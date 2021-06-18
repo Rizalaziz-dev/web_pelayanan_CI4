@@ -1,17 +1,16 @@
 <!-- Modal -->
-<div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open('user/save_data', ['class' => 'form_create']) ?>
+            <?= form_open('user/update_data', ['class' => 'form_edit']) ?>
             <?= csrf_field(); ?>
             <div class="modal-body">
-
                 <!-- form-group -->
 
                 <div class="form-group row">
@@ -19,9 +18,7 @@
                         Email<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input id="user_email" name="user_email" type="email" class="form-control" autocomplete="off" placeholder="User Email" maxlength="255" />
-                        <div class="invalid-feedback errorEmail">
-                        </div>
+                        <input id="user_email" name="user_email" type="email" class="form-control" placeholder="User Email" maxlength="255" autocomplete="off" value="<?= $user_email ?>">
                     </div>
                 </div>
 
@@ -32,9 +29,7 @@
                         Fullname<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input id="user_fullname" name="user_fullname" type="text" class="form-control" autocomplete="off" placeholder="User Fullname" maxlength="150" />
-                        <div class="invalid-feedback errorFullname">
-                        </div>
+                        <input id="user_fullname" name="user_fullname" type="text" class="form-control" placeholder="User Fullname" maxlength="150" autocomplete="off" value="<?= $user_fullname ?>" />
                     </div>
                 </div>
 
@@ -42,16 +37,14 @@
 
                 <div class="form-group row">
                     <label for="user_group" class="col-sm-2 col-form-label">
-                        Hak Akses<span class="tx-danger">*</span>
+                        Group<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
                         <select id="user_group" name="user_group" class="form-control select2" autocomplete="off">
                             <option value="">--Select Group--</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Pidum">Pidum</option>
+                            <option value="Admin" <?php if ($user_group == 'Admin') echo "selected" ?>>Admin</option>
+                            <option value="Pidum" <?php if ($user_group == 'Pidum') echo "selected" ?>>Pidum</option>
                         </select>
-                        <div class="invalid-feedback errorGroup">
-                        </div>
                     </div>
                 </div>
 
@@ -62,26 +55,23 @@
                         Password<span id="spn_user_password" class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input id="user_password" name="user_password" type="password" class="form-control" autocomplete="off" placeholder="User Password" maxlength="255" />
-                        <div class="invalid-feedback errorPassword">
-                        </div>
+                        <input id="user_password" name="user_password" type="password" class="form-control" placeholder="User Password" maxlength="255" autocomplete="off" value="<?= $user_password ?>" />
                     </div>
                 </div>
 
+
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary btn-save">Save</button>
+                <button type="submit" class="btn btn-primary btn-save">Update</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
-
-            <?= form_close() ?>
         </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
-        $('.form_create').submit(function(e) {
+        $('.form_edit').submit(function(e) {
             e.preventDefault();
 
             $.ajax({
@@ -134,7 +124,7 @@
                             text: response.success
                         })
 
-                        $('#modal-create').modal('hide')
+                        $('#modal-edit').modal('hide')
 
                         data_user();
                     }

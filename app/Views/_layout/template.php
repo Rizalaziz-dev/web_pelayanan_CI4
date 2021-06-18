@@ -17,7 +17,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/css/adminlte.min.css">
     <!-- Sweet Alert -->
-    <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/node_modules/sweetalert2/dist/sweetalert2.all.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/node_modules/sweetalert2/dist/sweetalert2.min.css">
 
     <script src="<?= base_url() ?>/assets/theme/plugins/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 

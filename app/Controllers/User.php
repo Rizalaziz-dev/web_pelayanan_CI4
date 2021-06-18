@@ -15,10 +15,6 @@
 
 namespace App\Controllers;
 
-use App\Models\User_model;
-
-
-
 
 class User extends BaseController
 {
@@ -37,9 +33,8 @@ class User extends BaseController
     public function get_data()
     {
         if ($this->request->isAJAX()) {
-            $user = new User_model();
             $data = [
-                'show_user' => $user->findAll()
+                'show_user' => $this->usr->findAll()
             ];
 
             $msg = [
@@ -62,6 +57,28 @@ class User extends BaseController
             echo json_encode($msg);
         } else {
             exit('Page Not Found');
+        }
+    }
+
+    public function form_edit()
+    {
+        if ($this->request->isAJAX()) {
+            $user_email = $this->request->getVar('user_email');
+
+            $row = $this->usr->find($user_email);
+
+            $data = [
+                'user_email' => $row['user_email'],
+                'user_fullname' => $row['user_fullname'],
+                'user_group' => $row['user_group'],
+                'user_password' => $row['user_password']
+
+            ];
+
+            $msg = [
+                'success' => view('_pages/User/modal_edit', $data)
+            ];
+            echo json_encode($msg);
         }
     }
 
@@ -120,9 +137,7 @@ class User extends BaseController
                     'user_password' => $this->request->getVar('user_password')
                 ];
 
-                $mhs = new User_model();
-
-                $mhs->insert($save_data);
+                $this->usr->insert($save_data);
 
                 $msg = [
                     'success' => 'Data Mahasiswa Berhasil Tersimpan'
@@ -132,5 +147,41 @@ class User extends BaseController
         } else {
             exit('Page Not Found');
         }
+    }
+
+    public function update_data()
+    {
+        if ($this->request->isAJAX()) {
+            $save_data = [
+                'user_fullname' => $this->request->getVar('user_fullname'),
+                'user_group' => $this->request->getVar('user_group'),
+                'user_password' => $this->request->getVar('user_password')
+            ];
+
+            $user_email = $this->request->getVar('user_email');
+
+            $this->usr->update($user_email, $save_data);
+
+            $msg = [
+                'success' => 'Data User Berhasil di Perbarui'
+            ];
+            echo json_encode($msg);
+        } else {
+            exit('Maaf Permintaan Anda Tidak Dapat di Proses');
+        }
+    }
+
+    public function remove()
+    {
+        if ($this->request->isAJAX()) {
+            $user_email = $this->request->getVar('user_email');
+
+            $this->usr->delete($user_email);
+
+            $msg = [
+                'success' => 'User dengan Email $user_email berhasil dihapus'
+            ];
+        }
+        echo json_encode($msg);
     }
 }
