@@ -12,7 +12,7 @@
  * @reference   https://adminlte.io/themes/AdminLTE/index.html
  */
 
-namespace App\Models;
+namespace App\Models\Back;
 
 use CodeIgniter\Model;
 

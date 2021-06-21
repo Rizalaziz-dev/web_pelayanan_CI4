@@ -13,10 +13,12 @@
  * @reference   https://adminlte.io/themes/AdminLTE/index.html
  */
 
-namespace App\Controllers;
+namespace App\Controllers\Back;
+
+use App\Controllers\BaseController;
 
 
-class User extends BaseController
+class Users extends BaseController
 {
 
     public function index()
@@ -27,8 +29,9 @@ class User extends BaseController
 
 
 
-        return view('_pages/User/user');
+        return view('_back/_pages/_user/user');
     }
+
 
     public function get_data()
     {
@@ -38,7 +41,7 @@ class User extends BaseController
             ];
 
             $msg = [
-                'data' => view('_pages/User/data_user', $data)
+                'data' => view('_back/_pages/_user/data_user', $data)
             ];
 
             echo json_encode($msg);
@@ -51,7 +54,7 @@ class User extends BaseController
     {
         if ($this->request->isAJAX()) {
             $msg = [
-                'data' => view('_pages/User/modal_create')
+                'data' => view('_back/_pages/_user/modal_create')
             ];
 
             echo json_encode($msg);
@@ -76,7 +79,7 @@ class User extends BaseController
             ];
 
             $msg = [
-                'success' => view('_pages/User/modal_edit', $data)
+                'success' => view('_back/_pages/_user/modal_edit', $data)
             ];
             echo json_encode($msg);
         }
@@ -136,6 +139,19 @@ class User extends BaseController
                     'user_group' => $this->request->getVar('user_group'),
                     'user_password' => $this->request->getVar('user_password')
                 ];
+
+                require_once(APPPATH . 'views/vendor/autoload.php');
+                $options = [
+                    'cluster' => 'ap1',
+                    'useTLS' => true
+                ];
+
+                // $pusher = new PusherPusher(
+                //     'f00b9630960e06cbb49c',
+                //     '1a9e6f0160eb376a5f5d',
+                //     '1219579'
+                //     $options
+                // );
 
                 $this->usr->insert($save_data);
 

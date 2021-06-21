@@ -31,9 +31,9 @@
 
 <body class="hold-transition sidebar-mini">
 
-    <?php echo view('_layout/navbar'); ?>
+    <?php echo view('_back/_layout/navbar'); ?>
 
-    <?php echo view('_layout/sidebar'); ?>
+    <?php echo view('_back/_layout/sidebar'); ?>
 
 
     <!-- Content Wrapper. Contains page content -->
@@ -57,7 +57,7 @@
 
         <?= $this->renderSection('content') ?>
 
-        <?php echo view('_layout/footer'); ?>
+        <?php echo view('_back/_layout/footer'); ?>
 
 
         <!-- REQUIRED SCRIPTS -->
