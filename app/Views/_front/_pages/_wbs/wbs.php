@@ -8,9 +8,10 @@
 
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-4 text-center">
-                <h1>SITARA</h1>
-                <h2>SISTEM INFORMASI TAHAPAN PERKARA (SITARA).</h2>
-                <p>PERKARA TINDAK PIDANA UMUM PADA KEJAKSAAN NEGERI KABUPATEN TASIKMALAYA</p>
+                <h1>WBS</h1>
+                <h2>WHISTLE BLOWING SYSTEM (WBS).</h2>
+                <p>WHISTLE BLOWING SYSTEM PADA KEJAKSAAN NEGERI KABUPATEN TASIKMALAYA</p>
+
             </div>
         </div>
 

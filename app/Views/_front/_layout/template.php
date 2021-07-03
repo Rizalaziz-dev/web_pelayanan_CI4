@@ -10,8 +10,9 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="<?= base_url() ?>/assets/front_assets/img/favicon.png" rel="icon">
-  <link href="<?= base_url() ?>/assets/front_assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="icon" type="image.png" href="<?= base_url('assets/theme/img/Favicon.png') ?>">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/fontawesome-free/css/all.min.css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -28,12 +29,7 @@
   <!-- Template Main CSS File -->
   <link href="<?= base_url() ?>/assets/front_assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: OnePage - v2.2.2
-  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body>

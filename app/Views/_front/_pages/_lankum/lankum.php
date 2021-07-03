@@ -8,9 +8,9 @@
 
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-4 text-center">
-                <h1>SITARA</h1>
-                <h2>SISTEM INFORMASI TAHAPAN PERKARA (SITARA).</h2>
-                <p>PERKARA TINDAK PIDANA UMUM PADA KEJAKSAAN NEGERI KABUPATEN TASIKMALAYA</p>
+                <h1>PELAYANAN HUKUM</h1>
+                <p>PELAYANAN HUKUM PADA KEJAKSAAN NEGERI KABUPATEN TASIKMALAYA</p>
+
             </div>
         </div>
 
@@ -26,7 +26,8 @@
                 <div class="icon-box iconbox-blue">
 
                     <h4><a href="">Informasi Tilang</a></h4>
-                    <p>Lihat informasi Denda Tilang di sini. Hindari calo dalam mengurus perkara tilang Anda dengan 3M, Melihat - Membayar - Mengambil</p>
+                    S
+
 
                 </div>
             </div>

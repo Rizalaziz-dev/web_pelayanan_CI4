@@ -5,45 +5,28 @@
          <div class="container">
              <div class="row">
 
-                 <div class="col-lg-3 col-md-6 footer-contact">
-                     <h3>OnePage</h3>
+                 <div class="col-lg-4 col-md-6 footer-links">
+                     <h4>Alamat Kantor</h4>
                      <p>
-                         A108 Adam Street <br>
-                         New York, NY 535022<br>
-                         United States <br><br>
-                         <strong>Phone:</strong> +1 5589 55488 55<br>
-                         <strong>Email:</strong> info@example.com<br>
+                         Jl. Raya Mangunreja No. 88<br>
+                         Ds. Sukasukur Kec. Mangunreja Kab. Tasikmalaya<br>
+                         Prov. Jawa Barat - Indonesia<br><br>
                      </p>
                  </div>
 
-                 <div class="col-lg-2 col-md-6 footer-links">
-                     <h4>Useful Links</h4>
-                     <ul>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                     </ul>
+                 <div class="col-lg-4 col-md-6 footer-links">
+                     <h4>Alamat E-mail</h4>
+                     <label>
+                         <i class="far fa-envelope"></i>
+                         kn.singaparna@kejaksaan.go.id<br>
+                     </label>
                  </div>
 
-                 <div class="col-lg-3 col-md-6 footer-links">
-                     <h4>Our Services</h4>
-                     <ul>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                         <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-                     </ul>
-                 </div>
-
-                 <div class="col-lg-4 col-md-6 footer-newsletter">
-                     <h4>Join Our Newsletter</h4>
-                     <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-                     <form action="" method="post">
-                         <input type="email" name="email"><input type="submit" value="Subscribe">
-                     </form>
+                 <div class="col-lg-4 col-md-6 footer-links">
+                     <h4>Nomor Telephone dan WhatsApp</h4>
+                     <label> <i class="fas fa-phone"></i> <span class="text_info">(0265) 543962</span></label><br>
+                     <label> <i class="fas fa-phone"></i> <span class="text_info">(0265) 543826</span></label><br>
+                     <label> <i class="fab fa-whatsapp"></i> <span class="text_info">0853-2068-7966</span></label>
                  </div>
 
              </div>
@@ -51,25 +34,12 @@
      </div>
 
      <div class="container d-md-flex py-4">
-
          <div class="mr-md-auto text-center text-md-left">
-             <div class="copyright">
-                 &copy; Copyright <strong><span>OnePage</span></strong>. All Rights Reserved
-             </div>
+             <strong>Copyright &copy; 2021 <a href="http://www.kejari-tasikmalayakab.go.id/">kejari-tasikmalayakab.go.id</a>.
+                 All rights reserved.<br>
+             </strong>
              <div class="credits">
-                 <!-- All the links in the footer should remain intact. -->
-                 <!-- You can delete the links only if you purchased the pro version. -->
-                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/ -->
-                 Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                 <b>Version 1.0</b>
              </div>
          </div>
-         <div class="social-links text-center text-md-right pt-3 pt-md-0">
-             <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-             <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-             <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-             <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-             <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-         </div>
-     </div>
  </footer><!-- End Footer -->
