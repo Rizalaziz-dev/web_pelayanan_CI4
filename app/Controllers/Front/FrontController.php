@@ -9,7 +9,7 @@
  * @category    Controller
  * @author      Muhamad Rizal Nurul Aziz (muhammadrizal323@gmail.com)
  * @date        June 21, 2021
- * @reference   https://bootstrapmade.com/demo/OnePage/      
+ * @reference   https://bootstrapmade.com/demo/templates/OnePage/      
  */
 
 namespace App\Controllers\Front;

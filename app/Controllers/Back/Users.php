@@ -73,7 +73,8 @@ class Users extends BaseController
             $data = [
                 'user_email' => $row['user_email'],
                 'user_fullname' => $row['user_fullname'],
-                'user_group' => $row['user_group'],
+                'user_phonenumber' => $row['user_phonenumber'],
+                'user_level' => $row['user_level'],
                 'user_password' => $row['user_password']
 
             ];
@@ -99,14 +100,22 @@ class Users extends BaseController
                     ]
                 ],
                 'user_fullname' => [
-                    'label' => 'Nama Lengkap',
+                    'label' => 'Nama Lengkap ',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong',
                         'is_unique' => '{field} tidak boleh ada yang sama'
                     ]
                 ],
-                'user_group' => [
+                'user_phonenumber' => [
+                    'label' => 'No HP',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'user_level' => [
                     'label' => 'Group',
                     'rules' => 'required',
                     'errors' => [
@@ -128,7 +137,8 @@ class Users extends BaseController
                     'error' => [
                         'user_email' => $validation->getError('user_email'),
                         'user_fullname' => $validation->getError('user_fullname'),
-                        'user_group' => $validation->getError('user_group'),
+                        'user_phonenumber' => $validation->getError('user_phonenumber'),
+                        'user_level' => $validation->getError('user_level'),
                         'user_password' => $validation->getError('user_password')
                     ]
                 ];
@@ -136,15 +146,16 @@ class Users extends BaseController
                 $save_data = [
                     'user_email' => $this->request->getVar('user_email'),
                     'user_fullname' => $this->request->getVar('user_fullname'),
-                    'user_group' => $this->request->getVar('user_group'),
+                    'user_phonenumber' => $this->request->getVar('user_phonenumber'),
+                    'user_level' => $this->request->getVar('user_level'),
                     'user_password' => $this->request->getVar('user_password')
                 ];
 
-                require_once(APPPATH . 'views/vendor/autoload.php');
-                $options = [
-                    'cluster' => 'ap1',
-                    'useTLS' => true
-                ];
+                // require_once(APPPATH . 'views/vendor/autoload.php');
+                // $options = [
+                //     'cluster' => 'ap1',
+                //     'useTLS' => true
+                // ];
 
                 // $pusher = new PusherPusher(
                 //     'f00b9630960e06cbb49c',
@@ -170,7 +181,8 @@ class Users extends BaseController
         if ($this->request->isAJAX()) {
             $save_data = [
                 'user_fullname' => $this->request->getVar('user_fullname'),
-                'user_group' => $this->request->getVar('user_group'),
+                'user_phonenumber' => $this->request->getVar('user_phonenumber'),
+                'user_level' => $this->request->getVar('user_level'),
                 'user_password' => $this->request->getVar('user_password')
             ];
 

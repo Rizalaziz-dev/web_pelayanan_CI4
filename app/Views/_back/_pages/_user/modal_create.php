@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open('user/save_data', ['class' => 'form_create']) ?>
+            <?= form_open('back/users/save_data', ['class' => 'form_create']) ?>
             <?= csrf_field(); ?>
             <div class="modal-body">
 
@@ -41,16 +41,29 @@
                 <!-- form-group -->
 
                 <div class="form-group row">
-                    <label for="user_group" class="col-sm-2 col-form-label">
+                    <label for="user_phonenumber" class="col-sm-2 col-form-label">
+                        No HP<span class="tx-danger">*</span>
+                    </label>
+                    <div class="col-sm-10">
+                        <input id="user_phonenumber" name="user_phonenumber" type="text" class="form-control" autocomplete="off" placeholder="08x xxxx xxxx" maxlength="150" />
+                        <div class="invalid-feedback errorPhonenumber">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- form-group -->
+
+                <div class="form-group row">
+                    <label for="user_level" class="col-sm-2 col-form-label">
                         Hak Akses<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <select id="user_group" name="user_group" class="form-control select2" autocomplete="off">
-                            <option value="">--Select Group--</option>
+                        <select id="user_level" name="user_level" class="form-control select2" autocomplete="off">
+                            <option value="">--Pilih Salah Satu--</option>
                             <option value="Admin">Admin</option>
                             <option value="Pidum">Pidum</option>
                         </select>
-                        <div class="invalid-feedback errorGroup">
+                        <div class="invalid-feedback errorLevel">
                         </div>
                     </div>
                 </div>
@@ -113,12 +126,19 @@
                             $('#user_fullname').removeClass('is-invalid')
                             $('.errorFullname').html('');
                         }
-                        if (response.error.user_group) {
-                            $('#user_group').addClass('is-invalid')
-                            $('.errorGroup').html(response.error.user_group);
+                        if (response.error.user_phonenumber) {
+                            $('#user_phonenumber').addClass('is-invalid')
+                            $('.errorPhonenumber').html(response.error.user_phonenumber);
                         } else {
-                            $('#user_group').removeClass('is-invalid')
-                            $('.errorGroup').html('');
+                            $('#user_phonenumber').removeClass('is-invalid')
+                            $('.errorPhonenumber').html('');
+                        }
+                        if (response.error.user_level) {
+                            $('#user_level').addClass('is-invalid')
+                            $('.errorLevel').html(response.error.user_level);
+                        } else {
+                            $('#user_level').removeClass('is-invalid')
+                            $('.errorLevel').html('');
                         }
                         if (response.error.user_password) {
                             $('#user_password').addClass('is-invalid')

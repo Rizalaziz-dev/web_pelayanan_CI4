@@ -4,6 +4,7 @@
             <th>No</th>
             <th>Email</th>
             <th>Fullname</th>
+            <th>No HP</th>
             <th>Group</th>
             <th>Actions</th>
         </tr>
@@ -17,7 +18,8 @@
                 <td><?= $nomor; ?></td>
                 <td><?= $row['user_email']; ?></td>
                 <td><?= $row['user_fullname']; ?></td>
-                <td><?= $row['user_group']; ?></td>
+                <td><?= $row['user_phonenumber']; ?></td>
+                <td><?= $row['user_level']; ?></td>
                 <td>
                     <button type="button" class="btn btn-info btn-sm" onclick="edit('<?= $row['user_email'] ?>')">
                         <i class="fa fa-tags"></i>
@@ -40,7 +42,7 @@
     function edit(user_email) {
         $.ajax({
             type: "post",
-            url: "<?= site_url('user/form_edit') ?>",
+            url: "<?= site_url('Back/users/form_edit') ?>",
             data: {
                 user_email: user_email
             },
@@ -72,7 +74,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: "post",
-                    url: "<?= site_url('user/remove') ?>",
+                    url: "<?= site_url('Back/users/remove') ?>",
                     data: {
                         user_email: user_email
                     },

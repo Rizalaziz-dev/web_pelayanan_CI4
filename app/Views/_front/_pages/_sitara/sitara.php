@@ -2,6 +2,14 @@
 
 <?= $this->section('content'); ?>
 
+
+<!-- Data Tables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.10.25/datatables.min.css" />
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.10.25/datatables.min.js"></script>
+
+
+
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
@@ -25,8 +33,25 @@
             <div class="col-md" data-aos="zoom-in" data-aos-delay="100">
                 <div class="icon-box iconbox-blue">
 
-                    <h4><a href="">Informasi Tilang</a></h4>
-                    <p>Lihat informasi Denda Tilang di sini. Hindari calo dalam mengurus perkara tilang Anda dengan 3M, Melihat - Membayar - Mengambil</p>
+                    <table id="tabel-sitara" class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Tersangka</th>
+                                <th>Penyidik</th>
+                                <th>Sangkaan Pasal</th>
+                                <th>SPDP</th>
+                                <th>Tanggal Terima Berkas</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+
+
 
                 </div>
             </div>
@@ -34,6 +59,11 @@
         </div>
 </section>
 
+<script>
+    $(document).ready(function() {
+        $('#tabel-sitara').DataTable();
+    });
+</script>
 
 
 

@@ -9,7 +9,7 @@
  * @category    Controller
  * @author      Muhamad Rizal Nurul Aziz (muhammadrizal323@gmail.com)
  * @date        June 28, 2021
- * @reference   https://bootstrapmade.com/demo/OnePage/
+ * @reference   https://bootstrapmade.com/demo/templates/OnePage/
  */
 
 

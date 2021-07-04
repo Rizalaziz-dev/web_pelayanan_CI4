@@ -11,6 +11,7 @@
 
   <!-- Favicons -->
   <link rel="icon" type="image.png" href="<?= base_url('assets/theme/img/Favicon.png') ?>">
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/fontawesome-free/css/all.min.css">
 
@@ -29,6 +30,9 @@
   <!-- Template Main CSS File -->
   <link href="<?= base_url() ?>/assets/front_assets/css/style.css" rel="stylesheet">
 
+  <!-- jquery -->
+  <script src="<?= base_url() ?>/assets/front_assets/vendor/jquery/jquery.min.js"></script>
+
 
 </head>
 
@@ -41,7 +45,6 @@
 
 
   <!-- Vendor JS Files -->
-  <script src="<?= base_url() ?>/assets/front_assets/vendor/jquery/jquery.min.js"></script>
   <script src="<?= base_url() ?>/assets/front_assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="<?= base_url() ?>/assets/front_assets/vendor/jquery.easing/jquery.easing.min.js"></script>
   <script src="<?= base_url() ?>/assets/front_assets/vendor/php-email-form/validate.js"></script>

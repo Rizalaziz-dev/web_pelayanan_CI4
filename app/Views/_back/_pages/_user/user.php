@@ -46,7 +46,7 @@
 <script>
     function data_user() {
         $.ajax({
-            url: "<?= site_url('user/get_data') ?>",
+            url: "<?= site_url('Back/users/get_data') ?>",
             dataType: "json",
             success: function(response) {
                 $('.view-data').html(response.data);
@@ -63,7 +63,7 @@
         $('.btn-create').click(function(e) {
             e.preventDefault();
             $.ajax({
-                url: "<?= site_url('user/form_create') ?>",
+                url: "<?= site_url('Back/users/form_create') ?>",
                 dataType: "json",
                 success: function(response) {
                     $('.view-modal').html(response.data).show();

@@ -37,7 +37,7 @@ $routes->get('/sitara', 'Front\Sitara::index');
 
 $routes->get('/wbs', 'Front\Wbs::index');
 
-$routes->get('/lankum', 'Front\Lankum::index');
+$routes->get('/yankum', 'Front\Yankum::index');
 
 $routes->get('/home', 'Front\FrontController::index');
 
