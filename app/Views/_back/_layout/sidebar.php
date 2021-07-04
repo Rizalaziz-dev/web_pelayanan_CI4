@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-warning">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link text-sm navbar-white">
+    <a href="" class="brand-link text-sm navbar-white">
         <img src="" alt="Parahyangan Golf Logo" class="brand-image" />
         <span class="brand-text font-weight-light-navy">&nbsp;</span>
     </a>
@@ -39,27 +39,35 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <li class="nav-item has-treeview menu-closed">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Transaction
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo site_url('smartcard_usage'); ?>" class="nav-link">
+                            <a href="<?php echo site_url(''); ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Smartcard Usage</p>
+                                <p>Sitara</p>
                             </a>
                         </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo site_url('topup'); ?>" class="nav-link">
+                            <a href="<?php echo site_url(''); ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Top Up</p>
+                                <p>Tipikor</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?php echo site_url(''); ?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>WBS</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?php echo site_url(''); ?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pelayanan Hukum</p>
                             </a>
                         </li>
                     </ul>
@@ -74,42 +82,13 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?php echo site_url('smartcard_report'); ?>" class="nav-link">
+                        <!-- <li class="nav-item">
+                            <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Usage Report</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo site_url('topup_report'); ?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Top Up Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        </li> -->
 
-                <li class="nav-item has-treeview menu-closed">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Role Management
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?php echo site_url('module'); ?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Modules</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo site_url('permissions'); ?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Permissions</p>
-                            </a>
-                        </li>
                     </ul>
                 </li>
 
