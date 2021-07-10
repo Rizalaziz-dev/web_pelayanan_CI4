@@ -30,8 +30,18 @@
   <!-- Template Main CSS File -->
   <link href="<?= base_url() ?>/assets/front_assets/css/style.css" rel="stylesheet">
 
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/node_modules/sweetalert2/dist/sweetalert2.min.css">
+
+  <script src="<?= base_url() ?>/assets/theme/plugins/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <!-- jquery -->
   <script src="<?= base_url() ?>/assets/front_assets/vendor/jquery/jquery.min.js"></script>
+
+  <!-- Datepicker -->
+
+  <script src="<?= base_url() ?>/assets/theme/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
+  <link href="<?= base_url() ?>/assets/theme/plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
 
 
 </head>
