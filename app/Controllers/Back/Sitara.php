@@ -20,6 +20,6 @@ class Sitara extends BaseController
 {
 	public function index()
 	{
-		//
+		return view('_back/_pages/_sitara/sitara');
 	}
 }

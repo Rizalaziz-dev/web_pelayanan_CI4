@@ -10,33 +10,31 @@
         </tr>
     </thead>
     <tbody>
-        <?php $nomor = 0;
-        foreach ($show_user as $row) :
-            $nomor++;
-        ?>
-            <tr>
-                <td><?= $nomor; ?></td>
-                <td><?= $row['user_email']; ?></td>
-                <td><?= $row['user_fullname']; ?></td>
-                <td><?= $row['user_phonenumber']; ?></td>
-                <td><?= $row['user_level']; ?></td>
-                <td>
-                    <button type="button" class="btn btn-info btn-sm" onclick="edit('<?= $row['user_email'] ?>')">
-                        <i class="fa fa-tags"></i>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="remove('<?= $row['user_email'] ?>')">
-                        <i class="fa fa-trash"></i>
-                    </button>
 
-                </td>
-            </tr>
-        <?php endforeach; ?>
     </tbody>
 </table>
 
 <script>
+    function load_data() {
+        var table = $('#tabel-user').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "<?php echo site_url('Back/Users/data') ?>",
+                "type": "POST",
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "orderable": false
+            }]
+
+        })
+
+    }
     $(document).ready(function() {
-        $('#tabel-user').DataTable();
+        load_data();
+        // $('#tabel-user').DataTable();
     });
 
     function edit(user_email) {

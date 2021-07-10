@@ -17,6 +17,11 @@ namespace App\Controllers\Back;
 
 use App\Controllers\BaseController;
 
+use App\Models\Back\DataUser_Model;
+
+use Config\Services;
+
+
 
 class Users extends BaseController
 {
@@ -31,6 +36,44 @@ class Users extends BaseController
 
         return view('_back/_pages/_user/user');
     }
+
+    public function data()
+    {
+        $request = Services::request();
+        $datamodel = new DataUser_Model($request);
+        if ($request->getMethod(true) == 'POST') {
+            $lists = $datamodel->get_datatables();
+            $data = [];
+            $no = $request->getPost("start");
+            foreach ($lists as $list) {
+                $no++;
+                $row = [];
+
+                $btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->user_email . "')\">
+                <i class=\"fa fa-tags\"></i>
+            </button>";
+                $btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->user_email . "')\">
+                <i class=\"fa fa-trash\"></i>
+            </button>";
+
+                $row[] = $no;
+                $row[] = $list->user_email;
+                $row[] = $list->user_fullname;
+                $row[] = $list->user_phonenumber;
+                $row[] = $list->user_level;
+                $row[] = $btnEdit . "" . $btnRemove;
+                $data[] = $row;
+            }
+            $output = [
+                "draw" => $request->getPost('draw'),
+                "recordsTotal" => $datamodel->count_all(),
+                "recordsFiltered" => $datamodel->count_filtered(),
+                "data" => $data
+            ];
+            echo json_encode($output);
+        }
+    }
+
 
 
     public function get_data()
@@ -49,6 +92,7 @@ class Users extends BaseController
             exit('Page Not Found');
         }
     }
+
 
     public function form_create()
     {
@@ -211,5 +255,28 @@ class Users extends BaseController
             ];
         }
         echo json_encode($msg);
+    }
+
+    public function get_level()
+    {
+        if ($this->request->isAJAX()) {
+
+            $dataLevel = $this->lvl->findAll();
+
+
+
+            // $data = "";
+
+            // foreach ($dataLevel->getResultArray() as $row) :
+
+            //     $data .= '<option value="' . $row['level_id'] . '">' . $row['nama'] . '</option>';
+
+            // endforeach;
+
+            $msg = [
+                'data' => $dataLevel
+            ];
+            echo json_encode($msg);
+        }
     }
 }

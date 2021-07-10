@@ -41,9 +41,17 @@ $routes->get('/yankum', 'Front\Yankum::index');
 
 $routes->get('/home', 'Front\FrontController::index');
 
-$routes->get('/users', 'Back\Users::index');
+$routes->get('/admin/users', 'Back\Users::index');
 
 $routes->get('/Login', 'Back\Login::index');
+
+$routes->get('/admin/sitara', 'Back\Sitara::index');
+
+$routes->get('/admin/tipikor', 'Back\Tipikor::index');
+
+$routes->get('/admin/wbs', 'Back\Wbs::index');
+
+$routes->get('/admin/yankum', 'Back\Yankum::index');
 
 // $routes->get('/Users', 'Back\Users::index');
 

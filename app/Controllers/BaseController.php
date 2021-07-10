@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Models\Back\Level_Model;
 use App\Models\Back\User_Model;
 use App\Models\Back\Login_Model;
+use App\Models\Back\Tipikor_Model;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -57,7 +59,12 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
 
-		$this->usr = new User_Model();
-		$this->login = new Login_Model();
+		$this->usr = new User_Model;
+
+		$this->login = new Login_Model;
+
+		$this->tpkr = new Tipikor_Model;
+
+		$this->lvl = new Level_Model;
 	}
 }

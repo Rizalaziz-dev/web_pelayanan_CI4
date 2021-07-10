@@ -41,7 +41,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo site_url(''); ?>" class="nav-link">
+                            <a href="<?php echo site_url('Back/Sitara'); ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sitara</p>
                             </a>
@@ -49,7 +49,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo site_url(''); ?>" class="nav-link">
+                            <a href="<?php echo site_url('Back/Tipikor'); ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tipikor</p>
                             </a>
@@ -57,7 +57,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo site_url(''); ?>" class="nav-link">
+                            <a href="<?php echo site_url('Back/Wbs'); ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>WBS</p>
                             </a>
@@ -65,7 +65,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo site_url(''); ?>" class="nav-link">
+                            <a href="<?php echo site_url('Back/Yankum'); ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pelayanan Hukum</p>
                             </a>

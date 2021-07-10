@@ -60,8 +60,8 @@
                     <div class="col-sm-10">
                         <select id="user_level" name="user_level" class="form-control select2" autocomplete="off">
                             <option value="">--Pilih Salah Satu--</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Pidum">Pidum</option>
+                            <!-- <option value="Admin">Admin</option>
+                            <option value="Pidum">Pidum</option> -->
                         </select>
                         <div class="invalid-feedback errorLevel">
                         </div>
@@ -94,6 +94,37 @@
 
 <script>
     $(document).ready(function() {
+        getLevel();
+        save();
+
+
+    });
+
+    function getLevel() {
+        $('#user_level').change(function(e) {
+            $.ajax({
+                type: "post",
+                url: "<?= site_url('Back/Users/get_level') ?>",
+                data: {
+                    level: $(this).val()
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.data) {
+                        $('#user_level').html(response.data);
+                        $('#user_level').select2();
+                    }
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            });
+        });
+    }
+
+
+    function save() {
         $('.form_create').submit(function(e) {
             e.preventDefault();
 
@@ -168,5 +199,5 @@
             return false;
 
         });
-    });
+    }
 </script>

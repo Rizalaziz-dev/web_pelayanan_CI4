@@ -27,7 +27,9 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <p class="card-text view-data">
+
                         </p>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -44,21 +46,9 @@
 
 
 <script>
-    function data_user() {
-        $.ajax({
-            url: "<?= site_url('Back/users/get_data') ?>",
-            dataType: "json",
-            success: function(response) {
-                $('.view-data').html(response.data);
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-            }
-        });
-    }
-
     $(document).ready(function() {
         data_user();
+
 
         $('.btn-create').click(function(e) {
             e.preventDefault();
@@ -77,6 +67,19 @@
             });
         });
     });
+
+    function data_user() {
+        $.ajax({
+            url: "<?= site_url('Back/users/get_data') ?>",
+            dataType: "json",
+            success: function(response) {
+                $('.view-data').html(response.data);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+    }
 </script>
 
 
