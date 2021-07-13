@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open('back/users/save_data', ['class' => 'form_create']) ?>
+            <?= form_open('', ['class' => 'form_create']) ?>
             <?= csrf_field(); ?>
             <div class="modal-body">
 
@@ -58,10 +58,8 @@
                         Hak Akses<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <select id="user_level" name="user_level" class="form-control select2" autocomplete="off">
+                        <select id="user_level" name="user_level" class="form-control select2">
                             <option value="">--Pilih Salah Satu--</option>
-                            <!-- <option value="Admin">Admin</option>
-                            <option value="Pidum">Pidum</option> -->
                         </select>
                         <div class="invalid-feedback errorLevel">
                         </div>
@@ -101,26 +99,27 @@
     });
 
     function getLevel() {
-        $('#user_level').change(function(e) {
-            $.ajax({
-                type: "post",
-                url: "<?= site_url('Back/Users/get_level') ?>",
-                data: {
-                    level: $(this).val()
-                },
-                dataType: "json",
-                success: function(response) {
-                    if (response.data) {
-                        $('#user_level').html(response.data);
-                        $('#user_level').select2();
-                    }
 
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-                }
-            });
+        $.ajax({
+            type: "post",
+            url: "<?= site_url('Back/Users/get_level') ?>",
+            dataType: "json",
+            success: function(response) {
+                $.each(response, function(i, item) {
+                    $.each(item, function(j, val) {
+                        $('#user_level').append($('<option>', {
+                            value: val.level_name,
+                            text: val.level_id
+                        }));
+                    });
+                });
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
         });
+
     }
 
 
@@ -128,10 +127,27 @@
         $('.form_create').submit(function(e) {
             e.preventDefault();
 
+            var user_email = $("#user_email").val();
+            var user_fullname = $("#user_fullname").val();
+            var user_phonenumber = $("#user_phonenumber").val();
+            var user_level = $("#user_level").val();
+            var user_password = $("#user_password").val();
+
+            let data = new FormData();
+
+            data.append("user_email", user_email)
+            data.append("user_fullname", user_fullname)
+            data.append("user_phonenumber", user_phonenumber)
+            data.append("user_level", user_level)
+            data.append("user_password", user_password)
+
             $.ajax({
                 type: "post",
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: "<?= site_url('back/users/save_data') ?>",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
                 dataType: "json",
                 beforeSend: function() {
                     $('.btn-save').attr('disable', 'disabled');

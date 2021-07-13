@@ -46,7 +46,9 @@
                 <div class="col-md text-left">
                     <h5><strong>IDENTITAS PELAPOR</strong></h5>
 
-                    <?= form_open('Front/Tipikor/save_data', ['class' => 'form_create']) ?>
+
+
+                    <?= form_open_multipart('', ['class' => 'form-upload']) ?>
 
                     <?= csrf_field(); ?>
 
@@ -121,7 +123,7 @@
                                         </div>
 
                                         <div class="col-sm">
-                                            <input type="text" class="form-control" id="occure_time" name="occurre_time" placeholder="Siang">
+                                            <input type="text" class="form-control" id="occurre_time" name="occurre_time" placeholder="Siang">
                                             <div class="invalid-feedback errorOccurre"></div>
                                         </div>
 
@@ -151,27 +153,28 @@
                     </div>
 
                     <div class="form-group row pb-3 pt-3 text-left">
-                        <label for="attachment" class="col-md-3 form-label ">Upload dokumen pendukung (Jika ada)</label>
+                        <label for="" class="col-md-3 form-label ">Upload dokumen pendukung</label>
                         <div class="col-md-9">
-                            <input type="file" name="file" id="attachment">
-                            <p>Upload dalam bentuk .zip atau .rar (Penting : lampirkan foto KTP)</p>
+                            <input type="file" class="form-control" name="attachment" id="attachment">
+                            <div class="invalid-feedback errorAttachment"></div>
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-outline-primary btn-send "><i class="far fa-paper-plane"></i> Kirim Pengaduan</button>
+
+
                     <?= form_close() ?>
-
-
 
                 </div>
             </div>
         </div>
     </div>
+    <div class="view-modal" style="display: none;"></div>
 </section>
 
 <script>
     $(document).ready(function() {
-        save();
+
         $(function() {
             $("#calendar_day").datepicker({
                 format: "dd",
@@ -197,20 +200,58 @@
             })
         });
 
+        save();
+
     });
 
     function save() {
-        $('.form_create').submit(function(e) {
+        $('.btn-send').click(function(e) {
             e.preventDefault();
+
+            var id_report = $("#id_report").val();
+            var r_fullname = $("#reporter_fullname").val();
+            var r_nik = $("#reporter_nik").val();
+            var r_address = $("#reporter_address").val();
+            var r_email = $("#reporter_email").val();
+            var r_phonenumber = $("#reporter_phonenumber").val();
+            var subject = $("#subject").val();
+            var occurre_time = $("#occurre_time").val();
+            var calendar_day = $("#calendar_day").val();
+            var calendar_month = $("#calendar_month").val();
+            var calendar_year = $("#calendar_year").val();
+            var crime_scene = $("#crime_scene").val();
+            var report_detail = $("#report_detail").val();
+            var attachment = $("#attachment")[0].files[0];
+
+            let data = new FormData();
+
+            data.append("id_report", id_report)
+            data.append("reporter_fullname", r_fullname)
+            data.append("reporter_nik", r_nik)
+            data.append("reporter_address", r_address)
+            data.append("reporter_email", r_email)
+            data.append("reporter_phonenumber", r_phonenumber)
+            data.append("subject", subject)
+            data.append("occurre_time", occurre_time)
+            data.append("calendar_day", calendar_day)
+            data.append("calendar_month", calendar_month)
+            data.append("calendar_year", calendar_year)
+            data.append("crime_scene", crime_scene)
+            data.append("report_detail", report_detail)
+            data.append("attachment", attachment)
 
             $.ajax({
                 type: "post",
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: "<?= site_url('Front/Tipikor/save_data') ?>",
+                data: data,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                cache: false,
                 dataType: "json",
                 beforeSend: function() {
                     $('.btn-send').attr('disable', 'disabled');
-                    $('.btn-send').html('<i class="fa fa-spin fa-spinner"></i>            ');
+                    $('.btn-send').html('<i class="fa fa-spin fa-spinner"></i>');
                 },
                 complete: function() {
                     $('.btn-send').removeAttr('disable');
@@ -261,10 +302,10 @@
                             $('.errorSubject').html('');
                         }
                         if (response.error.occurre_time) {
-                            $('#occure_time').addClass('is-invalid')
+                            $('#occurre_time').addClass('is-invalid')
                             $('.errorOccurre').html(response.error.occurre_time);
                         } else {
-                            $('#occure_time').removeClass('is-invalid')
+                            $('#occurre_time').removeClass('is-invalid')
                             $('.errorOccure').html('');
                         }
                         if (response.error.crime_scene) {
@@ -281,16 +322,21 @@
                             $('#report_detail').removeClass('is-invalid')
                             $('.errorDetail').html('');
                         }
+                        if (response.error.attachment) {
+                            $('#attachment').addClass('is-invalid')
+                            $('.errorAttachment').html(response.error.attachment);
+                        } else {
+                            $('#attachment').removeClass('is-invalid')
+                            $('.errorAttachment').html('');
+                        }
+
                     } else {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
                             text: response.success
                         })
-
-                        // $('#modal-create').modal('hide')
-
-                        // data_user();
+                        clear_form();
                     }
 
                 },
@@ -298,10 +344,27 @@
                     alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
                 }
 
+
             });
-            return false;
 
         });
+    }
+
+    function clear_form() {
+        $("#id_report").val('');
+        $("#reporter_fullname").val('');
+        $("#reporter_nik").val('');
+        $("#reporter_address").val('');
+        $("#reporter_email").val('');
+        $("#reporter_phonenumber").val('');
+        $("#subject").val('');
+        $("#occurre_time").val('');
+        $("#calendar_day").val('');
+        $("#calendar_month").val('');
+        $("#calendar_year").val('');
+        $("#crime_scene").val('');
+        $("#report_detail").val('');
+        $("#attachment").val('');
     }
 </script>
 

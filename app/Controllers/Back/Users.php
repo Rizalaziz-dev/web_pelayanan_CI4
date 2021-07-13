@@ -21,6 +21,10 @@ use App\Models\Back\DataUser_Model;
 
 use Config\Services;
 
+use Pusher\Pusher;
+
+use Pusher\PusherInstance;
+
 
 
 class Users extends BaseController
@@ -52,7 +56,7 @@ class Users extends BaseController
                 $btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->user_email . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
-                $btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->user_email . "')\">
+                $btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"remove('" . $list->user_email . "')\">
                 <i class=\"fa fa-trash\"></i>
             </button>";
 
@@ -194,25 +198,27 @@ class Users extends BaseController
                     'user_level' => $this->request->getVar('user_level'),
                     'user_password' => $this->request->getVar('user_password')
                 ];
-
-                // require_once(APPPATH . 'views/vendor/autoload.php');
-                // $options = [
-                //     'cluster' => 'ap1',
-                //     'useTLS' => true
-                // ];
-
-                // $pusher = new PusherPusher(
-                //     'f00b9630960e06cbb49c',
-                //     '1a9e6f0160eb376a5f5d',
-                //     '1219579'
-                //     $options
-                // );
-
                 $this->usr->insert($save_data);
 
                 $msg = [
                     'success' => 'Data Mahasiswa Berhasil Tersimpan'
                 ];
+                require_once(APPPATH . 'views/vendor/autoload.php');
+                $options = [
+                    'cluster' => 'ap1',
+                    'useTLS' => true
+                ];
+
+                $pusher = new Pusher(
+                    'f00b9630960e06cbb49c',
+                    '1a9e6f0160eb376a5f5d',
+                    '1219579',
+                    $options
+                );
+
+                $data['message_user'] = 'success';
+
+                $pusher->trigger('my-chanel', 'my-event', $data);
             }
             echo json_encode($msg);
         } else {
@@ -262,16 +268,6 @@ class Users extends BaseController
         if ($this->request->isAJAX()) {
 
             $dataLevel = $this->lvl->findAll();
-
-
-
-            // $data = "";
-
-            // foreach ($dataLevel->getResultArray() as $row) :
-
-            //     $data .= '<option value="' . $row['level_id'] . '">' . $row['nama'] . '</option>';
-
-            // endforeach;
 
             $msg = [
                 'data' => $dataLevel

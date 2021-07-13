@@ -26,6 +26,9 @@
     <!-- jQuery -->
     <script src="<?= base_url() ?>/assets/theme/plugins/jquery/jquery.min.js"></script>
 
+    <!-- Pusher -->
+    <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
+
 
 </head>
 
@@ -60,6 +63,8 @@
         <?php echo view('_back/_layout/footer'); ?>
 
 
+
+
         <!-- REQUIRED SCRIPTS -->
 
 
@@ -67,6 +72,10 @@
         <script src="<?= base_url() ?>/assets/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- AdminLTE -->
         <script src="<?= base_url() ?>/assets/theme/js/adminlte.js"></script>
+
+        <script>
+
+        </script>
 
 
 

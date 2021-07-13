@@ -38,7 +38,7 @@ class Tipikor_Model extends Model
         if ($kode == null) {
             $no = 1;
         } else {
-            $date = "KOR/";
+            $date = "KOR-";
             if ($kode['tanggal'] == $date . date('Ymd')) {
                 $no = intval($kode['nomor']) + 1;
             } else {
@@ -49,7 +49,7 @@ class Tipikor_Model extends Model
         $tgl = date('Ymd');
         $batas = str_pad($no, 4, "0", STR_PAD_LEFT);
         $inisial = 'KOR';
-        $id_report = $inisial . "/" . $tgl . "/" . $batas;
+        $id_report = $inisial . "-" . $tgl . "-" . $batas;
         return $id_report;
     }
 }

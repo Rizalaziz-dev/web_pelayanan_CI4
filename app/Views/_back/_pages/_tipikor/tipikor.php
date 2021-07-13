@@ -20,22 +20,10 @@
         <div class="card m-b-30">
             <!-- /.card-body -->
             <div class="card-body">
-                <table id="tabel-tipikor" class="table">
-                    <thead class="thead-dark">
-                        <th>No</th>
-                        <th>No Laporan</th>
-                        <th>Nama Pelapor</th>
-                        <th>Subject</th>
-                        <th>Waktu Kejadian</th>
-                        <th>Tempat Kejadian</th>
-                        <th>Uraian Laporan</th>
-                        <th>Lampiran</th>
-                        <th>Actions</th>
-                    </thead>
-                    <tbody>
+                <p class="card-text view-data">
 
-                    </tbody>
-                </table>
+                </p>
+
             </div>
 
         </div>
@@ -47,25 +35,34 @@
 
 <script>
     $(document).ready(function() {
-        load_table();
+        data_tipikor();
 
     });
 
-    function load_table() {
-        $('#tabel-tipikor').DataTable({
-            "order": [],
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "<?php echo site_url('Back/Tipikor/data') ?>",
-                "type": "POST",
-            },
-            "columnDefs": [{
-                "targets": [0],
-                "orderable": false
-            }]
-        });
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('f00b9630960e06cbb49c', {
+        cluster: 'ap1',
+        forceTLS: true
+    });
 
+    var chanel = pusher.subscribe('my-chanel');
+    chanel.bind('my-event', function(data) {
+        if (data.message_tipikor === 'success') {
+            data_tipikor();
+        }
+    });
+
+    function data_tipikor() {
+        $.ajax({
+            url: "<?= site_url('Back/Tipikor/get_data') ?>",
+            dataType: "json",
+            success: function(response) {
+                $('.view-data').html(response.data);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
     }
 </script>
 
