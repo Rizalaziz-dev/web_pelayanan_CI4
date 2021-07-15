@@ -17,7 +17,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('Front\FrontController');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -31,7 +31,10 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+
+// Front
+
+$routes->get('/', 'Front\FrontController::index');
 
 $routes->get('/sitara', 'Front\Sitara::index');
 
@@ -41,19 +44,30 @@ $routes->get('/yankum', 'Front\Yankum::index');
 
 $routes->get('/home', 'Front\FrontController::index');
 
-$routes->get('/admin/users', 'Back\Users::index');
+// Back
 
 $routes->get('/Login', 'Back\Login::index');
 
-$routes->get('/admin/sitara', 'Back\Sitara::index');
+$routes->get('/admin/users', 'Back\Users::index', ['filter' => 'auth']);
 
-$routes->get('/admin/tipikor', 'Back\Tipikor::index');
+$routes->get('/admin/users/(:any)', 'Back\Users::$1', ['filter' => 'auth']);
 
-$routes->get('/admin/wbs', 'Back\Wbs::index');
+$routes->get('/admin/sitara', 'Back\Sitara::index', ['filter' => 'auth']);
 
-$routes->get('/admin/yankum', 'Back\Yankum::index');
+$routes->get('/admin/sitara/(:any)', 'Back\Sitara::$1', ['filter' => 'auth']);
 
-// $routes->get('/Users', 'Back\Users::index');
+$routes->get('/admin/tipikor', 'Back\Tipikor::index', ['filter' => 'auth']);
+
+$routes->get('/admin/tipikor/(:any)', 'Back\Tipikor::$1', ['filter' => 'auth']);
+
+$routes->get('/admin/wbs', 'Back\Wbs::index', ['filter' => 'auth']);
+
+$routes->get('/admin/wbs/(:any)', 'Back\Wbs::$1', ['filter' => 'auth']);
+
+$routes->get('/admin/yankum', 'Back\Yankum::index', ['filter' => 'auth']);
+
+$routes->get('/admin/yankum/(:any)', 'Back\Yankum::$1', ['filter' => 'auth']);
+
 
 
 

@@ -58,7 +58,8 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
-		// E.g.: $this->session = \Config\Services::session();
+		// E.g.: 
+		$this->session = \Config\Services::session();
 
 		$this->usr = new User_Model;
 
@@ -69,5 +70,7 @@ class BaseController extends Controller
 		$this->tpkr = new Tipikor_Model;
 
 		$this->rprtr = new Reporter_Model;
+
+		$this->login = new Login_Model;
 	}
 }

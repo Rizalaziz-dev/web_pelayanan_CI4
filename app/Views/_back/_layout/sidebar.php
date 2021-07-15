@@ -93,7 +93,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="<?php echo base_url('login/out') ?>" class="nav-link">
+                    <a href="<?php echo site_url('Back/Login/out') ?>" class="nav-link">
                         <i class="nav-icon fa fa-user"></i>
                         <p>
                             Logout

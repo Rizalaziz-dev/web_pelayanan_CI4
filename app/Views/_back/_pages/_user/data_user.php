@@ -5,7 +5,7 @@
             <th>Email</th>
             <th>Fullname</th>
             <th>No HP</th>
-            <th>Group</th>
+            <th>Hak Akses</th>
             <th>Actions</th>
         </tr>
     </thead>

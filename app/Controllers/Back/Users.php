@@ -64,7 +64,7 @@ class Users extends BaseController
                 $row[] = $list->user_email;
                 $row[] = $list->user_fullname;
                 $row[] = $list->user_phonenumber;
-                $row[] = $list->user_level;
+                $row[] = $list->level_name;
                 $row[] = $btnEdit . "" . $btnRemove;
                 $data[] = $row;
             }
@@ -178,7 +178,16 @@ class Users extends BaseController
                         'required' => '{field} tidak boleh kosong',
                         'is_unique' => '{field} tidak boleh ada yang sama'
                     ]
-                ]
+                ],
+                // 'confirm_password' => [
+                //     'label' => 'Confirm Password',
+                //     'rules' => 'required|matches[user_password]',
+                //     'errors' => [
+                //         'required' => '{field} tidak boleh kosong',
+                //         'matches' => '{field} berbeda dengan Password'
+                //     ]
+                // ],
+
             ]);
             if (!$valid) {
                 $msg = [
@@ -187,7 +196,8 @@ class Users extends BaseController
                         'user_fullname' => $validation->getError('user_fullname'),
                         'user_phonenumber' => $validation->getError('user_phonenumber'),
                         'user_level' => $validation->getError('user_level'),
-                        'user_password' => $validation->getError('user_password')
+                        'user_password' => $validation->getError('user_password'),
+                        // 'confirm_password' => $validation->getError('confirm_password')
                     ]
                 ];
             } else {
@@ -196,8 +206,9 @@ class Users extends BaseController
                     'user_fullname' => $this->request->getVar('user_fullname'),
                     'user_phonenumber' => $this->request->getVar('user_phonenumber'),
                     'user_level' => $this->request->getVar('user_level'),
-                    'user_password' => $this->request->getVar('user_password')
+                    'user_password' => password_hash($this->request->getVar('user_password'), PASSWORD_DEFAULT)
                 ];
+                // print_r($save_data);
                 $this->usr->insert($save_data);
 
                 $msg = [
@@ -257,7 +268,7 @@ class Users extends BaseController
             $this->usr->delete($user_email);
 
             $msg = [
-                'success' => 'User dengan Email $user_email berhasil dihapus'
+                'success' => 'User dengan Email ' . $user_email . ' berhasil dihapus'
             ];
         }
         echo json_encode($msg);

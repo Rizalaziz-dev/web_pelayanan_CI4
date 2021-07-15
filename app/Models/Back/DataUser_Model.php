@@ -21,7 +21,7 @@ use CodeIgniter\Model;
 class DataUser_Model extends Model
 {
     protected $table = "tb_m_user";
-    protected $column_order = array(null, 'user_email', 'user_fullname', 'user_phonenumber', 'user_level', null);
+    protected $column_order = array(null, 'user_email', 'user_fullname', 'user_phonenumber', 'user_level', 'user_password', null);
     protected $column_search = array('user_email', 'user_fullname');
     protected $order = array('user_email' => 'asc');
     protected $db;
@@ -33,7 +33,7 @@ class DataUser_Model extends Model
         $this->db = db_connect();
         $this->request = $request;
 
-        $this->dt = $this->db->table($this->table);
+        $this->dt = $this->db->table($this->table)->select('*')->join('tb_m_level', 'user_level=level_id');
     }
     private function _get_datatables_query()
     {

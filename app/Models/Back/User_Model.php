@@ -21,5 +21,9 @@ class User_Model extends Model
     protected $table      = 'tb_m_user';
     protected $primaryKey = 'user_email';
 
-    protected $allowedFields = ['user_email', 'user_fullname', 'user_phonenumber', 'user_group', 'user_password'];
+    protected $allowedFields = ['user_email', 'user_fullname', 'user_phonenumber', 'user_level', 'user_password', 'created_at', 'updated_at'];
+
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 }

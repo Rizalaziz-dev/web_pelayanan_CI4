@@ -70,7 +70,7 @@
 
                 <div class="form-group row">
                     <label for="user_password" class="col-sm-2 col-form-label">
-                        Password<span id="spn_user_password" class="tx-danger">*</span>
+                        Password<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
                         <input id="user_password" name="user_password" type="password" class="form-control" autocomplete="off" placeholder="User Password" maxlength="255" />
@@ -78,6 +78,19 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- form-group -->
+
+                <!-- <div class="form-group row">
+                    <label for="confirm_password" class="col-sm-2 col-form-label">
+                        Confirm Password<span class="tx-danger">*</span>
+                    </label>
+                    <div class="col-sm-10">
+                        <input id="confirm_password" name="confirm_password" type="password" class="form-control" autocomplete="off" placeholder="User Password" maxlength="255" />
+                        <div class="invalid-feedback errorConfirm">
+                        </div>
+                    </div>
+                </div> -->
 
             </div>
             <div class="modal-footer">
@@ -108,8 +121,8 @@
                 $.each(response, function(i, item) {
                     $.each(item, function(j, val) {
                         $('#user_level').append($('<option>', {
-                            value: val.level_name,
-                            text: val.level_id
+                            value: val.level_id,
+                            text: val.level_name
                         }));
                     });
                 });
@@ -132,6 +145,7 @@
             var user_phonenumber = $("#user_phonenumber").val();
             var user_level = $("#user_level").val();
             var user_password = $("#user_password").val();
+            // var user_password = $("#confirm_password").val();
 
             let data = new FormData();
 
@@ -140,6 +154,7 @@
             data.append("user_phonenumber", user_phonenumber)
             data.append("user_level", user_level)
             data.append("user_password", user_password)
+            // data.append("confirm_password", confirm_password)
 
             $.ajax({
                 type: "post",
@@ -194,6 +209,13 @@
                             $('#user_password').removeClass('is-invalid')
                             $('.errorPassword').html('');
                         }
+                        // if (response.error.confirm_password) {
+                        //     $('#confirm_password').addClass('is-invalid')
+                        //     $('.errorConfirm').html(response.error.confirm_password);
+                        // } else {
+                        //     $('#confirm_password').removeClass('is-invalid')
+                        //     $('.errorConfirm').html('');
+                        // }
                     } else {
                         Swal.fire({
                             icon: 'success',

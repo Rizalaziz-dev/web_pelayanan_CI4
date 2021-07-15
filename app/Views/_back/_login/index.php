@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="<?= base_url('assets/theme/plugins/toastr/toastr.min.css') ?>">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="<?= base_url('assets/theme/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url('assets/theme/css/adminlte.min.css') ?>">
     <!-- Google Font: Source Sans Pro -->
@@ -35,37 +33,41 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form id="loginForm">
-                    <div class="input-group mb-3">
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
+
+                <?= form_open('Back/Login/check_login', ['class' => 'form-login']) ?>
+
+                <?= csrf_field(); ?>
+                <div class="input-group mb-3">
+                    <input type="email" id="user_email" name="user_email" class="form-control" placeholder="Email">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
+                    <div class="invalid-feedback errorEmail"></div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
                         </div>
                     </div>
-                </form>
+                    <div class="invalid-feedback errorPassword"></div>
+                </div>
 
                 <div class="social-auth-links text-center mb-3">
 
-                    <a id="btnLogin" href="javascript:void(0)" class="btn btn-block btn-primary" onclick="$('#loginForm').submit();">
-                        <i class="fa fa-user mr-2"></i> Login
-                    </a>
+                    <button class="btn btn-block btn-primary btn-login " type="submit"><i class="fa fa-user mr-2"></i> Login</button>
 
                 </div>
+
+                <?= form_close() ?>
                 <!-- /.social-auth-links -->
 
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
+                <!-- <p class="mb-1">
+                        <a href="forgot-password.html">I forgot my password</a>
+                    </p> -->
             </div>
             <!-- /.login-card-body -->
         </div>
@@ -84,10 +86,59 @@
     <!-- AdminLTE App -->
     <script src="<?= base_url('assets/theme/js/adminlte.min.js') ?>"></script>
     <!-- Login script -->
+
     <script>
-        var base_url = '<?php echo base_url(); ?>';
+        $(document).ready(function() {
+            Login();
+        });
+
+        function Login() {
+            $('.form-login').submit(function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "post",
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    beforeSend: function() {
+                        $('.btn-login').attr('disable', 'disabled');
+                        $('.btn-login').html('<i class="fa fa-spin fa-spinner"></i>');
+                    },
+                    complete: function() {
+                        $('.btn-login').removeAttr('disable');
+                        $('.btn-login').html('<i class="fa fa-user mr-2"></i> Login');
+                    },
+                    success: function(response) {
+                        if (response.error) {
+                            if (response.error.user_email) {
+                                $('#user_email').addClass('is-invalid')
+                                $('.errorEmail').html(response.error.user_email);
+                            } else {
+                                $('#user_email').removeClass('is-invalid')
+                                $('.errorEmail').html('');
+                            }
+                            if (response.error.password) {
+                                $('#password').addClass('is-invalid')
+                                $('.errorPassword').html(response.error.password);
+                            } else {
+                                $('#password').removeClass('is-invalid')
+                                $('.errorPassword').html('');
+                            }
+                        }
+                        if (response.success) {
+                            window.location = response.success.link;
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                    }
+                });
+                return false;
+            });
+        }
     </script>
-    <script src="<?= base_url('assets/js_app/login.js') ?>"></script>
+
 </body>
 
 </html>
