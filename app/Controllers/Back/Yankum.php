@@ -39,6 +39,9 @@ class Yankum extends BaseController
 				$no++;
 				$row = [];
 
+				$url = base_url($list->attachment);
+
+
 				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
@@ -46,13 +49,16 @@ class Yankum extends BaseController
                 <i class=\"fa fa-trash\"></i>
             </button>";
 
+				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+
+
 				$row[] = $no;
 				$row[] = $list->report_id;
 				$row[] = $list->reporter_fullname;
 				$row[] = $list->question_type;
 				$row[] = $list->question_subject;
 				$row[] = $list->question_detail;
-				$row[] = $list->attachment;
+				$row[] = $storeImage;
 				$row[] = $btnEdit . "" . $btnRemove;
 				$data[] = $row;
 			}
@@ -63,6 +69,23 @@ class Yankum extends BaseController
 				"data" => $data
 			];
 			echo json_encode($output);
+		}
+	}
+
+	public function get_data()
+	{
+		if ($this->request->isAJAX()) {
+			$data = [
+				'show_yankum' => $this->yankum->findAll()
+			];
+
+			$msg = [
+				'data' => view('_back/_pages/_yankum/data_yankum', $data)
+			];
+
+			echo json_encode($msg);
+		} else {
+			exit('Page Not Found');
 		}
 	}
 }

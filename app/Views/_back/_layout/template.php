@@ -34,6 +34,8 @@
 
 <body class="hold-transition sidebar-mini">
 
+
+
     <?php echo view('_back/_layout/navbar'); ?>
 
     <?php echo view('_back/_layout/sidebar'); ?>
@@ -58,24 +60,52 @@
             </div><!-- /.container-fluid -->
         </div>
 
+
         <?= $this->renderSection('content') ?>
 
-        <?php echo view('_back/_layout/footer'); ?>
+    </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+
+    <?php echo view('_back/_layout/footer'); ?>
 
 
 
 
-        <!-- REQUIRED SCRIPTS -->
+    <!-- REQUIRED SCRIPTS -->
 
 
-        <!-- Bootstrap -->
-        <script src="<?= base_url() ?>/assets/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- AdminLTE -->
-        <script src="<?= base_url() ?>/assets/theme/js/adminlte.js"></script>
+    <!-- Bootstrap -->
+    <script src="<?= base_url() ?>/assets/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE -->
+    <script src="<?= base_url() ?>/assets/theme/js/adminlte.js"></script>
 
-        <script>
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('f00b9630960e06cbb49c', {
+            cluster: 'ap1',
+            forceTLS: true
+        });
 
-        </script>
+        var chanel = pusher.subscribe('my-chanel');
+        chanel.bind('my-event', function(data) {
+            if (data.message_tipikor === 'success') {
+                data_tipikor();
+            }
+            if (data.message_wbs === 'success') {
+                data_wbs();
+            }
+            if (data.message_yankum === 'success') {
+                data_yankum();
+            }
+        });
+    </script>
 
 
 

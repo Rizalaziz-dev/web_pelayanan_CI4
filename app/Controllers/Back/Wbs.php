@@ -39,12 +39,16 @@ class Wbs extends BaseController
 				$no++;
 				$row = [];
 
+				$url = base_url($list->attachment);
+
 				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
 				$btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
                 <i class=\"fa fa-trash\"></i>
             </button>";
+
+				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
 				$row[] = $no;
 				$row[] = $list->report_id;
@@ -54,7 +58,7 @@ class Wbs extends BaseController
 				$row[] = $list->occurre_time;
 				$row[] = $list->crime_scene;
 				$row[] = $list->report_detail;
-				$row[] = $list->attachment;
+				$row[] = $storeImage;
 				$row[] = $btnEdit . "" . $btnRemove;
 				$data[] = $row;
 			}
@@ -65,6 +69,23 @@ class Wbs extends BaseController
 				"data" => $data
 			];
 			echo json_encode($output);
+		}
+	}
+
+	public function get_data()
+	{
+		if ($this->request->isAJAX()) {
+			$data = [
+				'show_wbs' => $this->wbs->findAll()
+			];
+
+			$msg = [
+				'data' => view('_back/_pages/_wbs/data_wbs', $data)
+			];
+
+			echo json_encode($msg);
+		} else {
+			exit('Page Not Found');
 		}
 	}
 }

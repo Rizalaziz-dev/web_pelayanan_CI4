@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Tipikor
+ * Wbs
  *
- * Tipikor_Model scripts
+ * Wbs_Model scripts
  *
  * @package     Website Pelayanan
  * @category    Model
@@ -17,12 +17,12 @@ namespace App\Models\Front;
 use CodeIgniter\Model;
 
 
-class Tipikor_Model extends Model
+class Wbs_Model extends Model
 {
-    protected $table      = 'tb_m_tipikor';
-    protected $primaryKey = 'tipikor_id';
+    protected $table      = 'tb_m_wbs';
+    protected $primaryKey = 'wbs_id';
 
-    protected $allowedFields = ['subject', 'occurre_time', 'crime_scene', 'report_detail', 'attachment', 'id_report'];
+    protected $allowedFields = ['employee_name', 'violation_type', 'occurre_time', 'crime_scene', 'report_detail', 'attachment', 'id_report'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -41,7 +41,7 @@ class Tipikor_Model extends Model
         if ($kode == null) {
             $no = 1;
         } else {
-            $date = "KOR-";
+            $date = "WBS-";
             if ($kode['tanggal'] == $date . date('Ymd')) {
                 $no = intval($kode['nomor']) + 1;
             } else {
@@ -51,7 +51,7 @@ class Tipikor_Model extends Model
 
         $tgl = date('Ymd');
         $batas = str_pad($no, 4, "0", STR_PAD_LEFT);
-        $inisial = 'KOR';
+        $inisial = 'WBS';
         $id_report = $inisial . "-" . $tgl . "-" . $batas;
         return $id_report;
     }

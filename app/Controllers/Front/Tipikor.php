@@ -32,9 +32,6 @@ class Tipikor extends BaseController
 
         if ($this->request->isAJAX()) {
 
-
-            $tipikor = "Tipikor";
-
             $validation = \Config\Services::validation();
             $valid = $this->validate([
                 'reporter_fullname' => [
@@ -137,6 +134,8 @@ class Tipikor extends BaseController
             } else {
                 $id_report = $this->tpkr->noLaporan();
 
+                $tipikor = "Tipikor";
+
                 $filelampiran = $this->request->getFile('attachment');
 
                 $filelampiran->move('assets/image/lampiran', $id_report . '.' . $filelampiran->getExtension());
@@ -193,20 +192,6 @@ class Tipikor extends BaseController
 
                 $pusher->trigger('my-chanel', 'my-event', $data);
             }
-            echo json_encode($msg);
-        } else {
-            exit('Page Not Found');
-        }
-    }
-
-
-    public function form_upload()
-    {
-        if ($this->request->isAJAX()) {
-            $msg = [
-                'data' => view('_front/_pages/_tipikor/modalupload')
-            ];
-
             echo json_encode($msg);
         } else {
             exit('Page Not Found');

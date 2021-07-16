@@ -19,7 +19,11 @@ use CodeIgniter\Model;
 class Reporter_Model extends Model
 {
     protected $table      = 'tb_m_reporter';
-    // protected $primaryKey = 'report_id';
+    protected $primaryKey = 'report_id';
 
     protected $allowedFields = ['report_id', 'reporter_fullname', 'reporter_nik', 'reporter_address', 'reporter_email', 'reporter_phonenumber', 'report_type'];
+
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 }

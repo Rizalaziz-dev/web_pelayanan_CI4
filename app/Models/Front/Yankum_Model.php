@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Tipikor
+ * Wbs
  *
- * Tipikor_Model scripts
+ * Wbs_Model scripts
  *
  * @package     Website Pelayanan
  * @category    Model
@@ -17,12 +17,12 @@ namespace App\Models\Front;
 use CodeIgniter\Model;
 
 
-class Tipikor_Model extends Model
+class Yankum_Model extends Model
 {
-    protected $table      = 'tb_m_tipikor';
-    protected $primaryKey = 'tipikor_id';
+    protected $table      = 'tb_m_question';
+    protected $primaryKey = 'question_id';
 
-    protected $allowedFields = ['subject', 'occurre_time', 'crime_scene', 'report_detail', 'attachment', 'id_report'];
+    protected $allowedFields = ['question_type', 'question_subject', 'question_detail', 'attachment', 'id_report'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -34,14 +34,14 @@ class Tipikor_Model extends Model
 
         $kode = $this->db->table($this->table)
             ->select('RIGHT(id_report,4) as nomor', false)
-            ->select('Left(id_report,12) as tanggal', false)
+            ->select('Left(id_report,15) as tanggal', false)
             ->orderBy('id_report', 'DESC')
             ->limit(1)->get()->getRowArray();
 
         if ($kode == null) {
             $no = 1;
         } else {
-            $date = "KOR-";
+            $date = "YANKUM-";
             if ($kode['tanggal'] == $date . date('Ymd')) {
                 $no = intval($kode['nomor']) + 1;
             } else {
@@ -51,7 +51,7 @@ class Tipikor_Model extends Model
 
         $tgl = date('Ymd');
         $batas = str_pad($no, 4, "0", STR_PAD_LEFT);
-        $inisial = 'KOR';
+        $inisial = 'YANKUM';
         $id_report = $inisial . "-" . $tgl . "-" . $batas;
         return $id_report;
     }

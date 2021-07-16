@@ -110,12 +110,10 @@
                                     <div class="row">
                                         <div class="col-sm">
                                             <input id="calendar_day" name="calendar_day" type="number" class="form-control" placeholder="Day" autocomplete="off" maxlength="2" />
-
                                         </div>
 
                                         <div class="col-sm">
                                             <input id="calendar_month" name="calendar_month" type="number" class="form-control" placeholder="Month" autocomplete="off" maxlength="2" />
-
                                         </div>
 
                                         <div class="col-sm">
@@ -127,12 +125,9 @@
                                             <div class="invalid-feedback errorOccurre"></div>
                                         </div>
 
-
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 

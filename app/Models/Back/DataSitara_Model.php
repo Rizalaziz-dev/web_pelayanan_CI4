@@ -1,9 +1,9 @@
 <?php
 
 /**
- * DataTipikor
+ * DataSitara
  *
- * DataTipikor_Model scripts
+ * DataSitara_Model scripts
  *
  * @package     Website Pelayanan
  * @category    Model
@@ -18,13 +18,13 @@ use CodeIgniter\HTTP\RequestInterface;
 
 use CodeIgniter\Model;
 
-class DataTipikor_Model extends Model
+class DataSitara_Model extends Model
 {
-    protected $table = "tb_m_reporter";
-    protected $allowedFields = ['report_id', 'reporter_fullname', 'report_type'];
-    protected $column_order = array(null, 'report_id', 'reporter_fullname', null);
-    protected $column_search = array('report_id', 'reporter_fullname');
-    protected $order = array('report_id' => 'asc');
+    protected $table = "tb_m_case";
+    protected $allowedFields = ['case_id', 'case_date'];
+    protected $column_order = array(null, 'case_id', 'case_date', null);
+    protected $column_search = array('case_id', 'case_date');
+    protected $order = array('case_id' => 'asc');
     protected $db;
     protected $dt;
 
@@ -36,8 +36,8 @@ class DataTipikor_Model extends Model
 
         $this->dt = $this->db->table($this->table)
             ->select('*')
-            ->join('tb_m_tipikor', 'report_id=id_report')
-            ->where('report_type', 'Tipikor');
+            ->join('tb_m_suspect', 'case_id=id_case')
+            ->join('tb_m_decision', 'case_id=id_case');
     }
     private function _get_datatables_query()
     {

@@ -33,23 +33,30 @@ class DataWbs_Model extends Model
         $this->db = db_connect();
         $this->request = $request;
 
-        $this->dt = $this->db->table($this->table)->select('*')->join('tb_m_wbs', 'report_id=id_report');
+        $this->dt = $this->db->table($this->table)
+            ->select('*')
+            ->join('tb_m_wbs', 'report_id=id_report')
+            ->where('report_type', 'Wbs');
     }
     private function _get_datatables_query()
     {
-        $i = 0;
-        foreach ($this->column_search as $item) {
-            if ($this->request->getPost('search')['value']) {
-                if ($i === 0) {
-                    $this->dt->groupStart();
-                    $this->dt->like($item, $this->request->getPost('search')['value']);
-                } else {
-                    $this->dt->orLike($item, $this->request->getPost('search')['value']);
+        if ($this->request->getPost('search')['value'] == null) {
+            $this->dt->where('report_type', 'Wbs');
+        } else {
+            $i = 0;
+            foreach ($this->column_search as $item) {
+                if ($this->request->getPost('search')['value']) {
+                    if ($i === 0) {
+                        $this->dt->groupStart();
+                        $this->dt->like($item, $this->request->getPost('search')['value']);
+                    } else {
+                        $this->dt->orLike($item, $this->request->getPost('search')['value']);
+                    }
+                    if (count($this->column_search) - 1 == $i)
+                        $this->dt->groupEnd();
                 }
-                if (count($this->column_search) - 1 == $i)
-                    $this->dt->groupEnd();
+                $i++;
             }
-            $i++;
         }
 
         if ($this->request->getPost('order')) {
@@ -74,7 +81,7 @@ class DataWbs_Model extends Model
     }
     public function count_all()
     {
-        $tbl_storage = $this->db->table($this->table);
+        $tbl_storage = $this->db->table($this->table)->where('report_type', 'Wbs');
         return $tbl_storage->countAllResults();
     }
 }

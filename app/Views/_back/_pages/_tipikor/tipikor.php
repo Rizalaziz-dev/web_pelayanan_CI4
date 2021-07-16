@@ -39,19 +39,6 @@
 
     });
 
-    Pusher.logToConsole = true;
-    var pusher = new Pusher('f00b9630960e06cbb49c', {
-        cluster: 'ap1',
-        forceTLS: true
-    });
-
-    var chanel = pusher.subscribe('my-chanel');
-    chanel.bind('my-event', function(data) {
-        if (data.message_tipikor === 'success') {
-            data_tipikor();
-        }
-    });
-
     function data_tipikor() {
         $.ajax({
             url: "<?= site_url('Back/Tipikor/get_data') ?>",

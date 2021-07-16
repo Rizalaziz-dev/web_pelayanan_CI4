@@ -6,7 +6,9 @@ use App\Models\Back\Level_Model;
 use App\Models\Back\User_Model;
 use App\Models\Back\Login_Model;
 use App\Models\Front\Tipikor_Model;
+use App\Models\Front\Wbs_Model;
 use App\Models\Front\Reporter_Model;
+use App\Models\Front\Yankum_Model;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -59,6 +61,7 @@ class BaseController extends Controller
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.: 
+
 		$this->session = \Config\Services::session();
 
 		$this->usr = new User_Model;
@@ -69,7 +72,11 @@ class BaseController extends Controller
 
 		$this->tpkr = new Tipikor_Model;
 
+		$this->wbs = new Wbs_Model;
+
 		$this->rprtr = new Reporter_Model;
+
+		$this->yankum = new Yankum_Model;
 
 		$this->login = new Login_Model;
 	}
