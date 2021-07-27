@@ -45,28 +45,40 @@ $routes->get('/yankum', 'Front\Yankum::index');
 $routes->get('/home', 'Front\FrontController::index');
 
 // Back
+$routes->group('admin', ['namespace' => 'App\Controllers\Back', 'filter' => 'auth'], function ($routes) {
 
-$routes->get('/Login', 'Back\Login::index');
+	$routes->get('Login', 'Login::index');
 
-$routes->get('/admin/users', 'Back\Users::index', ['filter' => 'auth']);
+	$routes->get('dashboard', 'Dashboard::index');
 
-$routes->get('/admin/users/(:any)', 'Back\Users::$1', ['filter' => 'auth']);
+	$routes->get('dashboard/(:any)', 'Dashboard::$1');
 
-$routes->get('/admin/sitara', 'Back\Sitara::index', ['filter' => 'auth']);
+	$routes->get('users', 'Users::index');
 
-$routes->get('/admin/sitara/(:any)', 'Back\Sitara::$1', ['filter' => 'auth']);
+	$routes->get('users/(:any)', 'Users::$1');
 
-$routes->get('/admin/tipikor', 'Back\Tipikor::index', ['filter' => 'auth']);
+	$routes->get('sitara', 'Sitara::index');
 
-$routes->get('/admin/tipikor/(:any)', 'Back\Tipikor::$1', ['filter' => 'auth']);
+	$routes->get('sitara/(:any)', 'Sitara::$1');
 
-$routes->get('/admin/wbs', 'Back\Wbs::index', ['filter' => 'auth']);
+	$routes->get('tipikor', 'Tipikor::index');
 
-$routes->get('/admin/wbs/(:any)', 'Back\Wbs::$1', ['filter' => 'auth']);
+	$routes->get('tipikor/(:any)', 'Tipikor::$1');
 
-$routes->get('/admin/yankum', 'Back\Yankum::index', ['filter' => 'auth']);
+	$routes->get('wbs', 'Wbs::index');
 
-$routes->get('/admin/yankum/(:any)', 'Back\Yankum::$1', ['filter' => 'auth']);
+	$routes->get('wbs/(:any)', 'Wbs::$1');
+
+	$routes->get('yankum', 'Yankum::index');
+
+	$routes->get('yankum/(:any)', 'Yankum::$1');
+});
+
+
+
+
+
+
 
 
 

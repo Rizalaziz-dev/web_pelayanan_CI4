@@ -24,7 +24,11 @@ class Wbs extends BaseController
 {
 	public function index()
 	{
-		return view('_back/_pages/_wbs/wbs');
+		$data = [
+			'tittle' => 'Wbs'
+
+		];
+		return view('_back/_pages/_wbs/wbs', $data);
 	}
 
 	public function data()
@@ -41,17 +45,17 @@ class Wbs extends BaseController
 
 				$url = base_url($list->attachment);
 
-				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
+				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
-				$btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
+				$btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
                 <i class=\"fa fa-trash\"></i>
             </button>";
 
 				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
 				$row[] = $no;
-				$row[] = $list->report_id;
+				$row[] = $list->id_report;
 				$row[] = $list->reporter_fullname;
 				$row[] = $list->employee_name;
 				$row[] = $list->violation_type;

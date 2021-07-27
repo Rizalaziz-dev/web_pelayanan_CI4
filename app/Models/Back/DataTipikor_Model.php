@@ -20,11 +20,11 @@ use CodeIgniter\Model;
 
 class DataTipikor_Model extends Model
 {
-    protected $table = "tb_m_reporter";
-    protected $allowedFields = ['report_id', 'reporter_fullname', 'report_type'];
-    protected $column_order = array(null, 'report_id', 'reporter_fullname', null);
-    protected $column_search = array('report_id', 'reporter_fullname');
-    protected $order = array('report_id' => 'asc');
+    protected $table = "tb_m_tipikor";
+    protected $allowedFields = ['subject', 'occurre_time', 'crime_scene', 'report_detail', 'attachment', 'status', 'id_report'];
+    protected $column_order = array(null, 'id_report', 'subject', 'occurre_time', 'crime_scene', 'report_detail', 'status', 'attachment',  null);
+    protected $column_search = array('id_report', 'status');
+    protected $order = array('id_report' => 'asc');
     protected $db;
     protected $dt;
 
@@ -36,8 +36,7 @@ class DataTipikor_Model extends Model
 
         $this->dt = $this->db->table($this->table)
             ->select('*')
-            ->join('tb_m_tipikor', 'report_id=id_report')
-            ->where('report_type', 'Tipikor');
+            ->join('tb_m_reporter', 'id_report=report_id');
     }
     private function _get_datatables_query()
     {

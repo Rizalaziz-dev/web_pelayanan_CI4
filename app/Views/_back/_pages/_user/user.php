@@ -67,18 +67,7 @@
         });
     });
 
-    Pusher.logToConsole = true;
-    var pusher = new Pusher('f00b9630960e06cbb49c', {
-        cluster: 'ap1',
-        forceTLS: true
-    });
 
-    var chanel = pusher.subscribe('my-chanel');
-    chanel.bind('my-event', function(data) {
-        if (data.message_user === 'success') {
-            data_user();
-        }
-    });
 
     function data_user() {
         $.ajax({

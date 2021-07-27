@@ -32,13 +32,13 @@ class Users extends BaseController
 
     public function index()
     {
-        $page_tittle = [
-            'tittle' => 'Master User'
+        $data = [
+            'tittle' => 'User'
         ];
 
 
 
-        return view('_back/_pages/_user/user');
+        return view('_back/_pages/_user/user', $data);
     }
 
     public function data()
@@ -117,6 +117,8 @@ class Users extends BaseController
             $user_email = $this->request->getVar('user_email');
 
             $row = $this->usr->find($user_email);
+
+            var_dump($row);
 
             $data = [
                 'user_email' => $row['user_email'],

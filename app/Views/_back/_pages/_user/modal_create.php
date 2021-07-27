@@ -124,6 +124,7 @@
                             value: val.level_id,
                             text: val.level_name
                         }));
+                        console.log(response);
                     });
                 });
 

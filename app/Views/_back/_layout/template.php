@@ -95,6 +95,9 @@
 
         var chanel = pusher.subscribe('my-chanel');
         chanel.bind('my-event', function(data) {
+            if (data.message_user === 'success') {
+                data_user();
+            }
             if (data.message_tipikor === 'success') {
                 data_tipikor();
             }

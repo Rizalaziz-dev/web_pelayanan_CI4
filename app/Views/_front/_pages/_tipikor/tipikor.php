@@ -12,13 +12,47 @@
                 <h1>LAPDU TIPIKOR</h1>
                 <h2>LAPORAN PENGADUAN TINDAK PIDANA KORUPSI (LAPDU TIPIKOR).</h2>
                 <p>PERKARA TINDAK PIDANA KORUPSI PADA KEJAKSAAN NEGERI KABUPATEN TASIKMALAYA</p>
+                <br><br>
 
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12 ">
+                    <div class="input-group mb-3">
+                        <input id="tipikor_search" name="tipikor_search" type="text" class="form-control" placeholder="No Laporan" aria-label="" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-danger btn-search" type="button">Search</button>
+                        </div>
+                        <div class="invalid-feedback errorSearch"></div>
+                    </div>
+                </div>
+
+
+                <div id="table-search" class="col-md">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="records_table">
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
             </div>
         </div>
 
     </div>
 </section>
 <!-- End Hero -->
+
 
 
 <!-- form group -->
@@ -45,8 +79,6 @@
 
                 <div class="col-md text-left">
                     <h5><strong>IDENTITAS PELAPOR</strong></h5>
-
-
 
                     <?= form_open_multipart('', ['class' => 'form-upload']) ?>
 
@@ -169,7 +201,8 @@
 
 <script>
     $(document).ready(function() {
-
+        document.getElementById("table-search").style.display = "none"; //Hide the table
+        search();
         $(function() {
             $("#calendar_day").datepicker({
                 format: "dd",
@@ -197,7 +230,78 @@
 
         save();
 
+
+
     });
+
+    function search() {
+        $('.btn-search').click(function(e) {
+            e.preventDefault();
+
+            var tipikor_search = $("#tipikor_search").val();
+
+            let data = new FormData();
+
+            data.append("tipikor_search", tipikor_search)
+
+
+
+            $.ajax({
+                type: "post",
+                url: "<?= site_url('Front/Tipikor/get_data') ?>",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                dataType: "json",
+                beforeSend: function() {
+                    $('.btn-search').attr('disable', 'disabled');
+                    $('.btn-search').html('<i class="fa fa-spin fa-spinner"></i>');
+                },
+                complete: function() {
+                    $('.btn-search').removeAttr('disable');
+                    $('.btn-search').html('Search');
+                },
+                success: function(response) {
+                    if (response.error) {
+                        if (response.error.tipikor_search) {
+                            $('#tipikor_search').addClass('is-invalid')
+                            $('.errorSearch').html(response.error.tipikor_search);
+                            document.getElementById("table-search").style.display = "none"; //Hide the table
+                        } else {
+                            $('#tipikor_search').removeClass('is-invalid')
+                            $('.errorSearch').html('');
+                        }
+
+
+                    } else {
+                        document.getElementById("table-search").style.display = "";
+
+                        console.log(response);
+                        var trHTML = '';
+
+                        $.each(response, function(i, item) {
+                            var td = `</td>`;
+                            var $tr = $(`#records_table`).append(
+                                $(`<tr>`),
+                                $(`<td>`).text(item.updated_at).append(td),
+                                $(`<td>`).text(item.status).append(td),
+                            );
+
+                            console.log(item.status)
+                        });
+
+                    }
+
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            });
+
+        });
+    }
 
     function save() {
         $('.btn-send').click(function(e) {

@@ -21,9 +21,9 @@ use CodeIgniter\Model;
 class DataSitara_Model extends Model
 {
     protected $table = "tb_m_case";
-    protected $allowedFields = ['case_id', 'case_date'];
-    protected $column_order = array(null, 'case_id', 'case_date', null);
-    protected $column_search = array('case_id', 'case_date');
+    protected $allowedFields = ['case_id', 'decision_id'];
+    protected $column_order = array(null, 'case_id', 'decision_id', null);
+    protected $column_search = array('case_id', 'decision_id');
     protected $order = array('case_id' => 'asc');
     protected $db;
     protected $dt;
@@ -35,10 +35,12 @@ class DataSitara_Model extends Model
         $this->request = $request;
 
         $this->dt = $this->db->table($this->table)
-            ->select('*')
-            ->join('tb_m_suspect', 'case_id=id_case')
-            ->join('tb_m_decision', 'case_id=id_case');
+            ->select('tb_m_case.case_id, start_investigation, allegation, stage_one, suspect_name, public_prosecutor  ')
+            ->join('tb_m_case_detail', 'id_case=case_id')
+            ->join('tb_m_suspect', 'tb_m_suspect.id_case=tb_m_case.case_id')
+            ->join('tb_m_decision', 'tb_m_decision.decision_nomor=tb_m_case.decision_id');
     }
+
     private function _get_datatables_query()
     {
         $i = 0;

@@ -9,7 +9,7 @@
  * @category    Model
  * @author      Muhamad Rizal Nurul Aziz (muhammadrizal323@gmail.com)
  * @date        June 03, 2021
- * @reference   https://adminlte.io/themes/AdminLTE/index.html
+ * @reference   https://bootstrapmade.com/demo/templates/OnePage/
  */
 
 namespace App\Models\Front;

@@ -24,7 +24,11 @@ class Yankum extends BaseController
 {
 	public function index()
 	{
-		return view('_back/_pages/_yankum/yankum');
+		$data = [
+			'tittle' => 'Yankum'
+
+		];
+		return view('_back/_pages/_yankum/yankum', $data);
 	}
 
 	public function data()

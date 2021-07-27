@@ -78,6 +78,7 @@
                 <button type="submit" class="btn btn-primary btn-save">Update</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
+            <?= form_close() ?>
         </div>
     </div>
 </div>

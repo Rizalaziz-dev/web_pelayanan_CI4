@@ -20,10 +20,10 @@ use CodeIgniter\Model;
 
 class DataWbs_Model extends Model
 {
-    protected $table = "tb_m_reporter";
-    protected $column_order = array(null, 'report_id', 'reporter_fullname', null);
-    protected $column_search = array('report_id', 'reporter_fullname');
-    protected $order = array('report_id' => 'asc');
+    protected $table = "tb_m_wbs";
+    protected $column_order = array(null, 'employee_name', 'violation_type', 'occurre_time', 'crime_scene', 'report_detail', 'attachment', 'id_report', null);
+    protected $column_search = array('id_report');
+    protected $order = array('id_report' => 'asc');
     protected $db;
     protected $dt;
 
@@ -35,29 +35,26 @@ class DataWbs_Model extends Model
 
         $this->dt = $this->db->table($this->table)
             ->select('*')
-            ->join('tb_m_wbs', 'report_id=id_report')
-            ->where('report_type', 'Wbs');
+            ->join('tb_m_reporter', 'id_report=report_id');
     }
     private function _get_datatables_query()
     {
-        if ($this->request->getPost('search')['value'] == null) {
-            $this->dt->where('report_type', 'Wbs');
-        } else {
-            $i = 0;
-            foreach ($this->column_search as $item) {
-                if ($this->request->getPost('search')['value']) {
-                    if ($i === 0) {
-                        $this->dt->groupStart();
-                        $this->dt->like($item, $this->request->getPost('search')['value']);
-                    } else {
-                        $this->dt->orLike($item, $this->request->getPost('search')['value']);
-                    }
-                    if (count($this->column_search) - 1 == $i)
-                        $this->dt->groupEnd();
+
+        $i = 0;
+        foreach ($this->column_search as $item) {
+            if ($this->request->getPost('search')['value']) {
+                if ($i === 0) {
+                    $this->dt->groupStart();
+                    $this->dt->like($item, $this->request->getPost('search')['value']);
+                } else {
+                    $this->dt->orLike($item, $this->request->getPost('search')['value']);
                 }
-                $i++;
+                if (count($this->column_search) - 1 == $i)
+                    $this->dt->groupEnd();
             }
+            $i++;
         }
+
 
         if ($this->request->getPost('order')) {
             $this->dt->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
@@ -81,7 +78,7 @@ class DataWbs_Model extends Model
     }
     public function count_all()
     {
-        $tbl_storage = $this->db->table($this->table)->where('report_type', 'Wbs');
+        $tbl_storage = $this->db->table($this->table);
         return $tbl_storage->countAllResults();
     }
 }

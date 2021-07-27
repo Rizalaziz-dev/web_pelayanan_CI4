@@ -25,7 +25,11 @@ class Tipikor extends BaseController
 {
 	public function index()
 	{
-		return view('_back/_pages/_tipikor/tipikor');
+		$data = [
+			'tittle' => 'Tipikor'
+
+		];
+		return view('_back/_pages/_tipikor/tipikor', $data);
 	}
 
 	public function data()
@@ -42,22 +46,32 @@ class Tipikor extends BaseController
 
 				$url = base_url($list->attachment);
 
-				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
+				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
-				$btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
-                <i class=\"fa fa-trash\"></i>
+				$btnRemove = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_report . "')\">
+				<i class=\"fas fa-eye\"></i>
             </button>";
 				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
+				if ($list->status == 'Diterima') {
+					$status = "<span class=\"badge bg-secondary\">$list->status</span>";
+				} else if ($list->status == 'Selesai') {
+					$status = "<span class=\"badge bg-success\">$list->status</span>";
+				} else if ($list->status == 'Diproses') {
+					$status = "<span class=\"badge bg-warning\">$list->status</span>";
+				} else {
+					$status = "<span class=\"badge bg-danger\">$list->status</span>";
+				}
 				$row[] = $no;
-				$row[] = $list->report_id;
+				$row[] = $list->id_report;
 				$row[] = $list->reporter_fullname;
 				$row[] = $list->subject;
 				$row[] = $list->occurre_time;
 				$row[] = $list->crime_scene;
 				$row[] = $list->report_detail;
 				$row[] = $storeImage;
+				$row[] = $status;
 				$row[] = $btnEdit . "" . $btnRemove;
 				$data[] = $row;
 			}
@@ -77,6 +91,7 @@ class Tipikor extends BaseController
 			$data = [
 				'show_tipikor' => $this->tpkr->findAll()
 			];
+			// var_dump($data);
 
 			$msg = [
 				'data' => view('_back/_pages/_tipikor/data_tipikor', $data)
@@ -85,6 +100,101 @@ class Tipikor extends BaseController
 			echo json_encode($msg);
 		} else {
 			exit('Page Not Found');
+		}
+	}
+
+	public function update_data()
+	{
+		if ($this->request->isAJAX()) {
+			$save_data = [
+				'status' => $this->request->getVar('status'),
+			];
+
+			$save_data_status = [
+				'status' => $this->request->getVar('status'),
+				'token' => $this->request->getVar('token'),
+			];
+
+			$this->status->insert($save_data_status);
+
+			// var_dump($save_data);
+			// die();
+
+			$tipikor_id = $this->request->getVar('tipikor_id');
+
+
+			$this->tpkr->update($tipikor_id, $save_data);
+
+			$msg = [
+				'success' => 'Status Laporan Berhasil di Perbarui'
+			];
+			echo json_encode($msg);
+		} else {
+			exit('Maaf Permintaan Anda Tidak Dapat di Proses');
+		}
+	}
+
+	public function edit()
+	{
+		if ($this->request->isAJAX()) {
+
+			$report_id = $this->request->getVar('report_id');
+
+			$row = $this->tpkr->search_id($report_id);
+
+			$data = [
+				'tipikor_id' => $row['tipikor_id'],
+				'id_report' => $row['id_report'],
+				'subject' => $row['subject'],
+				'occurre_time' => $row['occurre_time'],
+				'crime_scene' => $row['crime_scene'],
+				'report_detail' => $row['report_detail'],
+				'attachment' => $row['attachment'],
+				'status' => $row['status'],
+				'token' => $row['token'],
+			];
+
+			$msg = [
+				'success' => view('_back/_pages/_tipikor/modal_edit', $data)
+			];
+			echo json_encode($msg);
+		}
+	}
+
+	public function view()
+	{
+		$report_id = $this->request->getVar('report_id');
+
+		$row = $this->rprtr->find($report_id);
+
+		$data = [
+			'report_id' => $row['report_id'],
+			'reporter_fullname' => $row['reporter_fullname'],
+			'reporter_nik' => $row['reporter_nik'],
+			'reporter_address' => $row['reporter_address'],
+			'reporter_email' => $row['reporter_email'],
+			'reporter_phonenumber' => $row['reporter_phonenumber'],
+		];
+
+		// var_dump($data);
+
+		$msg = [
+			'success' => view('_back/_pages/_tipikor/modal_view', $data)
+		];
+		echo json_encode($msg);
+	}
+
+
+	public function count_complaint()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->tpkr->count_all();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
 		}
 	}
 }

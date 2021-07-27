@@ -134,6 +134,8 @@ class Tipikor extends BaseController
             } else {
                 $id_report = $this->tpkr->noLaporan();
 
+                $token = $this->tpkr->generateToken();
+
                 $tipikor = "Tipikor";
 
                 $filelampiran = $this->request->getFile('attachment');
@@ -161,13 +163,20 @@ class Tipikor extends BaseController
                     'crime_scene' => $this->request->getVar('crime_scene'),
                     'report_detail' => $this->request->getVar('report_detail'),
                     'attachment' => './assets/image/lampiran/' . $filelampiran->getName(),
-                    'id_report' => $id_report
+                    'id_report' => $id_report,
+                    'token' => $token,
+                ];
 
+                $save_data_status = [
+                    'token' => $token,
+                    'status' => "Terkirim",
                 ];
 
                 $this->rprtr->insert($save_data_reporter);
 
                 $this->tpkr->insert($save_data_tipikor);
+
+                $this->status->insert($save_data_status);
 
 
 
@@ -193,6 +202,51 @@ class Tipikor extends BaseController
                 $pusher->trigger('my-chanel', 'my-event', $data);
             }
             echo json_encode($msg);
+        } else {
+            exit('Page Not Found');
+        }
+    }
+
+    public function get_data()
+    {
+        if ($this->request->isAJAX()) {
+
+            $validation = \Config\Services::validation();
+            $valid = $this->validate([
+                'tipikor_search' => [
+                    'label' => 'No Laporan ',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+            ]);
+            if (!$valid) {
+                $msg = [
+                    'error' => [
+                        'tipikor_search' => $validation->getError('tipikor_search'),
+
+                    ]
+                ];
+            } else {
+
+                $token = $this->request->getVar('tipikor_search');
+
+                $row = $this->status->search_id($token);
+
+                // var_dump($row);
+                // $data = [
+                //     'status' => $row->status,
+                //     'updated_at' => $row->updated_at,
+                // ];
+
+
+                $msg = [
+                    'data' => $row
+                ];
+            }
+            echo json_encode($row);
         } else {
             exit('Page Not Found');
         }
