@@ -8,43 +8,48 @@
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-4 text-center">
+            <div class="col-xl-10 col-lg-4 text-center pb-3">
                 <h1>LAPDU TIPIKOR</h1>
                 <h2>LAPORAN PENGADUAN TINDAK PIDANA KORUPSI (LAPDU TIPIKOR).</h2>
                 <p>PERKARA TINDAK PIDANA KORUPSI PADA KEJAKSAAN NEGERI KABUPATEN TASIKMALAYA</p>
-                <br><br>
-
             </div>
+        </div>
 
-            <div class="row">
-
-                <div class="col-md-12 ">
-                    <div class="input-group mb-3">
-                        <input id="tipikor_search" name="tipikor_search" type="text" class="form-control" placeholder="No Laporan" aria-label="" aria-describedby="basic-addon1">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card-body">
+                    <div class="input-group">
+                        <input id="tipikor_search" name="tipikor_search" type="text" class="form-control" placeholder="No Token" aria-label="" aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-danger btn-search" type="button">Search</button>
                         </div>
                         <div class="invalid-feedback errorSearch"></div>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <div class="row justify-content-center">
+            <div id="table-search" class="col-md-5">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>No Token</th>
+                            <th>:</th>
+                            <th id="token"></th>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records_table">
 
-                <div id="table-search" class="col-md">
-                    <div class="card-body">
-                        <table class="table">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="records_table">
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -203,6 +208,7 @@
     $(document).ready(function() {
         document.getElementById("table-search").style.display = "none"; //Hide the table
         search();
+        // document.getElementById("btn-search").disabled = true;
         $(function() {
             $("#calendar_day").datepicker({
                 format: "dd",
@@ -261,6 +267,8 @@
                 complete: function() {
                     $('.btn-search').removeAttr('disable');
                     $('.btn-search').html('Search');
+                    // document.getElementById("btn-search").disabled = false;
+
                 },
                 success: function(response) {
                     if (response.error) {
@@ -276,13 +284,19 @@
 
                     } else {
                         document.getElementById("table-search").style.display = "";
-
-                        console.log(response);
-                        var trHTML = '';
-
                         $.each(response, function(i, item) {
                             var td = `</td>`;
+                            // var th = `</th>`;
+                            // $(`#records_info`).append(
+                            //     $(`<tr>`),
+                            //     $(`<th>`).text(`No Token`).append(th),
+                            //     $(`<th>`).text(`:`).append(th),
+                            //     $(`<th>`).text(item.subject).append(th),
+                            //     $(`</tr>`),
+
+                            // );
                             var $tr = $(`#records_table`).append(
+                                $(`#token`).text(item.tokens).append,
                                 $(`<tr>`),
                                 $(`<td>`).text(item.updated_at).append(td),
                                 $(`<td>`).text(item.status).append(td),
@@ -291,6 +305,7 @@
                             console.log(item.status)
                         });
 
+                        // document.getElementById("btn-search").disabled = true;
                     }
 
 

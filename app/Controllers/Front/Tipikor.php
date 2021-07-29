@@ -168,7 +168,7 @@ class Tipikor extends BaseController
                 ];
 
                 $save_data_status = [
-                    'token' => $token,
+                    'tokens' => $token,
                     'status' => "Terkirim",
                 ];
 
@@ -181,7 +181,7 @@ class Tipikor extends BaseController
 
 
                 $msg = [
-                    'success' => 'Pengaduan Anda Berhasil Terkirim'
+                    'success' => '*catat No Token' . $token . 'Untuk Melihat Progress Pengaduan'
                 ];
 
                 require_once(APPPATH . 'views/vendor/autoload.php');
@@ -233,7 +233,7 @@ class Tipikor extends BaseController
 
                 $token = $this->request->getVar('tipikor_search');
 
-                $row = $this->status->search_id($token);
+                $msg = $this->status->search_id($token);
 
                 // var_dump($row);
                 // $data = [
@@ -242,11 +242,11 @@ class Tipikor extends BaseController
                 // ];
 
 
-                $msg = [
-                    'data' => $row
-                ];
+                // $msg = [
+                //     'data' => $row
+                // ];
             }
-            echo json_encode($row);
+            echo json_encode($msg);
         } else {
             exit('Page Not Found');
         }

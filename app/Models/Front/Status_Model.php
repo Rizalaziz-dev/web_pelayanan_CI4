@@ -22,7 +22,7 @@ class Status_Model extends Model
     protected $table      = 'tb_m_status';
     protected $primaryKey = 'id_status';
 
-    protected $allowedFields = ['token', 'status'];
+    protected $allowedFields = ['tokens', 'status'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
@@ -32,7 +32,8 @@ class Status_Model extends Model
     {
 
         $search = $this->db->table($this->table)
-            ->where('token', $token)->get();
+            ->where('tokens', $token)
+            ->get();
 
 
         return $search->getResultArray();

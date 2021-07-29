@@ -28,9 +28,6 @@
 
     function load_data() {
         $('#tabel-tipikor').DataTable({
-            "bLengthChange": false,
-            "bPaginate": true,
-            "bInfo": false,
             "autoWidth": false,
             "order": [],
             "processing": true,
