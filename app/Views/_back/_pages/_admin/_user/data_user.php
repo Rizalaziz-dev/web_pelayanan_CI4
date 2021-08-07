@@ -1,22 +1,32 @@
-<table id="tabel-user" class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>No</th>
-            <th>Email</th>
-            <th>Fullname</th>
-            <th>No HP</th>
-            <th>Hak Akses</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="tabel-responsive">
+    <table id="tabel-user" class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>No</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Fullname</th>
+                <th>No HP</th>
+                <th>Hak Akses</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <script>
+    $(document).ready(function() {
+        load_data();
+
+    });
+
     function load_data() {
         var table = $('#tabel-user').DataTable({
+            "autoWidth": false,
+            "order": [],
             "processing": true,
             "serverSide": true,
             "order": [],
@@ -32,15 +42,12 @@
         })
 
     }
-    $(document).ready(function() {
-        load_data();
-        // $('#tabel-user').DataTable();
-    });
+
 
     function edit(user_email) {
         $.ajax({
             type: "post",
-            url: "<?= site_url('Back/users/form_edit') ?>",
+            url: "<?= site_url('Back/users/edit') ?>",
             data: {
                 user_email: user_email
             },

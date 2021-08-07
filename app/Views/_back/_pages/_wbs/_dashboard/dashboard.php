@@ -56,9 +56,9 @@
 
 <script>
     $(document).ready(function() {
-        complaint();
-        process();
-        done();
+        // complaint();
+        // process();
+        // done();
     });
 
     function complaint() {

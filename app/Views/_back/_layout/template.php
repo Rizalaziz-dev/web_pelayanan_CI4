@@ -39,12 +39,18 @@ $session = \Config\Services::session() ?>
 
         <?php echo view('_back/_layout/navbar'); ?>
 
-        <?=
+        <?php
         $akses = $session->get('nama_level');
-        if ($akses == 'Pidsus') {
-            echo view('_back/_layout/sidebar_tipikor');
-        } else {
+        if ($akses == 'Admin') {
             echo view('_back/_layout/sidebar_admin');
+        } else if ($akses == 'Pidsus') {
+            echo view('_back/_layout/sidebar_tipikor');
+        } else if ($akses == 'Pembinaan') {
+            echo view('_back/_layout/sidebar_wbs');
+        } else if ($akses == 'Datun') {
+            echo view('_back/_layout/sidebar_yankum');
+        } else if ($akses == 'Kepala') {
+            echo view('_back/_layout/sidebar_Kepala');
         }
         ?>
 

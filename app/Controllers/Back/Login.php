@@ -33,8 +33,8 @@ class Login extends BaseController
 
             $validation = \Config\Services::validation();
             $valid = $this->validate([
-                'user_email' => [
-                    'label' => 'Username atau Email',
+                'user_name' => [
+                    'label' => 'Username',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong',
@@ -53,19 +53,19 @@ class Login extends BaseController
             if (!$valid) {
                 $msg = [
                     'error' => [
-                        'user_email' => $validation->getError('user_email'),
+                        'user_name' => $validation->getError('user_name'),
                         'password' => $validation->getError('password')
                     ]
                 ];
             } else {
 
-                $user_email = $this->request->getVar('user_email');
+                $user_name = $this->request->getVar('user_name');
 
                 $password = $this->request->getVar('password');
 
                 $data = $this->login->select('*')
                     ->join('tb_m_level', 'user_level=level_id')
-                    ->where('user_email', $user_email)
+                    ->where('user_name', $user_name)
                     ->first();
 
 
@@ -74,7 +74,8 @@ class Login extends BaseController
                     if (password_verify($password, $pass)) {
                         $save_session = [
                             'login' => true,
-                            'user_email' => $user_email,
+                            'user_email' => $data['user_email'],
+                            'user_name' => $user_name,
                             'user_name' => $data['user_fullname'],
                             'id_level' => $data['user_level'],
                             'nama_level' => $data['level_name']
@@ -82,9 +83,15 @@ class Login extends BaseController
                         $this->session->set($save_session);
 
                         if ($data['user_level'] == '1') {
-                            $url = '/admin/users';
+                            $url = '/admin/admindashboard';
                         } elseif ($data['user_level'] == '2') {
                             $url = '/admin/tipikordashboard';
+                        } elseif ($data['user_level'] == '3') {
+                            $url = '/admin/wbsdashboard';
+                        } elseif ($data['user_level'] == '4') {
+                            $url = '/admin/yankumdashboard';
+                        } elseif ($data['user_level'] == '5') {
+                            $url = '/admin/pimpinandashboard';
                         }
 
                         $msg = [
@@ -102,7 +109,7 @@ class Login extends BaseController
                 } else {
                     $msg = [
                         'error' => [
-                            'user_email' => 'Maaf Username tidak ditemukan'
+                            'user_name' => 'Maaf Username tidak ditemukan'
                         ]
                     ];
                 }

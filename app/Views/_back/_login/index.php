@@ -38,13 +38,13 @@
 
                 <?= csrf_field(); ?>
                 <div class="input-group mb-3">
-                    <input type="email" id="user_email" name="user_email" class="form-control" placeholder="Email">
+                    <input type="text" id="user_name" name="user_name" class="form-control" placeholder="Username">
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                            <span class="fas fa-user"></span>
                         </div>
                     </div>
-                    <div class="invalid-feedback errorEmail"></div>
+                    <div class="invalid-feedback errorUsername"></div>
                 </div>
                 <div class="input-group mb-3">
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password">
@@ -111,12 +111,12 @@
                     },
                     success: function(response) {
                         if (response.error) {
-                            if (response.error.user_email) {
-                                $('#user_email').addClass('is-invalid')
-                                $('.errorEmail').html(response.error.user_email);
+                            if (response.error.user_name) {
+                                $('#user_name').addClass('is-invalid')
+                                $('.errorUsername').html(response.error.user_name);
                             } else {
-                                $('#user_email').removeClass('is-invalid')
-                                $('.errorEmail').html('');
+                                $('#user_name').removeClass('is-invalid')
+                                $('.errorUsername').html('');
                             }
                             if (response.error.password) {
                                 $('#password').addClass('is-invalid')

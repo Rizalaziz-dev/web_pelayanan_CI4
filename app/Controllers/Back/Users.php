@@ -37,8 +37,7 @@ class Users extends BaseController
         ];
 
 
-
-        return view('_back/_pages/_user/user', $data);
+        return view('_back/_pages/_admin/_user/user', $data);
     }
 
     public function data()
@@ -62,6 +61,7 @@ class Users extends BaseController
 
                 $row[] = $no;
                 $row[] = $list->user_email;
+                $row[] = $list->user_name;
                 $row[] = $list->user_fullname;
                 $row[] = $list->user_phonenumber;
                 $row[] = $list->level_name;
@@ -88,7 +88,7 @@ class Users extends BaseController
             ];
 
             $msg = [
-                'data' => view('_back/_pages/_user/data_user', $data)
+                'data' => view('_back/_pages/_admin/_user/data_user', $data)
             ];
 
             echo json_encode($msg);
@@ -98,11 +98,11 @@ class Users extends BaseController
     }
 
 
-    public function form_create()
+    public function create()
     {
         if ($this->request->isAJAX()) {
             $msg = [
-                'data' => view('_back/_pages/_user/modal_create')
+                'data' => view('_back/_pages/_admin/_user/modal_create')
             ];
 
             echo json_encode($msg);
@@ -111,17 +111,16 @@ class Users extends BaseController
         }
     }
 
-    public function form_edit()
+    public function edit()
     {
         if ($this->request->isAJAX()) {
             $user_email = $this->request->getVar('user_email');
 
             $row = $this->usr->find($user_email);
 
-            var_dump($row);
-
             $data = [
                 'user_email' => $row['user_email'],
+                'user_name' => $row['user_name'],
                 'user_fullname' => $row['user_fullname'],
                 'user_phonenumber' => $row['user_phonenumber'],
                 'user_level' => $row['user_level'],
@@ -130,7 +129,7 @@ class Users extends BaseController
             ];
 
             $msg = [
-                'success' => view('_back/_pages/_user/modal_edit', $data)
+                'success' => view('_back/_pages/_admin/_user/modal_edit', $data)
             ];
             echo json_encode($msg);
         }
@@ -144,6 +143,14 @@ class Users extends BaseController
                 'user_email' => [
                     'label' => 'Email',
                     'rules' => 'required|is_unique[tb_m_user.user_email]',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'user_name' => [
+                    'label' => 'Username',
+                    'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong',
                         'is_unique' => '{field} tidak boleh ada yang sama'
@@ -195,6 +202,7 @@ class Users extends BaseController
                 $msg = [
                     'error' => [
                         'user_email' => $validation->getError('user_email'),
+                        'user_name' => $validation->getError('user_name'),
                         'user_fullname' => $validation->getError('user_fullname'),
                         'user_phonenumber' => $validation->getError('user_phonenumber'),
                         'user_level' => $validation->getError('user_level'),
@@ -205,6 +213,7 @@ class Users extends BaseController
             } else {
                 $save_data = [
                     'user_email' => $this->request->getVar('user_email'),
+                    'user_name' => $this->request->getVar('user_name'),
                     'user_fullname' => $this->request->getVar('user_fullname'),
                     'user_phonenumber' => $this->request->getVar('user_phonenumber'),
                     'user_level' => $this->request->getVar('user_level'),
@@ -244,6 +253,7 @@ class Users extends BaseController
         if ($this->request->isAJAX()) {
             $save_data = [
                 'user_fullname' => $this->request->getVar('user_fullname'),
+                'user_name' => $this->request->getVar('user_name'),
                 'user_phonenumber' => $this->request->getVar('user_phonenumber'),
                 'user_level' => $this->request->getVar('user_level'),
                 'user_password' => $this->request->getVar('user_password')

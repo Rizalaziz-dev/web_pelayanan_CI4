@@ -53,7 +53,7 @@
         $('.btn-create').click(function(e) {
             e.preventDefault();
             $.ajax({
-                url: "<?= site_url('Back/users/form_create') ?>",
+                url: "<?= site_url('Back/users/create') ?>",
                 dataType: "json",
                 success: function(response) {
                     $('.view-modal').html(response.data).show();

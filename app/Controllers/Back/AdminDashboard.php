@@ -4,7 +4,7 @@ namespace App\Controllers\Back;
 
 use App\Controllers\BaseController;
 
-class Dashboard extends BaseController
+class AdminDashboard extends BaseController
 {
 	public function index()
 	{
@@ -12,7 +12,7 @@ class Dashboard extends BaseController
 			'tittle' => 'Dashboard'
 
 		];
-		return view('_back/_pages/_dashboard/dashboard', $data);
+		return view('_back/_pages/_admin/_dashboard/dashboard', $data);
 		//
 	}
 }

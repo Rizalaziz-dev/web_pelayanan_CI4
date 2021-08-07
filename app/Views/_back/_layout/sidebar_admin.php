@@ -9,12 +9,12 @@
     <div class="sidebar">
 
         <!-- Sidebar Menu -->
-        <nav class="mt-5">
+        <nav id="navigation" class="mt-5">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
 			   with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/dashboard'); ?>" class="nav-link active">
+                    <a href="<?php echo site_url('Back/AdminDashboard'); ?>" class="nav-link active">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Dashboard
@@ -23,8 +23,8 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-treeview <?= $menu_master; ?>">
-                    <a href="#" class="nav-link <?= $active_master; ?>">
+                <li class="nav-item has-treeview">
+                    <a href="#" id="master" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Master
@@ -48,25 +48,6 @@
                         </li>
                     </ul>
 
-                </li>
-
-                <li class="nav-item has-treeview ">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Report
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <!-- <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Usage Report</p>
-                            </a>
-                        </li> -->
-
-                    </ul>
                 </li>
 
                 <li class="nav-item">
@@ -93,8 +74,13 @@
             if (this.href === path) {
                 // Tambahkan kelas "active" pada menu ini
                 $("li a").removeClass('active');
+                // $("li a").addClass('active');
                 $(this).addClass('active');
+
+                // $('#master').addClass('menu-open');
             }
         });
+
+
     });
 </script>

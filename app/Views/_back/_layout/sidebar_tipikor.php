@@ -35,17 +35,6 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/TipikorReport'); ?>" class="nav-link">
-                        <i class="nav-icon fas fa-exclamation-triangle"></i>
-                        <p>
-                            Report
-                            <!-- <i class="right fas fa-angle-left"></i> -->
-                        </p>
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
                     <a href="<?php echo site_url('Back/Login/out') ?>" class="nav-link">
                         <i class="nav-icon fa fa-user"></i>
                         <p>

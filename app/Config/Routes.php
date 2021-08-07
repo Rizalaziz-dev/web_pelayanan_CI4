@@ -102,13 +102,21 @@ $routes->get('/home', 'Front\FrontController::index');
 
 $routes->get('/admin/login', 'Back\Login::index');
 
-$routes->get('/admin/dashboard', 'Back\Dashboard::index');
+$routes->get('/admin/admindashboard', 'Back\AdminDashboard::index');
 
-$routes->get('/admin/dashboard/(:any)', 'Back\Dashboard::$1');
+$routes->get('/admin/admindashboard/(:any)', 'Back\AdminDashboard::$1');
 
 $routes->get('/admin/tipikordashboard', 'Back\TipikorDashboard::index');
 
 $routes->get('/admin/tipikordashboard/(:any)', 'Back\TipikorDashboard::$1');
+
+$routes->get('/admin/wbsdashboard', 'Back\WbsDashboard::index');
+
+$routes->get('/admin/wbsdashboard/(:any)', 'Back\WbsDashboard::$1');
+
+$routes->get('/admin/yankumdashboard', 'Back\YankumDashboard::index');
+
+$routes->get('/admin/yankumdashboard/(:any)', 'Back\YankumDashboard::$1');
 
 $routes->get('/admin/users', 'Back\Users::index');
 

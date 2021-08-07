@@ -7,20 +7,6 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <?php
-        if ($tittle == 'Dashboard') {
-            $active_dashboard = 'active';
-            $active_master = '';
-            $menu_master = '';
-            $active_wbs = '';
-        } else if ($tittle == 'Wbs') {
-            $active_dashboard = '';
-            $active_wbs = 'active';
-            $active_master = 'active';
-            $menu_master = 'menu-open';
-        }
-        ?>
-
 
         <!-- Sidebar Menu -->
         <nav class="mt-5">
@@ -28,7 +14,7 @@
                 <!-- Add icons to the links using the .nav-icon class
 			   with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/dashboard'); ?>" class="nav-link <?= $active_dashboard ?>">
+                    <a href="<?php echo site_url('Back/WbsDashboard'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Dashboard
@@ -37,8 +23,8 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-treeview <?= $menu_master; ?>">
-                    <a href="#" class="nav-link <?= $active_master; ?>">
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Master
@@ -47,7 +33,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?php echo site_url('Back/Tipikor'); ?>" class="nav-link <?= $active_wbs; ?>">
+                            <a href="<?php echo site_url('Back/Wbs'); ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Wbs</p>
                             </a>
@@ -90,3 +76,22 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+
+<script>
+    $(function() {
+        var path = window.location.href; // Mengambil data URL pada Address bar
+        $('nav a').each(function() {
+            // Jika URL pada menu ini sama persis dengan path...
+            if (this.href === path) {
+                // Tambahkan kelas "active" pada menu ini
+                $("li a").removeClass('active');
+                // $("li a").addClass('active');
+                $(this).addClass('active');
+
+                // $('#master').addClass('menu-open');
+            }
+        });
+
+
+    });
+</script>

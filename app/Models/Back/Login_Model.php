@@ -23,7 +23,7 @@ class Login_Model extends Model
     protected $table      = 'tb_m_user';
     protected $primaryKey = 'user_email';
 
-    protected $allowedFields = ['user_email', 'user_level', 'user_password'];
+    protected $allowedFields = ['user_email', 'user_name', 'user_level', 'user_password'];
     protected $db;
     protected $dt;
 }

@@ -1,17 +1,16 @@
 <!-- Modal -->
-<div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open('', ['class' => 'form_create']) ?>
+            <?= form_open('Back/users/update_data', ['class' => 'form_edit']) ?>
             <?= csrf_field(); ?>
             <div class="modal-body">
-
                 <!-- form-group -->
 
                 <div class="form-group row">
@@ -19,8 +18,19 @@
                         Email<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input id="user_email" name="user_email" type="email" class="form-control" autocomplete="off" placeholder="User Email" maxlength="255" />
-                        <div class="invalid-feedback errorEmail">
+                        <input id="user_email" name="user_email" type="email" class="form-control" placeholder="User Email" maxlength="255" autocomplete="off" value="<?= $user_email ?>">
+                    </div>
+                </div>
+
+                <!-- form-group -->
+
+                <div class="form-group row">
+                    <label for="user_name" class="col-sm-2 col-form-label">
+                        Username<span class="tx-danger">*</span>
+                    </label>
+                    <div class="col-sm-10">
+                        <input id="user_name" name="user_name" type="text" class="form-control" autocomplete="off" placeholder="Username" maxlength="150" value="<?= $user_name ?>" />
+                        <div class="invalid-feedback errorUsername">
                         </div>
                     </div>
                 </div>
@@ -32,9 +42,7 @@
                         Fullname<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input id="user_fullname" name="user_fullname" type="text" class="form-control" autocomplete="off" placeholder="User Fullname" maxlength="150" />
-                        <div class="invalid-feedback errorFullname">
-                        </div>
+                        <input id="user_fullname" name="user_fullname" type="text" class="form-control" placeholder="User Fullname" maxlength="150" autocomplete="off" value="<?= $user_fullname ?>" />
                     </div>
                 </div>
 
@@ -45,7 +53,7 @@
                         No HP<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input id="user_phonenumber" name="user_phonenumber" type="text" class="form-control" autocomplete="off" placeholder="08x xxxx xxxx" maxlength="150" />
+                        <input id="user_phonenumber" name="user_phonenumber" type="text" class="form-control" autocomplete="off" placeholder="08x xxxx xxxx" maxlength="16" value="<?= $user_phonenumber ?>" />
                         <div class="invalid-feedback errorPhonenumber">
                         </div>
                     </div>
@@ -73,31 +81,16 @@
                         Password<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <input id="user_password" name="user_password" type="password" class="form-control" autocomplete="off" placeholder="User Password" maxlength="255" />
-                        <div class="invalid-feedback errorPassword">
-                        </div>
+                        <input id="user_password" name="user_password" type="password" class="form-control" placeholder="User Password" maxlength="255" autocomplete="off" value="<?= $user_password ?>" />
                     </div>
                 </div>
 
-                <!-- form-group -->
-
-                <!-- <div class="form-group row">
-                    <label for="confirm_password" class="col-sm-2 col-form-label">
-                        Confirm Password<span class="tx-danger">*</span>
-                    </label>
-                    <div class="col-sm-10">
-                        <input id="confirm_password" name="confirm_password" type="password" class="form-control" autocomplete="off" placeholder="User Password" maxlength="255" />
-                        <div class="invalid-feedback errorConfirm">
-                        </div>
-                    </div>
-                </div> -->
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary btn-save">Save</button>
+                <button type="submit" class="btn btn-primary btn-save">Update</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
-
             <?= form_close() ?>
         </div>
     </div>
@@ -105,65 +98,18 @@
 
 <script>
     $(document).ready(function() {
+        update();
         getLevel();
-        save();
-
-
     });
 
-    function getLevel() {
-
-        $.ajax({
-            type: "post",
-            url: "<?= site_url('Back/Users/get_level') ?>",
-            dataType: "json",
-            success: function(response) {
-                $.each(response, function(i, item) {
-                    $.each(item, function(j, val) {
-                        $('#user_level').append($('<option>', {
-                            value: val.level_id,
-                            text: val.level_name
-                        }));
-                        console.log(response);
-                    });
-                });
-
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-            }
-        });
-
-    }
-
-
-    function save() {
-        $('.form_create').submit(function(e) {
+    function update() {
+        $('.form_edit').submit(function(e) {
             e.preventDefault();
-
-            var user_email = $("#user_email").val();
-            var user_fullname = $("#user_fullname").val();
-            var user_phonenumber = $("#user_phonenumber").val();
-            var user_level = $("#user_level").val();
-            var user_password = $("#user_password").val();
-            // var user_password = $("#confirm_password").val();
-
-            let data = new FormData();
-
-            data.append("user_email", user_email)
-            data.append("user_fullname", user_fullname)
-            data.append("user_phonenumber", user_phonenumber)
-            data.append("user_level", user_level)
-            data.append("user_password", user_password)
-            // data.append("confirm_password", confirm_password)
 
             $.ajax({
                 type: "post",
-                url: "<?= site_url('back/users/save_data') ?>",
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
                 dataType: "json",
                 beforeSend: function() {
                     $('.btn-save').attr('disable', 'disabled');
@@ -181,6 +127,13 @@
                         } else {
                             $('#user_email').removeClass('is-invalid')
                             $('.errorEmail').html('');
+                        }
+                        if (response.error.user_name) {
+                            $('#user_name').addClass('is-invalid')
+                            $('.errorUsername').html(response.error.user_name);
+                        } else {
+                            $('#user_name').removeClass('is-invalid')
+                            $('.errorUsername').html('');
                         }
                         if (response.error.user_fullname) {
                             $('#user_fullname').addClass('is-invalid')
@@ -210,13 +163,6 @@
                             $('#user_password').removeClass('is-invalid')
                             $('.errorPassword').html('');
                         }
-                        // if (response.error.confirm_password) {
-                        //     $('#confirm_password').addClass('is-invalid')
-                        //     $('.errorConfirm').html(response.error.confirm_password);
-                        // } else {
-                        //     $('#confirm_password').removeClass('is-invalid')
-                        //     $('.errorConfirm').html('');
-                        // }
                     } else {
                         Swal.fire({
                             icon: 'success',
@@ -224,7 +170,7 @@
                             text: response.success
                         })
 
-                        $('#modal-create').modal('hide')
+                        $('#modal-edit').modal('hide')
 
                         data_user();
                     }
@@ -238,5 +184,30 @@
             return false;
 
         });
+    }
+
+    function getLevel() {
+
+        $.ajax({
+            type: "post",
+            url: "<?= site_url('Back/Users/get_level') ?>",
+            dataType: "json",
+            success: function(response) {
+                $.each(response, function(i, item) {
+                    $.each(item, function(j, val) {
+                        $('#user_level').append($('<option>', {
+                            value: val.level_id,
+                            text: val.level_name
+                        }));
+                        console.log(response);
+                    });
+                });
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+
     }
 </script>
