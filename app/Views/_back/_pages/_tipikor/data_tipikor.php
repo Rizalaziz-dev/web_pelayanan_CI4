@@ -8,7 +8,7 @@
             <th>Waktu Kejadian</th>
             <th>Tempat Kejadian</th>
             <th>Uraian Laporan</th>
-            <th>Lampiran</th>
+            <!-- <th>Lampiran</th> -->
             <th>Status</th>
             <th>Actions</th>
         </thead>

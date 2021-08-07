@@ -62,6 +62,20 @@ class Tipikor_Model extends Model
         return $complaint->countAllResults();
     }
 
+    public function count_process()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('status', 'Diproses');
+        return $complaint->countAllResults();
+    }
+
+    public function count_done()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('status', 'Selesai');
+        return $complaint->countAllResults();
+    }
+
     public function search_id($report_id)
     {
 
@@ -70,6 +84,16 @@ class Tipikor_Model extends Model
 
 
         return $search->getRowArray();
+    }
+
+    public function search_file($tipikor_id)
+    {
+
+        $search = $this->db->table($this->table)
+            ->where('tipikor_id', $tipikor_id)->get();
+
+
+        return $search->getRowObject();
     }
 
     public function checkTokens($randstr)

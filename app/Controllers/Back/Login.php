@@ -81,9 +81,15 @@ class Login extends BaseController
                         ];
                         $this->session->set($save_session);
 
+                        if ($data['user_level'] == '1') {
+                            $url = '/admin/users';
+                        } elseif ($data['user_level'] == '2') {
+                            $url = '/admin/tipikordashboard';
+                        }
+
                         $msg = [
                             'success' => [
-                                'link' => '/admin/users'
+                                'link' => $url
                             ]
                         ];
                     } else {

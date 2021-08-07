@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Filters\Auth;
+use App\Filters\TipikorFilters;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -21,6 +22,7 @@ class Filters extends BaseConfig
 		'toolbar'  => DebugToolbar::class,
 		'honeypot' => Honeypot::class,
 		'auth' => Auth::class,
+		'TipikorFilters' => TipikorFilters::class,
 	];
 
 	/**
@@ -60,5 +62,20 @@ class Filters extends BaseConfig
 	 *
 	 * @var array
 	 */
-	public $filters = [];
+	public $filters = [
+		// 'auth' => [
+		// 	'before' => [
+		// 		'/admin/dashboard',
+		// 	]
+		// ],
+		'TipikorFilters' => [
+			'before' => [
+				'/admin/dashboard',
+				'/admin/users'
+			],
+			'after' => [
+				'/Back/Users'
+			]
+		]
+	];
 }

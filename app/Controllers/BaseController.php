@@ -50,7 +50,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['form', 'url'];
+	protected $helpers = ['form', 'url', 'download'];
 
 	/**
 	 * Constructor.
@@ -70,6 +70,8 @@ class BaseController extends Controller
 		// E.g.: 
 
 		$this->session = \Config\Services::session();
+
+		$this->db      = \Config\Database::connect();
 
 		//Back
 

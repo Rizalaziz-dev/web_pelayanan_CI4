@@ -108,10 +108,11 @@ class Tipikor extends BaseController
                 ],
                 'attachment' => [
                     'label' => 'Lampiran',
-                    'rules' => 'uploaded[attachment]|mime_in[attachment,image/png,image/jpg,image/jpeg]|is_image[attachment]',
+                    'rules' => 'uploaded[attachment]|ext_in[attachment,zip,rar]|max_size[attachment,8192]',
                     'errors' => [
                         'uploaded' => '{field} wajib diisi',
-                        'mime_in' => 'Harus dalam bentuk gambar, jangan file yang lain'
+                        'mime_in' => 'Harus dalam bentuk gambar, jangan file yang lain',
+                        'max_size' => 'Maksimal File 8 Mb'
                     ]
                 ]
 
@@ -181,7 +182,7 @@ class Tipikor extends BaseController
 
 
                 $msg = [
-                    'success' => '*catat No Token' . $token . 'Untuk Melihat Progress Pengaduan'
+                    'success' => '*catat No Token ' . $token . ' Untuk Melihat Progress Pengaduan'
                 ];
 
                 require_once(APPPATH . 'views/vendor/autoload.php');

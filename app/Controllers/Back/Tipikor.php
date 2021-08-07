@@ -25,8 +25,13 @@ class Tipikor extends BaseController
 {
 	public function index()
 	{
+
+
+		// $url = 'http://localhost:8080/assets/image/lampiran/KOR-20210806-0001.zip';
+		// return $this->response->download($url, null);
 		$data = [
 			'tittle' => 'Tipikor'
+
 
 		];
 		return view('_back/_pages/_tipikor/tipikor', $data);
@@ -46,12 +51,15 @@ class Tipikor extends BaseController
 
 				$url = base_url($list->attachment);
 
+
 				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
 				$btnRemove = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_report . "')\">
 				<i class=\"fas fa-eye\"></i>
             </button>";
+
+
 				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
 				if ($list->status == 'Diterima') {
@@ -70,7 +78,7 @@ class Tipikor extends BaseController
 				$row[] = $list->occurre_time;
 				$row[] = $list->crime_scene;
 				$row[] = $list->report_detail;
-				$row[] = $storeImage;
+				// $row[] = $storeImage;
 				$row[] = $status;
 				$row[] = $btnEdit . "" . $btnRemove;
 				$data[] = $row;
@@ -112,7 +120,7 @@ class Tipikor extends BaseController
 
 			$save_data_status = [
 				'status' => $this->request->getVar('status'),
-				'token' => $this->request->getVar('token'),
+				'tokens' => $this->request->getVar('token'),
 			];
 
 			$this->status->insert($save_data_status);
@@ -185,10 +193,68 @@ class Tipikor extends BaseController
 	}
 
 
-	public function count_complaint()
+	public function count_pengaduan()
 	{
 		if ($this->request->isAJAX()) {
 			$data = $this->tpkr->count_all();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
+	public function count_diproses()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->tpkr->count_process();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
+	public function count_selesai()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->tpkr->count_done();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
+	public function download()
+	{
+		if ($this->request->isAJAX()) {
+			$tipikor_id = $this->request->getVar('tipikor_id');
+
+			$row = $this->tpkr->search_file($tipikor_id);
+
+			// var_dump($row);
+			// die();
+			// $file = $row['attachment'];
+
+			// $data2 = [
+			// 	'attachment' => $row['attachment'],
+			// ];
+
+			$url = base_url($row->attachment);
+
+			// var_dump($url);
+			// die();
+
+			// force_download($url, null);
+
+			$data = $this->response->download($url, null);
 
 			$msg = [
 				'success' => $data,
