@@ -12,6 +12,7 @@
 <script src="<?= base_url() ?>/assets/theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"> </script>
 
 
+
 <!-- /.content-header -->
 <div class="content">
 
@@ -43,6 +44,12 @@
     </div>
 
 </div><!-- /.container-fluid -->
+
+<style>
+    .tabel {
+        text-align: center;
+    }
+</style>
 
 
 <div class="view-modal" style="display: none;"></div>
@@ -196,9 +203,15 @@
 
     function load_table() {
         $('#tabel-wbs').DataTable({
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "autoWidth": false,
             "order": [],
             "processing": true,
             "serverSide": true,
+            "responsive": true,
             "ajax": {
                 "url": "<?php echo site_url('Back/Wbs/data') ?>",
                 "type": "POST",
@@ -206,7 +219,8 @@
             "columnDefs": [{
                 "targets": [0],
                 "orderable": false
-            }]
+            }],
+
         });
 
     }

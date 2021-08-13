@@ -140,7 +140,7 @@
                     </div>
 
                     <div class="form-group row pb-3 pt-3">
-                        <label for="occurre_time" class="col-md-3 col-form-label">Waktu Kejadian</label>
+                        <label for="" class="col-md-3 col-form-label">Tanggal Kejadian</label>
                         <div class="col-md-9">
                             <div class="form-group row">
                                 <div class="col-sm">
@@ -148,23 +148,29 @@
                                         <div class="col-sm">
                                             <input id="calendar_day" name="calendar_day" type="number" class="form-control" placeholder="Day" autocomplete="off" maxlength="2" />
                                         </div>
+                                        <div class="invalid-feedback errorDay"></div>
 
                                         <div class="col-sm">
                                             <input id="calendar_month" name="calendar_month" type="number" class="form-control" placeholder="Month" autocomplete="off" maxlength="2" />
                                         </div>
+                                        <div class="invalid-feedback errorMonth"></div>
 
                                         <div class="col-sm">
                                             <input id="calendar_year" name="calendar_year" type="number" class="form-control" placeholder="Year" autocomplete="off" maxlength="4" />
                                         </div>
-
-                                        <div class="col-sm">
-                                            <input type="text" class="form-control" id="occurre_time" name="occurre_time" placeholder="Siang">
-                                            <div class="invalid-feedback errorOccurre"></div>
-                                        </div>
+                                        <div class="invalid-feedback errorYear"></div>
 
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-3 pt-3">
+                        <label for="occurre_time" class="col-md-3 col-form-label">Waktu Kejadian</label>
+                        <div class="col-md-3">
+                            <input type="time" class="form-control" id="occurre_time" name="occurre_time" placeholder="Siang">
+                            <div class="invalid-feedback errorOccurre"></div>
                         </div>
                     </div>
 
@@ -192,6 +198,14 @@
                         </div>
                     </div>
 
+                    <div class="form-group row pb-3 pt-3">
+                        <div class="col-md-9">
+                            <div id="captcha"></div>
+                            <!-- <div class="g-recaptcha" data-sitekey="6LfM8-sbAAAAAATZcNrybWeV2rR2XHLqJb2dgUDU" name="captcha" id="captcha"></div> -->
+                            <div class="invalid-feedback errorCaptcha"></div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-outline-primary btn-send "><i class="far fa-paper-plane"></i> Kirim Pengaduan</button>
 
 
@@ -205,9 +219,18 @@
 </section>
 
 <script>
+    var onloadCallback = function() {
+        grecaptcha.render('captcha', {
+            'sitekey': '6LfM8-sbAAAAAATZcNrybWeV2rR2XHLqJb2dgUDU',
+            'callback': 'correctCaptcha'
+
+        });
+    };
     $(document).ready(function() {
         document.getElementById("table-search").style.display = "none"; //Hide the table
         search();
+
+
         // document.getElementById("btn-search").disabled = true;
         $(function() {
             $("#calendar_day").datepicker({
@@ -322,6 +345,7 @@
         $('.btn-send').click(function(e) {
             e.preventDefault();
 
+            var response = grecaptcha.getResponse();
             var id_report = $("#id_report").val();
             var r_fullname = $("#reporter_fullname").val();
             var r_nik = $("#reporter_nik").val();
@@ -336,6 +360,7 @@
             var crime_scene = $("#crime_scene").val();
             var report_detail = $("#report_detail").val();
             var attachment = $("#attachment")[0].files[0];
+            var captcha = $("#captcha").val();
 
             let data = new FormData();
 
@@ -353,6 +378,7 @@
             data.append("crime_scene", crime_scene)
             data.append("report_detail", report_detail)
             data.append("attachment", attachment)
+            data.append("captcha", response)
 
             $.ajax({
                 type: "post",
@@ -415,6 +441,27 @@
                             $('#subject').removeClass('is-invalid')
                             $('.errorSubject').html('');
                         }
+                        if (response.error.calendar_day) {
+                            $('#calendar_day').addClass('is-invalid')
+                            $('.errorDay').html(response.error.calendar_day);
+                        } else {
+                            $('#calendar_day').removeClass('is-invalid')
+                            $('.errorDay').html('');
+                        }
+                        if (response.error.calendar_month) {
+                            $('#calendar_month').addClass('is-invalid')
+                            $('.errorMonth').html(response.error.calendar_month);
+                        } else {
+                            $('#calendar_month').removeClass('is-invalid')
+                            $('.errorMonth').html('');
+                        }
+                        if (response.error.calendar_year) {
+                            $('#calendar_year').addClass('is-invalid')
+                            $('.errorYear').html(response.error.calendar_year);
+                        } else {
+                            $('#calendar_year').removeClass('is-invalid')
+                            $('.errorYear').html('');
+                        }
                         if (response.error.occurre_time) {
                             $('#occurre_time').addClass('is-invalid')
                             $('.errorOccurre').html(response.error.occurre_time);
@@ -443,6 +490,13 @@
                             $('#attachment').removeClass('is-invalid')
                             $('.errorAttachment').html('');
                         }
+                        if (response.error.captcha) {
+                            $('#captcha').addClass('is-invalid')
+                            $('.errorCaptcha').html(response.error.captcha);
+                        } else {
+                            $('#captcha').removeClass('is-invalid')
+                            $('.errorCaptcha').html('');
+                        }
 
                     } else {
                         Swal.fire({
@@ -451,6 +505,7 @@
                             text: response.success
                         })
                         clear_form();
+                        grecaptcha.reset();
                     }
 
                 },

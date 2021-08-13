@@ -61,16 +61,6 @@
                     </div>
                 </div>
 
-                <div class="form-group row pb-1 pt-1">
-                    <label for="attachment" class="col-md-3 col-form-label">Lampiran</label>
-                    <div class="col-md-9">
-                        <img id="attachment" src="<?= Base_url($attachment); ?>" width="350" height="400"><br>
-                        <button type="submit" class="btn btn-outline-secondary btn-download"><i class="fas fa-download"></i> Download</button>
-                        <div class="invalid-feedback errorDetail"></div>
-                    </div>
-
-                </div>
-
                 <div class="form-group row pb-3 pt-3">
                     <label for="status" class="col-md-3 form-label">Status</label>
                     <div class="col-md-9">
@@ -86,6 +76,14 @@
                     </div>
                 </div>
 
+                <div hidden id="hide-ket" class="form-group row pb-1 pt-1">
+                    <label for="keterangan" class="col-md-3 col-form-label">Keterangan</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" id="keterangan" name="keterangan" rows="3">-</textarea>
+                        <div class="invalid-feedback errorKeterangan"></div>
+                    </div>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-update">Update</button>
@@ -98,40 +96,22 @@
 
 <script>
     $(document).ready(function() {
+        $('#status').on('change', function() {
+            if (this.value == 'Selesai') {
 
+                $('#hide-ket').removeAttr('hidden');
+
+
+            } else {
+                $('#hide-ket').attr("hidden", true);
+
+
+            }
+        });
         Update();
-        Download();
-
     });
 
-    function Download() {
-        $('.btn-download').click(function(e) {
-            e.preventDefault();
 
-            var tipikor_id = $("#tipikor_id").val();
-
-            let data = new FormData();
-
-            data.append("tipikor_id", tipikor_id)
-
-
-            $.ajax({
-                type: "post",
-                url: "<?= site_url('Back/Tipikor/download') ?>",
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
-                dataType: "json",
-                success: function(response) {
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-                }
-            });
-        })
-    }
 
     function Update() {
         $('.btn-update').click(function(e) {
@@ -140,12 +120,14 @@
             var tipikor_id = $("#tipikor_id").val();
             var status = $("#status").val();
             var token = $("#token").val();
+            var keterangan = $("#keterangan").val();
 
             let data = new FormData();
 
             data.append("tipikor_id", tipikor_id)
             data.append("status", status)
             data.append("token", token)
+            data.append("keterangan", keterangan)
 
             $.ajax({
                 type: "post",
@@ -156,9 +138,6 @@
                 cache: false,
                 dataType: "json",
                 beforeSend: function() {
-                    if (tipikor_id == 'Selesai') {
-                        console.log(tipikor_id);
-                    }
                     $('.btn-update').attr('disable', 'disabled');
                     $('.btn-update').html('<i class="fa fa-spin fa-spinner"></i>');
 
@@ -175,6 +154,13 @@
                         } else {
                             $('#status').removeClass('is-invalid')
                             $('.errorStatus').html('');
+                        }
+                        if (response.error.keterangan) {
+                            $('#keterangan').addClass('is-invalid')
+                            $('.errorKeterangan').html(response.error.keterangan);
+                        } else {
+                            $('#keterangan').removeClass('is-invalid')
+                            $('.errorKeterangan').html('');
                         }
 
                     } else {

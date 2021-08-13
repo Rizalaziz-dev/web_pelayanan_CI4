@@ -76,7 +76,7 @@ class Login extends BaseController
                             'login' => true,
                             'user_email' => $data['user_email'],
                             'user_name' => $user_name,
-                            'user_name' => $data['user_fullname'],
+                            'user_fullname' => $data['user_fullname'],
                             'id_level' => $data['user_level'],
                             'nama_level' => $data['level_name']
                         ];
@@ -91,7 +91,7 @@ class Login extends BaseController
                         } elseif ($data['user_level'] == '4') {
                             $url = '/admin/yankumdashboard';
                         } elseif ($data['user_level'] == '5') {
-                            $url = '/admin/pimpinandashboard';
+                            $url = '/admin/kepaladashboard';
                         }
 
                         $msg = [

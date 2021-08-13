@@ -20,6 +20,7 @@ use App\Models\Back\DataTipikor_Model;
 
 use Config\Services;
 
+use function PHPUnit\Framework\returnSelf;
 
 class Tipikor extends BaseController
 {
@@ -30,7 +31,7 @@ class Tipikor extends BaseController
 		// $url = 'http://localhost:8080/assets/image/lampiran/KOR-20210806-0001.zip';
 		// return $this->response->download($url, null);
 		$data = [
-			'tittle' => 'Tipikor'
+			'tittle' => 'Master Pengaduan'
 
 
 		];
@@ -49,7 +50,22 @@ class Tipikor extends BaseController
 				$no++;
 				$row = [];
 
-				$url = base_url($list->attachment);
+
+				$file = $list->attachment;
+				$path = pathinfo($file, PATHINFO_EXTENSION);
+				$url = base_url('assets/uploads/file/' . $file . '');
+
+				$download = base_url('Back/Tipikor/download/' . $list->id_report . '');
+
+				if ($path == 'png') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} elseif ($path == 'jpg') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} elseif ($path == 'jpeg') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} else {
+					$storeImage = $file;
+				}
 
 
 				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
@@ -58,9 +74,10 @@ class Tipikor extends BaseController
 				$btnRemove = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_report . "')\">
 				<i class=\"fas fa-eye\"></i>
             </button>";
+				// $storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
+				$btnDownload = "<a href=\"$download\" type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i>";
 
-				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
 				if ($list->status == 'Diterima') {
 					$status = "<span class=\"badge bg-secondary\">$list->status</span>";
@@ -78,7 +95,8 @@ class Tipikor extends BaseController
 				$row[] = $list->occurre_time;
 				$row[] = $list->crime_scene;
 				$row[] = $list->report_detail;
-				// $row[] = $storeImage;
+				$row[] = $btnDownload;
+				$row[] = $storeImage;
 				$row[] = $status;
 				$row[] = $btnEdit . "" . $btnRemove;
 				$data[] = $row;
@@ -114,28 +132,58 @@ class Tipikor extends BaseController
 	public function update_data()
 	{
 		if ($this->request->isAJAX()) {
-			$save_data = [
-				'status' => $this->request->getVar('status'),
-			];
 
-			$save_data_status = [
-				'status' => $this->request->getVar('status'),
-				'tokens' => $this->request->getVar('token'),
-			];
+			$validation = \Config\Services::validation();
+			$valid = $this->validate([
+				'status' => [
+					'label' => 'Status ',
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} tidak boleh kosong',
+						'is_unique' => '{field} tidak boleh ada yang sama'
+					]
+				],
+				'keterangan' => [
+					'label' => 'Status ',
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} tidak boleh kosong',
+						'is_unique' => '{field} tidak boleh ada yang sama'
+					]
+				],
+			]);
+			if (!$valid) {
+				$msg = [
+					'error' => [
+						'status' => $validation->getError('status'),
+						'keterangan' => $validation->getError('keterangan')
+					]
+				];
+			} else {
+				$save_data = [
+					'status' => $this->request->getVar('status'),
+				];
 
-			$this->status->insert($save_data_status);
+				$save_data_status = [
+					'status' => $this->request->getVar('status'),
+					'tokens' => $this->request->getVar('token'),
+				];
 
-			// var_dump($save_data);
-			// die();
+				$this->status->insert($save_data_status);
 
-			$tipikor_id = $this->request->getVar('tipikor_id');
+				// var_dump($save_data);
+				// die();
+
+				$tipikor_id = $this->request->getVar('tipikor_id');
 
 
-			$this->tpkr->update($tipikor_id, $save_data);
+				$this->tpkr->update($tipikor_id, $save_data);
 
-			$msg = [
-				'success' => 'Status Laporan Berhasil di Perbarui'
-			];
+				$msg = [
+					'success' => 'Status Laporan Berhasil di Perbarui'
+				];
+			}
+			// var_dump($msg);
 			echo json_encode($msg);
 		} else {
 			exit('Maaf Permintaan Anda Tidak Dapat di Proses');
@@ -171,25 +219,27 @@ class Tipikor extends BaseController
 
 	public function view()
 	{
-		$report_id = $this->request->getVar('report_id');
+		if ($this->request->isAJAX()) {
+			$report_id = $this->request->getVar('report_id');
 
-		$row = $this->rprtr->find($report_id);
+			$row = $this->rprtr->find($report_id);
 
-		$data = [
-			'report_id' => $row['report_id'],
-			'reporter_fullname' => $row['reporter_fullname'],
-			'reporter_nik' => $row['reporter_nik'],
-			'reporter_address' => $row['reporter_address'],
-			'reporter_email' => $row['reporter_email'],
-			'reporter_phonenumber' => $row['reporter_phonenumber'],
-		];
+			$data = [
+				'report_id' => $row['report_id'],
+				'reporter_fullname' => $row['reporter_fullname'],
+				'reporter_nik' => $row['reporter_nik'],
+				'reporter_address' => $row['reporter_address'],
+				'reporter_email' => $row['reporter_email'],
+				'reporter_phonenumber' => $row['reporter_phonenumber'],
+			];
 
-		// var_dump($data);
+			// var_dump($data);
 
-		$msg = [
-			'success' => view('_back/_pages/_tipikor/modal_view', $data)
-		];
-		echo json_encode($msg);
+			$msg = [
+				'success' => view('_back/_pages/_tipikor/modal_view', $data)
+			];
+			echo json_encode($msg);
+		}
 	}
 
 
@@ -232,35 +282,49 @@ class Tipikor extends BaseController
 		}
 	}
 
-	public function download()
+	public function download($id)
 	{
-		if ($this->request->isAJAX()) {
-			$tipikor_id = $this->request->getVar('tipikor_id');
+		// if ($this->request->isAJAX()) {
 
-			$row = $this->tpkr->search_file($tipikor_id);
+		// $tipikor_id = $this->request->getVar('report_id');
 
-			// var_dump($row);
-			// die();
-			// $file = $row['attachment'];
+		$row = $this->tpkr->search_file($id);
 
-			// $data2 = [
-			// 	'attachment' => $row['attachment'],
-			// ];
+		// var_dump($row);
 
-			$url = base_url($row->attachment);
+		// $file = $row['attachment'];
 
-			// var_dump($url);
-			// die();
+		// $data2 = [
+		// 	'attachment' => $row['attachment'],
+		// ];
 
-			// force_download($url, null);
+		$url = $row->attachment;
 
-			$data = $this->response->download($url, null);
 
-			$msg = [
-				'success' => $data,
-			];
+		// var_dump($url);
+		// die();
 
-			echo json_encode($msg);
-		}
+		// force_download($url, null);
+		// $file = $this->response->download(base_url('assets/uploads/file/' . $url . '', null));
+		$file = base_url('assets/uploads/file/' . $url . '', null);
+		var_dump($file);
+
+		// $data = [
+		// 	'file' => $file
+		// ];
+
+		// $this->response->download(base_url('assets/uploads/file/' . $url . '', null));
+		// var_dump($data);
+		// die();
+
+
+		return $this->response->download('assets/uploads/file/' . $url . '', null);
+
+		// 	$msg = [
+		// 		'success' => $data
+		// 	];
+
+		// 	echo json_encode($msg);
+		// }
 	}
 }

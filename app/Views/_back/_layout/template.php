@@ -8,7 +8,7 @@ $session = \Config\Services::session() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Pelayanan Terpadu | Kejari | </title>
+    <title>Pelayanan Terpadu | Kejari | <?= $tittle; ?> </title>
 
     <!-- favicon -->
     <link rel="icon" type="image.png" href="<?= base_url('assets/theme/img/Favicon.png') ?>">
@@ -20,16 +20,39 @@ $session = \Config\Services::session() ?>
     <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/css/adminlte.min.css">
     <!-- Sweet Alert -->
     <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/toastr/toastr.min.css">
 
     <script src="<?= base_url() ?>/assets/theme/plugins/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- jQuery -->
     <script src="<?= base_url() ?>/assets/theme/plugins/jquery/jquery.min.js"></script>
+    <!-- Toastr -->
+    <script src="<?= base_url() ?>/assets/theme/plugins/toastr/toastr.min.js"></script>
 
     <!-- Pusher -->
     <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
+
+    <!-- G-recaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- Datatables -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
+
+
 
 
 </head>
@@ -62,12 +85,12 @@ $session = \Config\Services::session() ?>
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark"></h1>
+                            <h1 class="m-0 text-dark"><?= $tittle; ?></h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active"></li>
+                                <li class="breadcrumb-item active"><?= $tittle; ?></li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -118,7 +141,29 @@ $session = \Config\Services::session() ?>
                 data_yankum();
             }
         });
+
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
     </script>
+
+    <!-- Button -->
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 
 
 

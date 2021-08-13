@@ -116,6 +116,10 @@ $routes->get('/admin/wbsdashboard/(:any)', 'Back\WbsDashboard::$1');
 
 $routes->get('/admin/yankumdashboard', 'Back\YankumDashboard::index');
 
+$routes->get('/admin/kepaladashboard/(:any)', 'Back\KepalaDashboard::$1');
+
+$routes->get('/admin/kepaladashboard', 'Back\KepalaDashboard::index');
+
 $routes->get('/admin/yankumdashboard/(:any)', 'Back\YankumDashboard::$1');
 
 $routes->get('/admin/users', 'Back\Users::index');

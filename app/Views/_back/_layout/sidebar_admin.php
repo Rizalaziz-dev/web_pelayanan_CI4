@@ -1,15 +1,16 @@
 <aside class="main-sidebar sidebar-dark-warning">
+
     <!-- Brand Logo -->
-    <!-- <a href="" class="brand-link text-sm navbar-white">
-        <img src="" alt="" class="brand-image" />
+    <a href="" class="brand-link ">
+        <img src="<?= base_url('assets/theme/img/logo front.png') ?>" alt="" class="brand-image">
         <span class="brand-text font-weight-light-navy">&nbsp;</span>
-    </a> -->
+    </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
 
         <!-- Sidebar Menu -->
-        <nav id="navigation" class="mt-5">
+        <nav id="navigation" class="mt-3">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
 			   with font-awesome or any other icon font library -->
@@ -23,36 +24,29 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-treeview">
-                    <a href="#" id="master" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                <li class="nav-item">
+                    <a href="<?php echo site_url('Back/Users'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
                         <p>
-                            Master
-                            <i class="right fas fa-angle-left"></i>
+                            Users
+                            <!--span class="right badge badge-danger">New</span-->
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?php echo site_url('Back/Users'); ?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?php echo site_url('Back/Sitara'); ?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sitara</p>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
 
+                <li class="nav-item">
+                    <a href="<?php echo site_url('Back/Sitara'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Sitara
+                            <!--span class="right badge badge-danger">New</span-->
+                        </p>
+                    </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="<?php echo site_url('Back/Login/out') ?>" class="nav-link">
-                        <i class="nav-icon fa fa-user"></i>
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Logout
                         </p>

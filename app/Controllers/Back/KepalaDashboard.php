@@ -4,7 +4,7 @@ namespace App\Controllers\Back;
 
 use App\Controllers\BaseController;
 
-class AdminDashboard extends BaseController
+class KepalaDashboard extends BaseController
 {
     public function index()
     {

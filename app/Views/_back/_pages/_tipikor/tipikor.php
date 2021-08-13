@@ -3,17 +3,16 @@
 <?= $this->section('content'); ?>
 
 <!-- Data Tables -->
-<link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/datatables/dataTables.bootstrap4.min.css" />
+<!-- <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/datatables/dataTables.bootstrap4.min.css" />
 
 <link rel="stylesheet" href="<?= base_url() ?>/assets/theme/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
 
 <script src="<?= base_url() ?>/assets/theme/plugins/datatables/jquery.dataTables.min.js"> </script>
 
-<script src="<?= base_url() ?>/assets/theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"> </script>
+<script src="<?= base_url() ?>/assets/theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"> </script> -->
 
 
 <!-- /.content-header -->
-
 <div class="content">
 
     <!-- /.card-header -->
@@ -30,7 +29,9 @@
         </div>
     </div>
 
-</div><!-- /.container-fluid -->
+</div>
+
+<!-- /.container-fluid -->
 
 
 

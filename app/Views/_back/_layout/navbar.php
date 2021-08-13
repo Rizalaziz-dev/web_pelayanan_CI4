@@ -1,3 +1,5 @@
+<?php
+$session = \Config\Services::session() ?>
 <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -12,5 +14,28 @@
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
             </li> -->
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-user"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">Akun</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item ">
+                        <img src="<?= base_url('assets/theme/img/profile.jpg'); ?>" class="img-circle mr-3" width="30" height="30"> <?= $session->get('user_fullname'); ?>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="<?php echo site_url('Back/Login/out') ?>" class="dropdown-item dropdown-footer">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+
+
+                </div>
+            </li>
+
         </ul>
 </div>

@@ -33,7 +33,7 @@ class Users extends BaseController
     public function index()
     {
         $data = [
-            'tittle' => 'User'
+            'tittle' => 'Master User'
         ];
 
 

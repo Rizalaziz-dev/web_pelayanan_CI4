@@ -82,6 +82,30 @@ class Tipikor extends BaseController
                         'is_unique' => '{field} tidak boleh ada yang sama'
                     ]
                 ],
+                'calendar_day' => [
+                    'label' => 'Tanggal',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'calendar_month' => [
+                    'label' => 'Month',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'calendar_year' => [
+                    'label' => 'Year',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
                 'occurre_time' => [
                     'label' => 'Waktu Kejadian',
                     'rules' => 'required',
@@ -108,13 +132,21 @@ class Tipikor extends BaseController
                 ],
                 'attachment' => [
                     'label' => 'Lampiran',
-                    'rules' => 'uploaded[attachment]|ext_in[attachment,zip,rar]|max_size[attachment,8192]',
+                    'rules' => 'uploaded[attachment]|ext_in[attachment,zip,rar,jpeg,jpg,png,pdf]|max_size[attachment,8192]',
                     'errors' => [
                         'uploaded' => '{field} wajib diisi',
                         'mime_in' => 'Harus dalam bentuk gambar, jangan file yang lain',
                         'max_size' => 'Maksimal File 8 Mb'
                     ]
-                ]
+                ],
+                'captcha' => [
+                    'label' => 'Captcha',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
 
             ]);
             if (!$valid) {
@@ -126,81 +158,112 @@ class Tipikor extends BaseController
                         'reporter_email' => $validation->getError('reporter_email'),
                         'reporter_phonenumber' => $validation->getError('reporter_phonenumber'),
                         'subject' => $validation->getError('subject'),
+                        'calendar_day' => $validation->getError('calendar_day'),
+                        'calendar_month' => $validation->getError('calendar_month'),
+                        'calendar_year' => $validation->getError('calendar_year'),
                         'occurre_time' => $validation->getError('occurre_time'),
                         'crime_scene' => $validation->getError('crime_scene'),
                         'report_detail' => $validation->getError('report_detail'),
-                        'attachment' => $validation->getError('attachment')
+                        'attachment' => $validation->getError('attachment'),
+                        'captcha' => $validation->getError('captcha')
                     ]
                 ];
             } else {
-                $id_report = $this->tpkr->noLaporan();
 
-                $token = $this->tpkr->generateToken();
+                $captcha_response = $this->request->getVar('captcha');
+                if ($captcha_response != '') {
 
-                $tipikor = "Tipikor";
+                    $secretKey = '6LfM8-sbAAAAAKql7pRHw2nECSv3VuWVmkkcvr4H';
 
-                $filelampiran = $this->request->getFile('attachment');
+                    $response = $this->request->getVar('captcha');
 
-                $filelampiran->move('assets/image/lampiran', $id_report . '.' . $filelampiran->getExtension());
+                    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$response}");
 
+                    $status = json_decode($verify, true);
+                    // var_dump($status);
+                    if ($status['success']) {
 
-                $day = $this->request->getVar('calendar_day');
-                $month = $this->request->getVar('calendar_month');
-                $year = $this->request->getVar('calendar_year');
-                $time = $this->request->getVar('occurre_time');
-                $save_data_reporter = [
-                    'report_id' => $id_report,
-                    'reporter_fullname' => $this->request->getVar('reporter_fullname'),
-                    'reporter_nik' => $this->request->getVar('reporter_nik'),
-                    'reporter_address' => $this->request->getVar('reporter_address'),
-                    'reporter_email' => $this->request->getVar('reporter_email'),
-                    'reporter_phonenumber' => $this->request->getVar('reporter_phonenumber'),
-                    'report_type' => $tipikor
-                ];
+                        $id_report = $this->tpkr->noLaporan();
 
-                $save_data_tipikor = [
-                    'subject' => $this->request->getVar('subject'),
-                    'occurre_time' => $day . '-' . $month . '-' . $year . ' ' . $time,
-                    'crime_scene' => $this->request->getVar('crime_scene'),
-                    'report_detail' => $this->request->getVar('report_detail'),
-                    'attachment' => './assets/image/lampiran/' . $filelampiran->getName(),
-                    'id_report' => $id_report,
-                    'token' => $token,
-                ];
+                        $token = $this->tpkr->generateToken();
 
-                $save_data_status = [
-                    'tokens' => $token,
-                    'status' => "Terkirim",
-                ];
+                        $tipikor = "Tipikor";
 
-                $this->rprtr->insert($save_data_reporter);
+                        $filelampiran = $this->request->getFile('attachment');
 
-                $this->tpkr->insert($save_data_tipikor);
-
-                $this->status->insert($save_data_status);
+                        $filelampiran->move('assets/uploads/file', $id_report . '.' . $filelampiran->getExtension());
 
 
+                        $day = $this->request->getVar('calendar_day');
+                        $month = $this->request->getVar('calendar_month');
+                        $year = $this->request->getVar('calendar_year');
+                        $time = $this->request->getVar('occurre_time');
+                        $save_data_reporter = [
+                            'report_id' => $id_report,
+                            'reporter_fullname' => $this->request->getVar('reporter_fullname'),
+                            'reporter_nik' => $this->request->getVar('reporter_nik'),
+                            'reporter_address' => $this->request->getVar('reporter_address'),
+                            'reporter_email' => $this->request->getVar('reporter_email'),
+                            'reporter_phonenumber' => $this->request->getVar('reporter_phonenumber'),
+                            'report_type' => $tipikor
+                        ];
 
-                $msg = [
-                    'success' => '*catat No Token ' . $token . ' Untuk Melihat Progress Pengaduan'
-                ];
+                        $save_data_tipikor = [
+                            'subject' => $this->request->getVar('subject'),
+                            'occurre_time' => $day . '-' . $month . '-' . $year . ' ' . $time,
+                            'crime_scene' => $this->request->getVar('crime_scene'),
+                            'report_detail' => $this->request->getVar('report_detail'),
+                            'attachment' => $filelampiran->getName(),
+                            'id_report' => $id_report,
+                            'token' => $token,
+                            'status' => "Terkirim",
+                        ];
 
-                require_once(APPPATH . 'views/vendor/autoload.php');
-                $options = [
-                    'cluster' => 'ap1',
-                    'useTLS' => true
-                ];
+                        $save_data_status = [
+                            'tokens' => $token,
+                            'status' => "Terkirim",
+                        ];
 
-                $pusher = new Pusher(
-                    'f00b9630960e06cbb49c',
-                    '1a9e6f0160eb376a5f5d',
-                    '1219579',
-                    $options
-                );
+                        $this->rprtr->insert($save_data_reporter);
 
-                $data['message_tipikor'] = 'success';
+                        $this->tpkr->insert($save_data_tipikor);
 
-                $pusher->trigger('my-chanel', 'my-event', $data);
+                        $this->status->insert($save_data_status);
+
+
+
+                        $msg = [
+                            'success' => '*catat No Token ' . $token . ' Untuk Melihat Progress Pengaduan'
+                        ];
+
+                        require_once(APPPATH . 'views/vendor/autoload.php');
+                        $options = [
+                            'cluster' => 'ap1',
+                            'useTLS' => true
+                        ];
+
+                        $pusher = new Pusher(
+                            'f00b9630960e06cbb49c',
+                            '1a9e6f0160eb376a5f5d',
+                            '1219579',
+                            $options
+                        );
+
+                        $data['message_tipikor'] = 'success';
+
+                        $pusher->trigger('my-chanel', 'my-event', $data);
+                    } else {
+                        $msg = [
+                            'error' =>  'Something goes to wrong 1'
+
+                        ];
+                    }
+                } else {
+                    $msg = [
+                        'error' =>  'Something goes to wrong 2'
+
+                    ];
+                }
             }
             echo json_encode($msg);
         } else {

@@ -24,9 +24,11 @@
 
     function load_table() {
         $('#tabel-wbs').DataTable({
+            "autoWidth": false,
             "order": [],
             "processing": true,
             "serverSide": true,
+            "responsive": true,
             "ajax": {
                 "url": "<?php echo site_url('Back/Wbs/data') ?>",
                 "type": "POST",
@@ -34,7 +36,11 @@
             "columnDefs": [{
                 "targets": [0],
                 "orderable": false
-            }]
+            }],
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
         });
 
     }

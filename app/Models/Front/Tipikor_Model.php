@@ -90,7 +90,7 @@ class Tipikor_Model extends Model
     {
 
         $search = $this->db->table($this->table)
-            ->where('tipikor_id', $tipikor_id)->get();
+            ->where('id_report', $tipikor_id)->get();
 
 
         return $search->getRowObject();
