@@ -44,6 +44,7 @@
                             <tr>
                                 <th>Tanggal</th>
                                 <th>Status</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody id="records_table">
@@ -290,8 +291,7 @@
                 complete: function() {
                     $('.btn-search').removeAttr('disable');
                     $('.btn-search').html('Search');
-                    // document.getElementById("btn-search").disabled = false;
-
+                    $('.btn-search').attr("hidden", true);
                 },
                 success: function(response) {
                     if (response.error) {
@@ -323,9 +323,10 @@
                                 $(`<tr>`),
                                 $(`<td>`).text(item.updated_at).append(td),
                                 $(`<td>`).text(item.status).append(td),
+                                $(`<td>`).text(item.note).append(td),
                             );
+                            console.log(item.note)
 
-                            console.log(item.status)
                         });
 
                         // document.getElementById("btn-search").disabled = true;
@@ -360,7 +361,6 @@
             var crime_scene = $("#crime_scene").val();
             var report_detail = $("#report_detail").val();
             var attachment = $("#attachment")[0].files[0];
-            var captcha = $("#captcha").val();
 
             let data = new FormData();
 
@@ -505,6 +505,7 @@
                             text: response.success
                         })
                         clear_form();
+
                         grecaptcha.reset();
                     }
 

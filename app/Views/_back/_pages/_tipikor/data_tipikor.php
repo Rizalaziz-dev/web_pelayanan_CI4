@@ -64,10 +64,6 @@
             "processing": true,
             "serverSide": true,
             "responsive": true,
-            "dom": 'Bfrtip',
-            "buttons": [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
             "ajax": {
                 "url": "<?php echo site_url('Back/Tipikor/data') ?>",
                 "type": "POST",
@@ -86,8 +82,12 @@
                     "className": "dt-head-center"
                 }
             ],
-
-
+            "dom": "<'row'<'col-md-2'l><'col-md-6'B><'col-md-4'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>",
+            "buttons": [
+                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+            ],
 
         });
 

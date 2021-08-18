@@ -143,7 +143,7 @@ class Tipikor extends BaseController
 						'is_unique' => '{field} tidak boleh ada yang sama'
 					]
 				],
-				'keterangan' => [
+				'note' => [
 					'label' => 'Status ',
 					'rules' => 'required',
 					'errors' => [
@@ -156,7 +156,7 @@ class Tipikor extends BaseController
 				$msg = [
 					'error' => [
 						'status' => $validation->getError('status'),
-						'keterangan' => $validation->getError('keterangan')
+						'note' => $validation->getError('note')
 					]
 				];
 			} else {
@@ -167,6 +167,7 @@ class Tipikor extends BaseController
 				$save_data_status = [
 					'status' => $this->request->getVar('status'),
 					'tokens' => $this->request->getVar('token'),
+					'note' => $this->request->getVar('note'),
 				];
 
 				$this->status->insert($save_data_status);

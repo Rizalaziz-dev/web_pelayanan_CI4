@@ -24,7 +24,7 @@
     });
 
     function load_data() {
-        var table = $('#tabel-user').DataTable({
+        $('#tabel-user').DataTable({
             "autoWidth": false,
             "order": [],
             "processing": true,
@@ -35,9 +35,13 @@
                 "type": "POST",
             },
             "columnDefs": [{
-                "targets": 0,
+                "targets": [0],
                 "orderable": false
-            }]
+            }, {
+                "targets": [6],
+                "orderable": false
+            }],
+
 
         })
 

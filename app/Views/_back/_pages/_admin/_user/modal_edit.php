@@ -1,4 +1,7 @@
 <!-- Modal -->
+<?php
+$db = \Config\Database::connect(); ?>
+
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -66,13 +69,28 @@
                         Hak Akses<span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-10">
-                        <select id="user_level" name="user_level" class="form-control select2">
-                            <option value="">--Pilih Salah Satu--</option>
+                        <select id="user_level" name="user_level" class="form-control" value="">
+                            <?php
+                            $level = $user_level;
+                            $query = $db->query("SELECT * FROM tb_m_level");
+
+                            foreach ($query->getResultArray() as $row) {
+                                if ($level == $row['level_id']) {
+                                    $select = "selected";
+                                } else {
+                                    $select = "";
+                                }
+                                var_dump($select);
+                                $id = $row['level_id'];
+                                echo "<option $select value ='$id'>" . $row['level_name'] . "</option>";
+                            } ?>
                         </select>
                         <div class="invalid-feedback errorLevel">
                         </div>
                     </div>
                 </div>
+
+
 
                 <!-- form-group -->
 
@@ -99,7 +117,7 @@
 <script>
     $(document).ready(function() {
         update();
-        getLevel();
+        // getLevel();
     });
 
     function update() {
@@ -199,7 +217,6 @@
                             value: val.level_id,
                             text: val.level_name
                         }));
-                        console.log(response);
                     });
                 });
 

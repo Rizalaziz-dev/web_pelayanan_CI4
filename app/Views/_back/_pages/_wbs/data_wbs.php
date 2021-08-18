@@ -1,20 +1,22 @@
-<table id="tabel-wbs" class="table">
-    <thead class="thead-dark">
-        <th>No</th>
-        <th>No Laporan</th>
-        <th>Nama Pelapor</th>
-        <th>Nama Petugas</th>
-        <th>Jenis Pelanggaran</th>
-        <th>Waktu Kejadian</th>
-        <th>Tempat Kejadian</th>
-        <th>Uraian Laporan</th>
-        <th>Lampiran</th>
-        <th>Actions</th>
-    </thead>
-    <tbody>
+<div class="table-responsive">
+    <table id="tabel-wbs" class="table">
+        <thead class="thead-dark">
+            <th>No</th>
+            <th>No Laporan</th>
+            <th>Nama Pelapor</th>
+            <th>Nama Petugas</th>
+            <th>Jenis Pelanggaran</th>
+            <th>Waktu Kejadian</th>
+            <th>Tempat Kejadian</th>
+            <th>Uraian Laporan</th>
+            <th>Lampiran</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -37,9 +39,11 @@
                 "targets": [0],
                 "orderable": false
             }],
-            "dom": 'Bfrtip',
+            "dom": "<'row'<'col-md-2'l><'col-md-6'B><'col-md-4'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-5'i><'col-md-7'p>>",
             "buttons": [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
             ]
         });
 

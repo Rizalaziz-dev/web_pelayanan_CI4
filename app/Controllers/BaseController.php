@@ -89,7 +89,7 @@ class BaseController extends Controller
 
 		$this->sspct = new Suspect_Model;
 
-		$this->dcs = new Decision_Model;
+		$this->dcsn = new Decision_Model;
 
 		//Front
 

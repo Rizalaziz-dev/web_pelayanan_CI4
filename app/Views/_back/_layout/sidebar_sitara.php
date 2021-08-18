@@ -15,7 +15,7 @@
                 <!-- Add icons to the links using the .nav-icon class
 			   with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/AdminDashboard'); ?>" class="nav-link active">
+                    <a href="<?php echo site_url('Back/'); ?>" class="nav-link active">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Dashboard
@@ -25,10 +25,10 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/Users'); ?>" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
+                    <a href="<?php echo site_url('Back/Sitara'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-hands-helping"></i>
                         <p>
-                            Users
+                            Sitara
                             <!--span class="right badge badge-danger">New</span-->
                         </p>
                     </a>

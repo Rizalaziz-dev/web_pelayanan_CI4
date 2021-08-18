@@ -99,12 +99,20 @@ class Yankum extends BaseController
                 ],
                 'attachment' => [
                     'label' => 'Lampiran',
-                    'rules' => 'uploaded[attachment]|mime_in[attachment,image/png,image/jpg,image/jpeg]|is_image[attachment]',
+                    'rules' => 'uploaded[attachment]|ext_in[attachment,zip,rar,jpeg,jpg,png,pdf]|max_size[attachment,8192]',
                     'errors' => [
                         'uploaded' => '{field} wajib diisi',
                         'mime_in' => 'Harus dalam bentuk gambar, jangan file yang lain'
                     ]
-                ]
+                ],
+                'captcha' => [
+                    'label' => 'Captcha',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
 
             ]);
             if (!$valid) {
@@ -118,63 +126,92 @@ class Yankum extends BaseController
                         'question_type' => $validation->getError('question_type'),
                         'question_subject' => $validation->getError('question_subject'),
                         'question_detail' => $validation->getError('question_detail'),
-                        'attachment' => $validation->getError('attachment')
+                        'attachment' => $validation->getError('attachment'),
+                        'captcha' => $validation->getError('captcha')
+
                     ]
                 ];
             } else {
-                $id_report = $this->yankum->noLaporan();
 
-                $yankum = "Yankum";
+                $captcha_response = $this->request->getVar('captcha');
+                if ($captcha_response != '') {
 
-                $filelampiran = $this->request->getFile('attachment');
+                    $secretKey = '6LfM8-sbAAAAAKql7pRHw2nECSv3VuWVmkkcvr4H';
 
-                $filelampiran->move('assets/image/lampiran', $id_report . '.' . $filelampiran->getExtension());
+                    $response = $this->request->getVar('captcha');
 
-                $save_data_reporter = [
-                    'report_id' => $id_report,
-                    'reporter_fullname' => $this->request->getVar('reporter_fullname'),
-                    'reporter_nik' => $this->request->getVar('reporter_nik'),
-                    'reporter_address' => $this->request->getVar('reporter_address'),
-                    'reporter_email' => $this->request->getVar('reporter_email'),
-                    'reporter_phonenumber' => $this->request->getVar('reporter_phonenumber'),
-                    'report_type' => $yankum
-                ];
+                    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$response}");
 
-                $save_data_yankum = [
-                    'question_type' => $this->request->getVar('question_type'),
-                    'question_subject' => $this->request->getVar('question_subject'),
-                    'question_detail' => $this->request->getVar('question_detail'),
-                    'attachment' => './assets/image/lampiran/' . $filelampiran->getName(),
-                    'id_report' => $id_report
+                    $status = json_decode($verify, true);
+                    // var_dump($status);
+                    if ($status['success']) {
 
-                ];
+                        $id_report = $this->yankum->noLaporan();
 
-                $this->rprtr->insert($save_data_reporter);
+                        $token = $this->yankum->generateToken();
 
-                $this->yankum->insert($save_data_yankum);
+                        $yankum = "Yankum";
 
+                        $filelampiran = $this->request->getFile('attachment');
 
+                        $filelampiran->move('assets/image/lampiran', $id_report . '.' . $filelampiran->getExtension());
 
-                $msg = [
-                    'success' => 'Pengaduan Anda Berhasil Terkirim'
-                ];
+                        $save_data_reporter = [
+                            'report_id' => $id_report,
+                            'reporter_fullname' => $this->request->getVar('reporter_fullname'),
+                            'reporter_nik' => $this->request->getVar('reporter_nik'),
+                            'reporter_address' => $this->request->getVar('reporter_address'),
+                            'reporter_email' => $this->request->getVar('reporter_email'),
+                            'reporter_phonenumber' => $this->request->getVar('reporter_phonenumber'),
+                            'report_type' => $yankum
+                        ];
 
-                require_once(APPPATH . 'views/vendor/autoload.php');
-                $options = [
-                    'cluster' => 'ap1',
-                    'useTLS' => true
-                ];
+                        $save_data_yankum = [
+                            'question_type' => $this->request->getVar('question_type'),
+                            'question_subject' => $this->request->getVar('question_subject'),
+                            'question_detail' => $this->request->getVar('question_detail'),
+                            'attachment' => $filelampiran->getName(),
+                            'id_report' => $id_report,
+                            'token' => $token,
 
-                $pusher = new Pusher(
-                    'f00b9630960e06cbb49c',
-                    '1a9e6f0160eb376a5f5d',
-                    '1219579',
-                    $options
-                );
+                        ];
 
-                $data['message_yankum'] = 'success';
+                        $this->rprtr->insert($save_data_reporter);
 
-                $pusher->trigger('my-chanel', 'my-event', $data);
+                        $this->yankum->insert($save_data_yankum);
+
+                        $msg = [
+                            'success' => '*catat No Token ' . $token . ' Untuk Melihat Progress Pengaduan'
+                        ];
+
+                        require_once(APPPATH . 'views/vendor/autoload.php');
+                        $options = [
+                            'cluster' => 'ap1',
+                            'useTLS' => true
+                        ];
+
+                        $pusher = new Pusher(
+                            'f00b9630960e06cbb49c',
+                            '1a9e6f0160eb376a5f5d',
+                            '1219579',
+                            $options
+                        );
+
+                        $data['message_tipikor'] = 'success';
+
+                        $pusher->trigger('my-chanel', 'my-event', $data);
+                    } else {
+                        $msg = [
+                            'error' =>  'Something goes to wrong 1'
+
+                        ];
+                    }
+                } else {
+                    $msg = [
+                        'error' =>  'Something goes to wrong 2'
+
+                    ];
+                }
             }
             echo json_encode($msg);
         } else {

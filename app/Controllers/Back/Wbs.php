@@ -43,16 +43,43 @@ class Wbs extends BaseController
 				$no++;
 				$row = [];
 
-				$url = base_url($list->attachment);
+				$file = $list->attachment;
+				$path = pathinfo($file, PATHINFO_EXTENSION);
+				$url = base_url('assets/uploads/file/' . $file . '');
+
+				$download = base_url('Back/Wbs/download/' . $list->id_report . '');
+
+				if ($path == 'png') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} elseif ($path == 'jpg') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} elseif ($path == 'jpeg') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} else {
+					$storeImage = $file;
+				}
+
 
 				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
-				$btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
-                <i class=\"fa fa-trash\"></i>
+				$btnRemove = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_report . "')\">
+				<i class=\"fas fa-eye\"></i>
             </button>";
+				// $storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
-				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				$btnDownload = "<a href=\"$download\" type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i>";
+
+
+				if ($list->status == 'Diterima') {
+					$status = "<span class=\"badge bg-secondary\">$list->status</span>";
+				} else if ($list->status == 'Selesai') {
+					$status = "<span class=\"badge bg-success\">$list->status</span>";
+				} else if ($list->status == 'Diproses') {
+					$status = "<span class=\"badge bg-warning\">$list->status</span>";
+				} else {
+					$status = "<span class=\"badge bg-danger\">$list->status</span>";
+				}
 
 				$row[] = $no;
 				$row[] = $list->id_report;
@@ -62,7 +89,9 @@ class Wbs extends BaseController
 				$row[] = $list->occurre_time;
 				$row[] = $list->crime_scene;
 				$row[] = $list->report_detail;
+				$row[] = $btnDownload;
 				$row[] = $storeImage;
+				$row[] = $status;
 				$row[] = $btnEdit . "" . $btnRemove;
 				$data[] = $row;
 			}
@@ -90,6 +119,164 @@ class Wbs extends BaseController
 			echo json_encode($msg);
 		} else {
 			exit('Page Not Found');
+		}
+	}
+
+	public function update_data()
+	{
+		if ($this->request->isAJAX()) {
+
+			$validation = \Config\Services::validation();
+			$valid = $this->validate([
+				'status' => [
+					'label' => 'Status ',
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} tidak boleh kosong',
+						'is_unique' => '{field} tidak boleh ada yang sama'
+					]
+				],
+				'note' => [
+					'label' => 'Status ',
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} tidak boleh kosong',
+						'is_unique' => '{field} tidak boleh ada yang sama'
+					]
+				],
+			]);
+			if (!$valid) {
+				$msg = [
+					'error' => [
+						'status' => $validation->getError('status'),
+						'note' => $validation->getError('note')
+					]
+				];
+			} else {
+				$save_data = [
+					'status' => $this->request->getVar('status'),
+				];
+
+				$save_data_status = [
+					'status' => $this->request->getVar('status'),
+					'tokens' => $this->request->getVar('token'),
+					'note' => $this->request->getVar('note'),
+				];
+
+				$this->status->insert($save_data_status);
+
+				$wbs_id = $this->request->getVar('wbs_id');
+
+				$this->wbs->update($wbs_id, $save_data);
+
+				$msg = [
+					'success' => 'Status Laporan Berhasil di Perbarui'
+				];
+			}
+			echo json_encode($msg);
+		} else {
+			exit('Maaf Permintaan Anda Tidak Dapat di Proses');
+		}
+	}
+
+	public function edit()
+	{
+		if ($this->request->isAJAX()) {
+
+			$report_id = $this->request->getVar('report_id');
+
+			$row = $this->wbs->search_id($report_id);
+
+			$data = [
+				'wbs_id' => $row['wbs_id'],
+				'employee_name' => $row['employee_name'],
+				'violation_type' => $row['violation_type'],
+				'occurre_time' => $row['occurre_time'],
+				'crime_scene' => $row['crime_scene'],
+				'report_detail' => $row['report_detail'],
+				'attachment' => $row['attachment'],
+				'id_report' => $row['id_report'],
+				'status' => $row['status'],
+				'token' => $row['token'],
+			];
+
+			$msg = [
+				'success' => view('_back/_pages/_wbs/modal_edit', $data)
+			];
+			echo json_encode($msg);
+		}
+	}
+
+	public function view()
+	{
+		if ($this->request->isAJAX()) {
+			$report_id = $this->request->getVar('report_id');
+
+			$row = $this->rprtr->find($report_id);
+
+			$data = [
+				'report_id' => $row['report_id'],
+				'reporter_fullname' => $row['reporter_fullname'],
+				'reporter_nik' => $row['reporter_nik'],
+				'reporter_address' => $row['reporter_address'],
+				'reporter_email' => $row['reporter_email'],
+				'reporter_phonenumber' => $row['reporter_phonenumber'],
+			];
+
+			$msg = [
+				'success' => view('_back/_pages/_wbs/modal_view', $data)
+			];
+			echo json_encode($msg);
+		}
+	}
+
+	public function download($id)
+	{
+		$row = $this->wbs->search_file($id);
+
+		$url = $row->attachment;
+
+		$file = base_url('assets/uploads/file/' . $url . '', null);
+
+		return $this->response->download('assets/uploads/file/' . $url . '', null);
+	}
+
+	public function count_pengaduan()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->wbs->count_all();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
+	public function count_diproses()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->wbs->count_process();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
+	public function count_selesai()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->wbs->count_done();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
 		}
 	}
 }

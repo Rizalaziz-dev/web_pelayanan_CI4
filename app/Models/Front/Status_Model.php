@@ -22,7 +22,7 @@ class Status_Model extends Model
     protected $table      = 'tb_m_status';
     protected $primaryKey = 'id_status';
 
-    protected $allowedFields = ['tokens', 'status'];
+    protected $allowedFields = ['tokens', 'status', 'note'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

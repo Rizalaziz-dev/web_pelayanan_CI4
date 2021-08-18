@@ -2,6 +2,11 @@
 
 <?= $this->section('content'); ?>
 
+<!-- G-recaptcha -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+</script>
+
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
@@ -112,7 +117,6 @@
                             </div>
                         </div>
 
-
                         <div class="form-group row pb-3 pt-3">
                             <label for="question_detail" class="col-md-3 col-form-label">Isi Permohonan</label>
                             <div class="col-md-9">
@@ -129,12 +133,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row pb-3 pt-3">
+                            <div class="col-md-9">
+                                <div id="captcha"></div>
+                                <!-- <div class="g-recaptcha" data-sitekey="6LfM8-sbAAAAAATZcNrybWeV2rR2XHLqJb2dgUDU" name="captcha" id="captcha"></div> -->
+                                <div class="invalid-feedback errorCaptcha"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-send">Kirim</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Batal</button>
             </div>
 
             <?= form_close() ?>
@@ -143,17 +155,35 @@
 </div>
 
 <script>
+    var onloadCallback = function() {
+        grecaptcha.render('captcha', {
+            'sitekey': '6LfM8-sbAAAAAATZcNrybWeV2rR2XHLqJb2dgUDU',
+            'callback': 'correctCaptcha'
+
+        });
+    };
     $(document).ready(function() {
         $('#btn-tanyakami').click(function(e) {
             $('#modal-permohonan').modal('show');
+
+            cancel();
         });
+
         save();
     });
+
+    function cancel() {
+        $('.btn-cancel').click(function(e) {
+            e.preventDefault();
+            clear_form();
+        })
+    }
 
     function save() {
         $('.btn-send').click(function(e) {
             e.preventDefault();
 
+            var response = grecaptcha.getResponse();
             var id_report = $("#id_report").val();
             var r_fullname = $("#reporter_fullname").val();
             var r_nik = $("#reporter_nik").val();
@@ -177,6 +207,8 @@
             data.append("question_subject", question_subject)
             data.append("question_detail", question_detail)
             data.append("attachment", attachment)
+            data.append("captcha", response)
+
 
             $.ajax({
                 type: "post",
@@ -260,6 +292,13 @@
                             $('#attachment').removeClass('is-invalid')
                             $('.errorAttachment').html('');
                         }
+                        if (response.error.captcha) {
+                            $('#captcha').addClass('is-invalid')
+                            $('.errorCaptcha').html(response.error.captcha);
+                        } else {
+                            $('#captcha').removeClass('is-invalid')
+                            $('.errorCaptcha').html('');
+                        }
 
                     } else {
                         Swal.fire({
@@ -268,6 +307,7 @@
                             text: response.success
                         })
                         clear_form();
+                        grecaptcha.reset();
                         $('#modal-permohonan').modal('hide');
                     }
 
@@ -293,6 +333,7 @@
         $("#question_subject").val('');
         $("#question_detail").val('');
         $("#attachment").val('');
+        grecaptcha.reset();
     }
 </script>
 

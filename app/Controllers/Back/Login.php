@@ -92,6 +92,8 @@ class Login extends BaseController
                             $url = '/admin/yankumdashboard';
                         } elseif ($data['user_level'] == '5') {
                             $url = '/admin/kepaladashboard';
+                        } elseif ($data['user_level'] == '6') {
+                            $url = '/admin/sitara';
                         }
 
                         $msg = [

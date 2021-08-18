@@ -158,6 +158,7 @@ class Sitara extends BaseController
 					'suspect_nationality' => $this->request->getVar('suspect_nationality'),
 					'suspect_religion' => $this->request->getVar('suspect_religion'),
 					'suspect_profession' => $this->request->getVar('suspect_profession'),
+					'suspect_education' => $this->request->getVar('suspect_education'),
 					'suspect_address' => $this->request->getVar('suspect_address'),
 					'suspect_email' => $this->request->getVar('suspect_email'),
 					'suspect_phonenummber' => $this->request->getVar('suspect_phonenummber')
@@ -166,7 +167,7 @@ class Sitara extends BaseController
 					'decision_nomor' => $decision_nomor,
 					'decision_date' => $this->request->getVar('decision_date'),
 					'decision_pn' => $this->request->getVar('decision_pn'),
-					'decision_appeal' => $this->request->getVar('decision_appeal'),
+					'decision_apeal' => $this->request->getVar('decision_apeal'),
 					'decision_cassation' => $this->request->getVar('decision_cassation'),
 					'decision_execution' => $this->request->getVar('decision_execution')
 				];

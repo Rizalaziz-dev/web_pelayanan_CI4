@@ -56,15 +56,15 @@
 
 <script>
     $(document).ready(function() {
-        // complaint();
-        // process();
-        // done();
+        complaint();
+        process();
+        done();
     });
 
     function complaint() {
         $.ajax({
             type: "post",
-            url: "<?= site_url('Back/Tipikor/count_pengaduan') ?>",
+            url: "<?= site_url('Back/Wbs/count_pengaduan') ?>",
             dataType: "json",
             success: function(response) {
                 $('#show-complaint').text(response.success);
@@ -81,7 +81,7 @@
     function process() {
         $.ajax({
             type: "post",
-            url: "<?= site_url('Back/Tipikor/count_diproses') ?>",
+            url: "<?= site_url('Back/Wbs/count_diproses') ?>",
             dataType: "json",
             success: function(response) {
                 $('#show-process').text(response.success);
@@ -98,7 +98,7 @@
     function done() {
         $.ajax({
             type: "post",
-            url: "<?= site_url('Back/Tipikor/count_selesai') ?>",
+            url: "<?= site_url('Back/Wbs/count_selesai') ?>",
             dataType: "json",
             success: function(response) {
                 $('#show-done').text(response.success);

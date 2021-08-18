@@ -15,6 +15,46 @@
             </div>
         </div>
 
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card-body">
+                    <div class="input-group">
+                        <input id="wbs_search" name="wbs_search" type="text" class="form-control" placeholder="No Token" aria-label="" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-danger btn-search" type="button">Search</button>
+                        </div>
+                        <div class="invalid-feedback errorSearch"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div id="table-search" class="col-md-5">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>No Token</th>
+                            <th>:</th>
+                            <th id="token"></th>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records_table">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 <!-- End Hero -->
@@ -115,7 +155,7 @@
                     </div>
 
                     <div class="form-group row pb-3 pt-3">
-                        <label for="occurre_time" class="col-md-3 col-form-label">Waktu Kejadian</label>
+                        <label for="" class="col-md-3 col-form-label">Tanggal Kejadian</label>
                         <div class="col-md-9">
                             <div class="form-group row">
                                 <div class="col-sm">
@@ -123,25 +163,32 @@
                                         <div class="col-sm">
                                             <input id="calendar_day" name="calendar_day" type="number" class="form-control" placeholder="Day" autocomplete="off" maxlength="2" />
                                         </div>
+                                        <div class="invalid-feedback errorDay"></div>
 
                                         <div class="col-sm">
                                             <input id="calendar_month" name="calendar_month" type="number" class="form-control" placeholder="Month" autocomplete="off" maxlength="2" />
                                         </div>
+                                        <div class="invalid-feedback errorMonth"></div>
 
                                         <div class="col-sm">
                                             <input id="calendar_year" name="calendar_year" type="number" class="form-control" placeholder="Year" autocomplete="off" maxlength="4" />
                                         </div>
-
-                                        <div class="col-sm">
-                                            <input type="text" class="form-control" id="occurre_time" name="occurre_time" placeholder="Siang">
-                                            <div class="invalid-feedback errorOccurre"></div>
-                                        </div>
+                                        <div class="invalid-feedback errorYear"></div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group row pb-3 pt-3">
+                        <label for="occurre_time" class="col-md-3 col-form-label">Waktu Kejadian</label>
+                        <div class="col-md-3">
+                            <input type="time" class="form-control" id="occurre_time" name="occurre_time" placeholder="Siang">
+                            <div class="invalid-feedback errorOccurre"></div>
+                        </div>
+                    </div>
+
 
                     <div class="form-group row pb-3 pt-3">
                         <label for="crime_scene" class="col-md-3 col-form-label">Tempat Kejadian</label>
@@ -167,6 +214,14 @@
                         </div>
                     </div>
 
+                    <div class="form-group row pb-3 pt-3">
+                        <div class="col-md-9">
+                            <div id="captcha"></div>
+                            <!-- <div class="g-recaptcha" data-sitekey="6LfM8-sbAAAAAATZcNrybWeV2rR2XHLqJb2dgUDU" name="captcha" id="captcha"></div> -->
+                            <div class="invalid-feedback errorCaptcha"></div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-outline-primary btn-send "><i class="far fa-paper-plane"></i> Kirim Pengaduan</button>
 
 
@@ -181,7 +236,17 @@
 </section>
 
 <script>
+    var onloadCallback = function() {
+        grecaptcha.render('captcha', {
+            'sitekey': '6LfM8-sbAAAAAATZcNrybWeV2rR2XHLqJb2dgUDU',
+            'callback': 'correctCaptcha'
+
+        });
+    };
+
     $(document).ready(function() {
+        document.getElementById("table-search").style.display = "none"; //Hide the table
+        search();
 
         $(function() {
             $("#calendar_day").datepicker({
@@ -212,10 +277,87 @@
 
     });
 
+    function search() {
+        $('.btn-search').click(function(e) {
+            e.preventDefault();
+
+            var wbs_search = $("#wbs_search").val();
+
+            let data = new FormData();
+
+            data.append("wbs_search", wbs_search)
+
+            $.ajax({
+                type: "post",
+                url: "<?= site_url('Front/Wbs/get_data') ?>",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                dataType: "json",
+                beforeSend: function() {
+                    $('.btn-search').attr('disable', 'disabled');
+                    $('.btn-search').html('<i class="fa fa-spin fa-spinner"></i>');
+                },
+                complete: function() {
+                    $('.btn-search').removeAttr('disable');
+                    $('.btn-search').html('Search');
+                    $('.btn-search').attr("hidden", true);
+                },
+                success: function(response) {
+                    if (response.error) {
+                        if (response.error.wbs_search) {
+                            $('#wbs_search').addClass('is-invalid')
+                            $('.errorSearch').html(response.error.wbs_search);
+                            document.getElementById("table-search").style.display = "none"; //Hide the table
+                        } else {
+                            $('#wbs_search').removeClass('is-invalid')
+                            $('.errorSearch').html('');
+                        }
+
+
+                    } else {
+                        document.getElementById("table-search").style.display = "";
+                        $.each(response, function(i, item) {
+                            var td = `</td>`;
+                            // var th = `</th>`;
+                            // $(`#records_info`).append(
+                            //     $(`<tr>`),
+                            //     $(`<th>`).text(`No Token`).append(th),
+                            //     $(`<th>`).text(`:`).append(th),
+                            //     $(`<th>`).text(item.subject).append(th),
+                            //     $(`</tr>`),
+
+                            // );
+                            var $tr = $(`#records_table`).append(
+                                $(`#token`).text(item.tokens).append,
+                                $(`<tr>`),
+                                $(`<td>`).text(item.updated_at).append(td),
+                                $(`<td>`).text(item.status).append(td),
+                                $(`<td>`).text(item.note).append(td),
+                            );
+                            console.log(item.note)
+
+                        });
+
+                        // document.getElementById("btn-search").disabled = true;
+                    }
+
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            });
+
+        });
+    }
+
     function save() {
         $('.btn-send').click(function(e) {
             e.preventDefault();
 
+            var response = grecaptcha.getResponse();
             var id_report = $("#id_report").val();
             var r_fullname = $("#reporter_fullname").val();
             var r_nik = $("#reporter_nik").val();
@@ -249,6 +391,7 @@
             data.append("crime_scene", crime_scene)
             data.append("report_detail", report_detail)
             data.append("attachment", attachment)
+            data.append("captcha", response)
 
             $.ajax({
                 type: "post",
@@ -318,6 +461,27 @@
                             $('#violation_type').removeClass('is-invalid')
                             $('.errorViolation').html('');
                         }
+                        if (response.error.calendar_day) {
+                            $('#calendar_day').addClass('is-invalid')
+                            $('.errorDay').html(response.error.calendar_day);
+                        } else {
+                            $('#calendar_day').removeClass('is-invalid')
+                            $('.errorDay').html('');
+                        }
+                        if (response.error.calendar_month) {
+                            $('#calendar_month').addClass('is-invalid')
+                            $('.errorMonth').html(response.error.calendar_month);
+                        } else {
+                            $('#calendar_month').removeClass('is-invalid')
+                            $('.errorMonth').html('');
+                        }
+                        if (response.error.calendar_year) {
+                            $('#calendar_year').addClass('is-invalid')
+                            $('.errorYear').html(response.error.calendar_year);
+                        } else {
+                            $('#calendar_year').removeClass('is-invalid')
+                            $('.errorYear').html('');
+                        }
                         if (response.error.occurre_time) {
                             $('#occurre_time').addClass('is-invalid')
                             $('.errorOccurre').html(response.error.occurre_time);
@@ -346,6 +510,13 @@
                             $('#attachment').removeClass('is-invalid')
                             $('.errorAttachment').html('');
                         }
+                        if (response.error.captcha) {
+                            $('#captcha').addClass('is-invalid')
+                            $('.errorCaptcha').html(response.error.captcha);
+                        } else {
+                            $('#captcha').removeClass('is-invalid')
+                            $('.errorCaptcha').html('');
+                        }
 
                     } else {
                         Swal.fire({
@@ -354,6 +525,8 @@
                             text: response.success
                         })
                         clear_form();
+
+                        grecaptcha.reset();
                     }
 
                 },

@@ -43,18 +43,43 @@ class Yankum extends BaseController
 				$no++;
 				$row = [];
 
-				$url = base_url($list->attachment);
+				$file = $list->attachment;
+				$path = pathinfo($file, PATHINFO_EXTENSION);
+				$url = base_url('assets/uploads/file/' . $file . '');
+
+				$download = base_url('Back/Yankum/download/' . $list->id_report . '');
+
+				if ($path == 'png') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} elseif ($path == 'jpg') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} elseif ($path == 'jpeg') {
+					$storeImage = "<img src=\"$url\" class=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				} else {
+					$storeImage = $file;
+				}
 
 
-				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
+				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
                 <i class=\"fa fa-tags\"></i>
             </button>";
-				$btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->report_id . "')\">
-                <i class=\"fa fa-trash\"></i>
+				$btnRemove = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_report . "')\">
+				<i class=\"fas fa-eye\"></i>
             </button>";
+				// $storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
 
-				$storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
+				$btnDownload = "<a href=\"$download\" type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i>";
 
+
+				// if ($list->status == 'Diterima') {
+				// 	$status = "<span class=\"badge bg-secondary\">$list->status</span>";
+				// } else if ($list->status == 'Selesai') {
+				// 	$status = "<span class=\"badge bg-success\">$list->status</span>";
+				// } else if ($list->status == 'Diproses') {
+				// 	$status = "<span class=\"badge bg-warning\">$list->status</span>";
+				// } else {
+				// 	$status = "<span class=\"badge bg-danger\">$list->status</span>";
+				// }
 
 				$row[] = $no;
 				$row[] = $list->report_id;
@@ -62,6 +87,7 @@ class Yankum extends BaseController
 				$row[] = $list->question_type;
 				$row[] = $list->question_subject;
 				$row[] = $list->question_detail;
+				$row[] = $btnDownload;
 				$row[] = $storeImage;
 				$row[] = $btnEdit . "" . $btnRemove;
 				$data[] = $row;
@@ -91,5 +117,16 @@ class Yankum extends BaseController
 		} else {
 			exit('Page Not Found');
 		}
+	}
+
+	public function download($id)
+	{
+		$row = $this->yankum->search_file($id);
+
+		$url = $row->attachment;
+
+		// $file = base_url('assets/uploads/file/' . $url . '', null);
+
+		return $this->response->download('assets/uploads/file/' . $url . '', null);
 	}
 }

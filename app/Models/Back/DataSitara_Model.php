@@ -37,7 +37,7 @@ class DataSitara_Model extends Model
         $this->dt = $this->db->table($this->table)
             ->select('tb_m_case.case_id, start_investigation, allegation, stage_one, suspect_name, public_prosecutor  ')
             ->join('tb_m_case_detail', 'id_case=case_id')
-            ->join('tb_m_suspect', 'tb_m_suspect.id_case=tb_m_case.case_id')
+            ->join('tb_m_suspect', 'tb_m_suspect.case_id=tb_m_case.case_id')
             ->join('tb_m_decision', 'tb_m_decision.decision_nomor=tb_m_case.decision_id');
     }
 

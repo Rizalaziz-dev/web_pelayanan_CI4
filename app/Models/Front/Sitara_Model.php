@@ -1,9 +1,9 @@
 <?php
 
 /**
- * DataTipikor
+ * DataSitara
  *
- * DataTipikor_Model scripts
+ * DataSitara_Model scripts
  *
  * @package     Website Pelayanan
  * @category    Model
@@ -12,19 +12,32 @@
  * @reference   https://adminlte.io/themes/AdminLTE/index.html
  */
 
-namespace App\Models\Back;
+namespace App\Models\Front;
 
 use CodeIgniter\HTTP\RequestInterface;
 
 use CodeIgniter\Model;
 
-class DataYankum_Model extends Model
+class Sitara_Model extends Model
 {
-    protected $table      = 'tb_m_question';
-    protected $allowedFields = ['question_type', 'question_subject', 'question_detail', 'attachment', 'id_report', 'token'];
-    protected $column_order = array(null, 'report_id', 'reporter_fullname', null);
-    protected $column_search = array('report_id', 'reporter_fullname');
-    protected $order = array('report_id' => 'asc');
+    protected $table = "tb_m_suspect";
+    protected $allowedFields = [
+        'suspect_id',
+        'suspect_nik',
+        'suspect_ttl',
+        'suspect_gender',
+        'suspect_nationality',
+        'suspect_religion',
+        'suspect_profession',
+        'suspect_education',
+        'suspect_address',
+        'suspect_email',
+        'suspect_phonenumber',
+        'id_case'
+    ];
+    protected $column_order = array(null, 'id_case', 'suspect_name', null);
+    protected $column_search = array('id_case', 'suspect_name');
+    protected $order = array('id_case' => 'asc');
     protected $db;
     protected $dt;
 
@@ -35,9 +48,11 @@ class DataYankum_Model extends Model
         $this->request = $request;
 
         $this->dt = $this->db->table($this->table)
-            ->select('*')
-            ->join('tb_m_reporter', 'id_report=report_id');
+            // ->select('tb_m_suspect.id_case, suspect_name, suspect_ttl, suspect_address, indictment_article, case_status ')
+            ->join('tb_m_case_detail', 'tb_m_suspect.case_id=tb_m_case_detail.id_case');
+        // ->join('tb_m_decision', 'tb_m_decision.decision_nomor=tb_m_suspect.decision_id');
     }
+
     private function _get_datatables_query()
     {
         $i = 0;

@@ -20,7 +20,7 @@
                 <!-- Add icons to the links using the .nav-icon class
 			   with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/YankumDashboard'); ?>" class="nav-link">
+                    <a href="<?php echo site_url('Back/YankumDashboard'); ?>" class="nav-link active">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Dashboard

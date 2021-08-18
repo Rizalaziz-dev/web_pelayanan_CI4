@@ -225,22 +225,6 @@ class Users extends BaseController
                 $msg = [
                     'success' => 'Data Mahasiswa Berhasil Tersimpan'
                 ];
-                require_once(APPPATH . 'views/vendor/autoload.php');
-                $options = [
-                    'cluster' => 'ap1',
-                    'useTLS' => true
-                ];
-
-                $pusher = new Pusher(
-                    'f00b9630960e06cbb49c',
-                    '1a9e6f0160eb376a5f5d',
-                    '1219579',
-                    $options
-                );
-
-                $data['message_user'] = 'success';
-
-                $pusher->trigger('my-chanel', 'my-event', $data);
             }
             echo json_encode($msg);
         } else {
@@ -256,7 +240,7 @@ class Users extends BaseController
                 'user_name' => $this->request->getVar('user_name'),
                 'user_phonenumber' => $this->request->getVar('user_phonenumber'),
                 'user_level' => $this->request->getVar('user_level'),
-                'user_password' => $this->request->getVar('user_password')
+                'user_password' => password_hash($this->request->getVar('user_password'), PASSWORD_DEFAULT)
             ];
 
             $user_email = $this->request->getVar('user_email');

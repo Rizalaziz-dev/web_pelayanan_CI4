@@ -73,7 +73,9 @@ $session = \Config\Services::session() ?>
         } else if ($akses == 'Datun') {
             echo view('_back/_layout/sidebar_yankum');
         } else if ($akses == 'Kepala') {
-            echo view('_back/_layout/sidebar_Kepala');
+            echo view('_back/_layout/sidebar_kepala');
+        } else if ($akses == 'Pidum') {
+            echo view('_back/_layout/sidebar_sitara');
         }
         ?>
 
@@ -164,6 +166,8 @@ $session = \Config\Services::session() ?>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
 
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"></script>
 
 
 

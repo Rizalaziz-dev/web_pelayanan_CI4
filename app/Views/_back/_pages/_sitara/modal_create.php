@@ -3,12 +3,12 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Sitara</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><strong>TAMBAH SITARA</strong></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open('Back/Sitara/save_data', ['class' => 'form_create']) ?>
+            <?= form_open('', ['class' => 'form_create']) ?>
 
             <?= csrf_field(); ?>
 
@@ -42,9 +42,9 @@
                         </div>
 
                         <div class="form-group row pb-3 pt-3">
-                            <label for="Start_investigation" class="col-md-3 col-form-label">SPDP</label>
+                            <label for="start_investigation" class="col-md-3 col-form-label">SPDP</label>
                             <div class="col-md-9">
-                                <input type="date" class="form-control" id="Start_investigation" name="Start_investigation">
+                                <input type="date" class="form-control" id="start_investigation" name="start_investigation">
                             </div>
                             </select>
                             <div class="invalid-feedback errorSpdp">
@@ -189,9 +189,12 @@
                             <div class="form-group row pb-3 pt-3">
                                 <label for="suspect_gender" class="col-md-3 col-form-label">Jenis Kelamin</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="suspect_gender" name="suspect_gender" placeholder="Masukkan Jenis Kelamin Tersangka">
+                                    <select name="suspect_gender" id="suspect_gender" class="form-control select2">
+                                        <option value="">--Pilih Salah Satu--</option>
+                                        <option value="Laki-Laki">Laki-Laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    </select>
                                 </div>
-                                </select>
                                 <div class="invalid-feedback errorGender">
                                 </div>
                             </div>
@@ -340,15 +343,73 @@
         $('.form_create').submit(function(e) {
             e.preventDefault();
             var case_nomor = $("#case_nomor").val();
+            var case_date = $("#case_date").val();
+            var start_investigation = $("#start_investigation").val();
+            var case_position = $("#case_position").val();
+            var allegation = $("#allegation").val();
+            var stage_one = $("#stage_one").val();
+            var stage_two = $("#stage_two").val();
+            var public_prosecutor = $("#public_prosecutor").val();
+            var indictment_article = $("#indictment_article").val();
+            var indictment = $("#indictment").val();
+            var demands = $("#demands").val();
+            var case_status = $("#case_status").val();
+
+            var suspect_nik = $("#suspect_nik").val();
+            var suspect_name = $("#suspect_name").val();
+            var suspect_ttl = $("#suspect_ttl").val();
+            var suspect_gender = $("#suspect_gender").val();
+            var suspect_nationality = $("#suspect_nationality").val();
+            var suspect_religion = $("#suspect_religion").val();
+            var suspect_profession = $("#suspect_profession").val();
+            var suspect_education = $("#suspect_education").val();
+            var suspect_address = $("#suspect_address").val();
+            var suspect_email = $("#suspect_email").val();
+
+            var decision_nomor = $("#decision_nomor").val();
+            var decision_date = $("#decision_date").val();
+            var decision_pn = $("#decision_pn").val();
+            var decision_apeal = $("#decision_apeal").val();
+            var decision_cassation = $("#decision_cassation").val();
+            var decision_execution = $("#decision_execution").val();
 
             let data = new FormData();
 
             data.append("case_nomor", case_nomor)
+            data.append("case_date", case_date)
+            data.append("start_investigation", start_investigation)
+            data.append("case_position", case_position)
+            data.append("allegation", allegation)
+            data.append("stage_one", stage_one)
+            data.append("stage_two", stage_two)
+            data.append("public_prosecutor", public_prosecutor)
+            data.append("indictment_article", indictment_article)
+            data.append("indictment", indictment)
+            data.append("demands", demands)
+            data.append("case_status", case_status)
+
+            data.append("suspect_nik", suspect_nik)
+            data.append("suspect_name", suspect_name)
+            data.append("suspect_ttl", suspect_ttl)
+            data.append("suspect_gender", suspect_gender)
+            data.append("suspect_nationality", suspect_nationality)
+            data.append("suspect_religion", suspect_religion)
+            data.append("suspect_profession", suspect_profession)
+            data.append("suspect_education", suspect_education)
+            data.append("suspect_address", suspect_address)
+            data.append("suspect_email", suspect_email)
+
+            data.append("decision_nomor", decision_nomor)
+            data.append("decision_date", decision_date)
+            data.append("decision_pn", decision_pn)
+            data.append("decision_apeal", decision_apeal)
+            data.append("decision_cassation", decision_cassation)
+            data.append("decision_execution", decision_execution)
 
             $.ajax({
                 type: "post",
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: "<?= site_url('Back/Sitara/save_data'); ?>",
+                data: data,
                 processData: false,
                 contentType: false,
                 cache: false,
@@ -379,6 +440,9 @@
                             text: response.success
                         })
                         clear_form();
+
+                        data_sitara();
+
                         $('#modal-create').modal('hide');
                     }
 

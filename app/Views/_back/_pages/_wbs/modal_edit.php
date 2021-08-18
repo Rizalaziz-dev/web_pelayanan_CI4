@@ -13,7 +13,7 @@
             <div class="modal-body">
 
 
-                <input type="hidden" class="form-control" id="tipikor_id" name="tipikor_id" value="<?= $tipikor_id; ?>" disabled>
+                <input type="hidden" class="form-control" id="wbs_id" name="wbs_id" value="<?= $wbs_id; ?>" disabled>
                 <input type="hidden" class="form-control" id="token" name="token" value="<?= $token; ?>" disabled>
 
 
@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="form-group row pb-1 pt-3">
-                    <label for="subject" class="col-md-3 col-form-label">Subyek Laporan</label>
+                    <label for="employee_name" class="col-md-3 col-form-label">Nama Petugas</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" id="subject" name="subject" value="<?= $subject; ?>" disabled>
-                        <div class="invalid-feedback errorSubject"></div>
+                        <input type="text" class="form-control" id="employee_name" name="employee_name" value="<?= $employee_name; ?>" disabled>
+                        <div class="invalid-feedback errorEmployee"></div>
                     </div>
                 </div>
 
@@ -117,21 +117,21 @@
         $('.btn-update').click(function(e) {
             e.preventDefault();
 
-            var tipikor_id = $("#tipikor_id").val();
+            var wbs_id = $("#wbs_id").val();
             var status = $("#status").val();
             var token = $("#token").val();
             var note = $("#note").val();
 
             let data = new FormData();
 
-            data.append("tipikor_id", tipikor_id)
+            data.append("wbs_id", wbs_id)
             data.append("status", status)
             data.append("token", token)
             data.append("note", note)
 
             $.ajax({
                 type: "post",
-                url: "<?= site_url('Back/Tipikor/update_data') ?>",
+                url: "<?= site_url('Back/Wbs/update_data') ?>",
                 data: data,
                 processData: false,
                 contentType: false,
