@@ -2,7 +2,7 @@
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-        <a href=""><img src="<?= base_url('assets/theme/img/logo front.png') ?>" /></a>
+        <a href=""><img src="<?= base_url('assets/img/logo front.png') ?>" /></a>
         <h1 class="logo mr-auto"><a href=""></a></h1>
 
         <nav class="nav-menu d-none d-lg-block">

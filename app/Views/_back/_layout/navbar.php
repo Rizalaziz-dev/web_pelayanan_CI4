@@ -1,5 +1,6 @@
 <?php
 $session = \Config\Services::session() ?>
+
 <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -26,7 +27,7 @@ $session = \Config\Services::session() ?>
                     <span class="dropdown-item dropdown-header">Akun</span>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item ">
-                        <img src="<?= base_url('assets/theme/img/profile.jpg'); ?>" class="img-circle mr-3" width="30" height="30"> <?= $session->get('user_fullname'); ?>
+                        <img src="<?= base_url('/assets/img/profile.jpg'); ?>" class="img-circle mr-3" width="30" height="30"> <?= $session->get('user_fullname'); ?>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="<?php echo site_url('Back/Login/out') ?>" class="dropdown-item dropdown-footer">
@@ -38,4 +39,6 @@ $session = \Config\Services::session() ?>
             </li>
 
         </ul>
+
+
 </div>

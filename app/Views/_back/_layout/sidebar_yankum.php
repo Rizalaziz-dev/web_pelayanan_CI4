@@ -7,7 +7,7 @@
 
     <!-- Brand Logo -->
     <a href="" class="brand-link ">
-        <img src="<?= base_url('assets/theme/img/logo front.png') ?>" alt="" class="brand-image">
+        <img src="<?= base_url('assets/img/logo front.png') ?>" alt="" class="brand-image">
         <span class="brand-text font-weight-light-navy">&nbsp;</span>
     </a>
 

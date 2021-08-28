@@ -1,5 +1,5 @@
 <div class="tabel-responsive">
-    <table id="tabel-user" class="table">
+    <table id="tabel-user" class="table table-borderedr">
         <thead class="thead-dark">
             <tr>
                 <th>No</th>
