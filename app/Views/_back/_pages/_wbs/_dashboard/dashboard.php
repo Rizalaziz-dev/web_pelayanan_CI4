@@ -2,13 +2,15 @@
 
 <?= $this->section('content'); ?>
 
+<?php
+$session = \Config\Services::session() ?>
 <div class="content">
     <div class="col-sm-12">
         <div class="row">
 
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-warning pl-2 pr-2">
+                <div class="small-box bg-warning">
                     <div class="inner">
                         <h3 id="show-complaint"></h3>
 
@@ -17,12 +19,21 @@
                     <div class="icon">
                         <i class="fas fa-book-open"></i>
                     </div>
+                    <a href="<?php $akses = $session->get('nama_level');
+                                if ($akses == "Kepala") {
+                                    echo site_url('Back/Kepala/Wbs/DetailsPengaduan');
+                                } else {
+                                    echo site_url('Back/Wbs');
+                                } ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
+
+
+
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-danger pl-2 pr-2">
+                <div class="small-box bg-danger">
                     <div class="inner">
                         <h3 id="show-process"></h3>
 
@@ -31,12 +42,18 @@
                     <div class="icon">
                         <i class="fas fa-spinner"></i>
                     </div>
+                    <a href="<?php $akses = $session->get('nama_level');
+                                if ($akses == "Kepala") {
+                                    echo site_url('Back/Kepala/Wbs/DetailsDiproses');
+                                } else {
+                                    echo site_url('Back/Wbs');
+                                } ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
             <div class="col-lg-3 col-12 ">
                 <!-- small box -->
-                <div class="small-box bg-primary pl-2 pr-2">
+                <div class="small-box bg-primary">
                     <div class="inner">
                         <h3 id="show-done"></h3>
 
@@ -45,6 +62,12 @@
                     <div class="icon">
                         <i class="far fa-check-circle"></i>
                     </div>
+                    <a href="<?php $akses = $session->get('nama_level');
+                                if ($akses == "Kepala") {
+                                    echo site_url('Back/Kepala/Wbs/DetailsSelesai');
+                                } else {
+                                    echo site_url('Back/Wbs');
+                                } ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 

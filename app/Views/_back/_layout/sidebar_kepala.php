@@ -15,14 +15,36 @@
                 <!-- Add icons to the links using the .nav-icon class
 			   with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/KepalaDashboard'); ?>" class="nav-link active">
-                        <i class="nav-icon fas fa-th"></i>
+                    <a href="<?php echo site_url('Back/TipikorDashboard'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-balance-scale"></i>
                         <p>
-                            Dashboard
+                            Tipikor
                             <!--span class="right badge badge-danger">New</span-->
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="<?php echo site_url('Back/WbsDashboard'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-wind"></i>
+                        <p>
+                            Wbs
+                            <!--span class="right badge badge-danger">New</span-->
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="<?php echo site_url('Back/YankumDashboard'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-hands-helping"></i>
+                        <p>
+                            Yankum
+                            <!--span class="right badge badge-danger">New</span-->
+                        </p>
+                    </a>
+                </li>
+
+
 
                 <li class="nav-item">
                     <a href="<?php echo site_url('Back/Login/out') ?>" class="nav-link">
