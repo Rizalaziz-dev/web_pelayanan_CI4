@@ -25,10 +25,41 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="<?php echo site_url('Back/Sitara'); ?>" class="nav-link">
-                        <i class="nav-icon fas fa-hands-helping"></i>
+                    <a href="<?php echo site_url('Back/Sitaraa/Suspect'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-user-cog"></i>
                         <p>
-                            Sitara
+                            Data Tersangka
+                            <!--span class="right badge badge-danger">New</span-->
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="<?php echo site_url('Back/Sitaraa/PreProsecution'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-user-tag"></i>
+                        <p>
+                            Pra Penuntutan
+                            <!--span class="right badge badge-danger">New</span-->
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="<?php echo site_url('Back/Sitaraa/Prosecution'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-balance-scale"></i>
+                        <p>
+                            Penuntutan
+                            <!--span class="right badge badge-danger">New</span-->
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="<?php echo site_url('Back/Sitaraa/execution'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-user-check"></i>
+                        <p>
+                            Eksekusi
                             <!--span class="right badge badge-danger">New</span-->
                         </p>
                     </a>

@@ -119,6 +119,45 @@ class Yankum extends BaseController
 		}
 	}
 
+	public function count_pengaduan()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->yankum->count_all();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
+	public function count_diproses()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->tpkr->count_process();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
+	public function count_selesai()
+	{
+		if ($this->request->isAJAX()) {
+			$data = $this->tpkr->count_done();
+
+			$msg = [
+				'success' => $data,
+			];
+
+			echo json_encode($msg);
+		}
+	}
+
 	public function download($id)
 	{
 		$row = $this->yankum->search_file($id);

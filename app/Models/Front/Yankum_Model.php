@@ -76,6 +76,26 @@ class Yankum_Model extends Model
         return $search->getRowObject();
     }
 
+    public function count_all()
+    {
+        $complaint = $this->db->table($this->table);
+        return $complaint->countAllResults();
+    }
+
+    public function count_process()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('status', 'Diproses');
+        return $complaint->countAllResults();
+    }
+
+    public function count_done()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('status', 'Selesai');
+        return $complaint->countAllResults();
+    }
+
     public function checkTokens($randstr)
     {
         $check = $this->db->table($this->table)

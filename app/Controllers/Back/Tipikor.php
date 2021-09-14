@@ -285,47 +285,12 @@ class Tipikor extends BaseController
 
 	public function download($id)
 	{
-		// if ($this->request->isAJAX()) {
-
-		// $tipikor_id = $this->request->getVar('report_id');
-
 		$row = $this->tpkr->search_file($id);
-
-		// var_dump($row);
-
-		// $file = $row['attachment'];
-
-		// $data2 = [
-		// 	'attachment' => $row['attachment'],
-		// ];
 
 		$url = $row->attachment;
 
-
-		// var_dump($url);
-		// die();
-
-		// force_download($url, null);
-		// $file = $this->response->download(base_url('assets/uploads/file/' . $url . '', null));
 		$file = base_url('assets/uploads/file/' . $url . '', null);
-		var_dump($file);
-
-		// $data = [
-		// 	'file' => $file
-		// ];
-
-		// $this->response->download(base_url('assets/uploads/file/' . $url . '', null));
-		// var_dump($data);
-		// die();
-
 
 		return $this->response->download('assets/uploads/file/' . $url . '', null);
-
-		// 	$msg = [
-		// 		'success' => $data
-		// 	];
-
-		// 	echo json_encode($msg);
-		// }
 	}
 }

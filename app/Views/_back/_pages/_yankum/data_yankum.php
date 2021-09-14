@@ -34,7 +34,7 @@
                 "type": "POST",
             },
             "columnDefs": [{
-                "targets": [0],
+                "targets": [0, 3, 4, 5, 8],
                 "orderable": false
             }],
             "dom": "<'row'<'col-md-2'l><'col-md-6'B><'col-md-4'f>>" +

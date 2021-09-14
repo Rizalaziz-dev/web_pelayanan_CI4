@@ -56,13 +56,14 @@
 
 <script>
     $(document).ready(function() {
+        complaint();
 
     });
 
     function complaint() {
         $.ajax({
             type: "post",
-            url: "<?= site_url('Back/Tipikor/count_pengaduan') ?>",
+            url: "<?= site_url('Back/Yankum/count_pengaduan') ?>",
             dataType: "json",
             success: function(response) {
                 $('#show-complaint').text(response.success);
