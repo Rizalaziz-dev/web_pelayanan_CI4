@@ -4,25 +4,29 @@ namespace App\Controllers\Back\Sitaraa;
 
 use App\Controllers\BaseController;
 
-use App\Models\Back\DataExecution_Model;
+use App\Models\Back\DataProsecution_Model;
 
 use Config\Services;
 
-class Execution extends BaseController
+class Sidang extends BaseController
 {
     public function index()
     {
+        $id = $_GET["suspect_id"];
         $data = [
-            'tittle' => 'Daftar Tersangka Eksekusi'
+            'id' => $id,
+            'tittle' => 'Daftar Tersangka Penuntutan'
 
         ];
-        return view('_back/_pages/_sitara/_execution/execution', $data);
+        return view('_back/_pages/_sitara/_prosecution/data_sidang', $data);
         //
     }
+
+
     public function data()
     {
         $request = Services::request();
-        $datamodel = new DataExecution_Model($request);
+        $datamodel = new DataProsecution_Model($request);
         if ($request->getMethod(true) == 'POST') {
             $lists = $datamodel->get_datatables();
             $data = [];
@@ -46,7 +50,7 @@ class Execution extends BaseController
                 <i class=\"fa fa-tags\"></i>
             </button>";
                 $btnNext = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"edit('" . $list->suspect_id . "')\">
-                <i class=\"fa fa-check\"></i>
+                <i class=\"fa fa-arrow-right\"></i>
             </button>";
 
                 $row[] = $no;
@@ -77,7 +81,7 @@ class Execution extends BaseController
             // var_dump($data);
 
             $msg = [
-                'data' => view('_back/_pages/_sitara/_execution/data_execution', $data)
+                'data' => view('_back/_pages/_sitara/_prosecution/data_prosecution', $data)
             ];
 
             echo json_encode($msg);
@@ -99,71 +103,121 @@ class Execution extends BaseController
                 //         'is_unique' => '{field} tidak boleh ada yang sama'
                 //     ]
                 // ],
-                'decision_nomor' => [
-                    'label' => 'Nomor Putusan',
+                'case_nomor' => [
+                    'label' => 'Nomor Perkara',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong',
                         'is_unique' => '{field} tidak boleh ada yang sama'
                     ]
                 ],
-                'decision_date' => [
-                    'label' => 'Tanggal Putusan',
+                'case_date' => [
+                    'label' => 'Tanggal Perkara',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong',
                         'is_unique' => '{field} tidak boleh ada yang sama'
                     ]
                 ],
-                'decision_pn' => [
-                    'label' => 'Detail Putusan',
+                'start_investigation' => [
+                    'label' => 'SPDP',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong',
                         'is_unique' => '{field} tidak boleh ada yang sama'
                     ]
-                ]
-
+                ],
+                'allegation' => [
+                    'label' => 'Tuduhan',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'stage_one' => [
+                    'label' => 'Tahap 1',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'stage_two' => [
+                    'label' => 'Tahap 2',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'public_prosecutor' => [
+                    'label' => 'JPU',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'indictment_article' => [
+                    'label' => 'Pasal Sangkaan',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
+                'demans' => [
+                    'label' => 'Tuntutan',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong',
+                        'is_unique' => '{field} tidak boleh ada yang sama'
+                    ]
+                ],
 
             ]);
             if (!$valid) {
                 $msg = [
                     'error' => [
-                        'decision_nomor' => $validation->getError('decision_nomor'),
-                        'decision_date' => $validation->getError('decision_date'),
-                        'decision_pn' => $validation->getError('decision_pn'),
+                        'case_nomor' => $validation->getError('case_nomor'),
+                        'case_date' => $validation->getError('case_date'),
+                        'start_investigation' => $validation->getError('start_investigation'),
+                        'allegation' => $validation->getError('allegation'),
+                        'stage_one' => $validation->getError('stage_one'),
+                        'stage_two' => $validation->getError('stage_two'),
+                        'public_prosecutor' => $validation->getError('public_prosecutor'),
+                        'indictment_article' => $validation->getError('indictment_article'),
+                        'demans' => $validation->getError('demans'),
+
+
                     ]
                 ];
             } else {
-                $status = 'Kekuatan Hukum Tetap';
+                $status = 'Pra Penuntutan';
+                $nomor = $this->request->getVar('case_nomor');
+                $date =  $this->request->getVar('case_date');
 
-                $nomor = $this->request->getVar('decision_nomor');
-
-                $save_data_status = [
+                $save_data_id = [
+                    'case_id' => $nomor . '/' . $date,
                     'case_status' => $status,
-                    'decision_id' => $nomor,
-
                 ];
-
-
                 $save_data = [
-
-                    'decision_nomor' => $nomor,
-                    'decision_date' => $this->request->getVar('decision_date'),
-                    'decision_pn' => $this->request->getVar('decision_pn'),
-
+                    'id_case' => $nomor . '/' . $date,
+                    'start_investigation' => $this->request->getVar('start_investigation'),
+                    'allegation' => $this->request->getVar('allegation'),
+                    'stage_one' => $this->request->getVar('stage_one'),
+                    'stage_two' => $this->request->getVar('stage_two'),
+                    'public_prosecutor' => $this->request->getVar('public_prosecutor'),
+                    'indictment_article' => $this->request->getVar('indictment_article'),
+                    'demans' => $this->request->getVar('demans'),
                 ];
-
-                // $save_data_idTrial = [
-                //     'trial_id' => $id_trial,
-                // ];
-                // $this->trial->insert($save_data_idTrial);
 
                 $id = $this->request->getVar('suspect_id');
 
-                $this->sspct->update($id, $save_data_status);
+                $this->sspct->update($id, $save_data_id);
 
-                $this->dcsn->insert($save_data);
+                $this->csdet->insert($save_data);
 
                 $msg = [
                     'success' => 'Data Tersangka Berhasil Tersimpan'
@@ -182,20 +236,22 @@ class Execution extends BaseController
             $id_suspect = $this->request->getVar('id_suspect');
 
             $row = $this->sspct->search_id($id_suspect);
+            // var_dump($row);
+            // die();
 
             $data = [
                 'suspect_id' => $row['suspect_id'],
-                // 'start_investigation' => $row['start_investigation'],
-                // 'allegation' => $row['allegation'],
-                // 'stage_one' => $row['stage_one'],
-                // 'stage_two' => $row['stage_two'],
-                // 'public_prosecutor' => $row['public_prosecutor'],
-                // 'indictment_article' => $row['indictment_article'],
-                // 'demans' => $row['demans'],
+                'start_investigation' => $row['start_investigation'],
+                'allegation' => $row['allegation'],
+                'stage_one' => $row['stage_one'],
+                'stage_two' => $row['stage_two'],
+                'public_prosecutor' => $row['public_prosecutor'],
+                'indictment_article' => $row['indictment_article'],
+                'demans' => $row['demans'],
             ];
 
             $msg = [
-                'success' => view('_back/_pages/_sitara/_execution/modal_process', $data)
+                'success' => view('_back/_pages/_sitara/_prosecution/modal_process', $data)
             ];
             echo json_encode($msg);
         }

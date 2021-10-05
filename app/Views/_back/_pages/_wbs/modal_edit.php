@@ -172,7 +172,7 @@
 
                         $('#modal-edit').modal('hide')
 
-                        data_tipikor();
+                        data_wbs();
                         clear_form();
                     }
 

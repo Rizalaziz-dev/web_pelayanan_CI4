@@ -43,8 +43,10 @@ class PreProsecution extends BaseController
                 //     $storeImage = $file;
                 // }
 
-
-                $btnEdit = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"edit('" . $list->suspect_id . "')\">
+                $btnEdit = "<button type=\"button\" class=\"btn btn-primary btn-sm\" onclick=\"edit('" . $list->suspect_id . "')\">
+                <i class=\"fa fa-tags\"></i>
+            </button>";
+                $btnNext = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"edit('" . $list->suspect_id . "')\">
                 <i class=\"fa fa-arrow-right\"></i>
             </button>";
 
@@ -54,7 +56,7 @@ class PreProsecution extends BaseController
                 $row[] = $list->suspect_ttl;
                 $row[] = $list->suspect_gender;
                 $row[] = $list->suspect_address;
-                $row[] = $btnEdit;
+                $row[] = $btnNext;
                 $data[] = $row;
             }
             $output = [
@@ -190,6 +192,7 @@ class PreProsecution extends BaseController
                 ];
             } else {
                 $status = 'Pra Penuntutan';
+                $id_trial = $this->sspct->idTrial();
                 $nomor = $this->request->getVar('case_nomor');
                 $date =  $this->request->getVar('case_date');
 
@@ -206,9 +209,15 @@ class PreProsecution extends BaseController
                     'public_prosecutor' => $this->request->getVar('public_prosecutor'),
                     'indictment_article' => $this->request->getVar('indictment_article'),
                     'demans' => $this->request->getVar('demans'),
+                    'id_trial' => $id_trial,
                 ];
 
-                $id = $this->request->getVar('suspect_id');
+                // $save_data_idTrial = [
+                //     'trial_id' => $id_trial,
+                // ];
+                // $this->trial->insert($save_data_idTrial);
+
+                $id = $this->request->getVar('id_suspect');
 
                 $this->sspct->update($id, $save_data_id);
 
@@ -234,8 +243,13 @@ class PreProsecution extends BaseController
 
             $data = [
                 'suspect_id' => $row['suspect_id'],
-
-
+                // 'start_investigation' => $row['start_investigation'],
+                // 'allegation' => $row['allegation'],
+                // 'stage_one' => $row['stage_one'],
+                // 'stage_two' => $row['stage_two'],
+                // 'public_prosecutor' => $row['public_prosecutor'],
+                // 'indictment_article' => $row['indictment_article'],
+                // 'demans' => $row['demans'],
             ];
 
             $msg = [
@@ -243,5 +257,27 @@ class PreProsecution extends BaseController
             ];
             echo json_encode($msg);
         }
+    }
+
+    public function next()
+    {
+        if ($this->request->isAJAX()) {
+
+            $status = 'Pra Penuntutan';
+
+            $id = $this->request->getVar('id_suspect');
+
+            $save_data_id = [
+                'case_status' => $status,
+            ];
+
+            $this->sspct->update($id, $save_data_id);
+
+
+            $msg = [
+                'success' => 'Data berhasil disimpan'
+            ];
+        }
+        echo json_encode($msg);
     }
 }

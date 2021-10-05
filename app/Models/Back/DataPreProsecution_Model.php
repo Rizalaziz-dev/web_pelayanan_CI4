@@ -1,9 +1,9 @@
 <?php
 
 /**
- * DataSuspect
+ * DataPreProsecution
  *
- * DataSuspect_Model scripts
+ * DataPreProsecution_Model scripts
  *
  * @package     Website Pelayanan
  * @category    Model

@@ -1,4 +1,4 @@
-<table id="tabel-preprosecution" class="table">
+<table id="tabel-prosecution" class="table">
     <thead class="thead-dark">
         <th>No</th>
         <th>NIK</th>
@@ -6,6 +6,7 @@
         <th>TTL</th>
         <th>Jenis Kelamin</th>
         <th>Alamat</th>
+        <th colspan="2">Sidang Ke</th>
         <th>Actions</th>
     </thead>
     <tbody>
@@ -23,7 +24,7 @@
     function edit(id_suspect) {
         $.ajax({
             type: "post",
-            url: "<?php echo site_url('Back/Sitaraa/preprosecution/edit') ?>",
+            url: "<?php echo site_url('Back/Sitaraa/prosecution/edit') ?>",
             data: {
                 id_suspect: id_suspect
             },
@@ -42,9 +43,31 @@
 
     }
 
+    function add(id_suspect) {
+        $.ajax({
+            type: "post",
+            url: "<?php echo site_url('Back/Sitaraa/prosecution/add') ?>",
+            data: {
+                id_suspect: id_suspect
+            },
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    $('.view-modal').html(response.success).show();
+                    $('#modal-add-trial').modal('show');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+
+        });
+
+    }
+
 
     function load_table() {
-        $('#tabel-preprosecution').DataTable({
+        $('#tabel-prosecution').DataTable({
             "searching": true,
             "bFilter": true,
             "ordering": false,
@@ -58,7 +81,7 @@
             "responsive": true,
             "deferRender": true,
             "ajax": {
-                "url": "<?php echo site_url('Back/Sitaraa/preprosecution/data') ?>",
+                "url": "<?php echo site_url('Back/Sitaraa/prosecution/data') ?>",
                 "type": "POST",
             },
             "columnDefs": [{
@@ -83,7 +106,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: "post",
-                    url: "<?= site_url('Back/Sitaraa/preprosecution/next') ?>",
+                    url: "<?= site_url('Back/Sitaraa/prosecution/next') ?>",
                     data: {
                         id_suspect: id_suspect
                     },

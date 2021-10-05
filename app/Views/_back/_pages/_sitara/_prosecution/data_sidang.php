@@ -2,6 +2,8 @@
 
 <?= $this->section('content'); ?>
 
+<p><?= $id; ?></p>
+
 <!-- /.content-header -->
 <div class="content">
 
@@ -35,7 +37,7 @@
 
 <script>
     $(document).ready(function() {
-        data_preprosecution();
+
     });
 
 

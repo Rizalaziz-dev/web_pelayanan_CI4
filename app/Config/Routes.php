@@ -126,9 +126,9 @@ $routes->get('/admin/users', 'Back\Users::index');
 
 $routes->get('/admin/users/(:any)', 'Back\Users::$1');
 
-$routes->get('/admin/sitara', 'Back\Sitara::index');
+$routes->get('/admin/sitaradashboard', 'Back\Sitaraa\Dashboard::index');
 
-$routes->get('/admin/sitara/(:any)', 'Back\Sitara::$1');
+$routes->get('/admin/sitaradashboard/(:any)', 'Back\Sitaraa\Dashboard::$1');
 
 $routes->get('/admin/tipikor', 'Back\Tipikor::index');
 

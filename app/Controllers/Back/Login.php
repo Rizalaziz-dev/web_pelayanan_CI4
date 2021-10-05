@@ -93,7 +93,7 @@ class Login extends BaseController
                         } elseif ($data['user_level'] == '5') {
                             $url = '/admin/kepaladashboard';
                         } elseif ($data['user_level'] == '6') {
-                            $url = '/admin/sitara';
+                            $url = '/admin/sitaradashboard';
                         }
 
                         $msg = [

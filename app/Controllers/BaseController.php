@@ -10,6 +10,7 @@ use App\Models\Back\Case_Model;
 use App\Models\Back\CaseDetail_Model;
 use App\Models\Back\Suspect_Model;
 use App\Models\Back\Decision_Model;
+use App\Models\Back\Trial_Model;
 use App\Models\Front\Tipikor_Model;
 use App\Models\Front\Status_Model;
 use App\Models\Front\Wbs_Model;
@@ -90,6 +91,8 @@ class BaseController extends Controller
 		$this->sspct = new Suspect_Model;
 
 		$this->dcsn = new Decision_Model;
+
+		$this->trial = new Trial_Model;
 
 		//Front
 

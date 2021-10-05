@@ -21,7 +21,7 @@
             <div class="col-md-5">
                 <div class="card-body">
                     <div class="input-group">
-                        <input id="sitara_search" name="sitara_search" type="text" class="form-control" placeholder="Cari disini" aria-label="" aria-describedby="basic-addon1">
+                        <input id="sitara_search" name="sitara_search" type="text" class="form-control" placeholder="Cari Nama Tersangka disini" aria-label="" aria-describedby="basic-addon1">
                         <!-- <div class="input-group-prepend">
                             <button class="btn btn-outline-danger btn-search" type="button">Search</button>
                         </div> -->

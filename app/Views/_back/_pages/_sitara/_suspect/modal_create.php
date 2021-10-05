@@ -120,7 +120,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary btn-send">Kirim</button>
+                <button type="submit" class="btn btn-primary btn-send">Simpan</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             </div>
 
@@ -180,7 +180,7 @@
                 },
                 complete: function() {
                     $('.btn-send').removeAttr('disable');
-                    $('.btn-send').html('Kirim');
+                    $('.btn-send').html('Simpan');
                 },
                 success: function(response) {
                     if (response.error) {

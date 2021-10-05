@@ -122,7 +122,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary btn-send">Kirim</button>
+                <button type="submit" class="btn btn-primary btn-send">Simpan</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             </div>
 
@@ -140,6 +140,7 @@
     function save() {
         $('.form_create').submit(function(e) {
             e.preventDefault();
+            var suspect_id = $("#suspect_id").val();
             var suspect_nik = $("#suspect_nik").val();
             var suspect_name = $("#suspect_name").val();
             var suspect_ttl = $("#suspect_ttl").val();
@@ -155,6 +156,7 @@
 
             let data = new FormData();
 
+            data.append("suspect_id", suspect_id)
             data.append("suspect_nik", suspect_nik)
             data.append("suspect_name", suspect_name)
             data.append("suspect_ttl", suspect_ttl)
@@ -170,7 +172,7 @@
 
             $.ajax({
                 type: "post",
-                url: "<?= site_url('Back/Sitaraa/Suspect/save_data'); ?>",
+                url: "<?= site_url('Back/Sitaraa/Suspect/update_data'); ?>",
                 data: data,
                 processData: false,
                 contentType: false,
@@ -182,7 +184,7 @@
                 },
                 complete: function() {
                     $('.btn-send').removeAttr('disable');
-                    $('.btn-send').html('Kirim');
+                    $('.btn-send').html('Simpan');
                 },
                 success: function(response) {
                     if (response.error) {
@@ -265,7 +267,7 @@
                         })
                         clear_form();
                         data_suspect();
-                        $('#modal-create').modal('hide');
+                        $('#modal-edit').modal('hide');
                     }
 
                 },

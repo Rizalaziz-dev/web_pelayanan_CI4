@@ -44,10 +44,12 @@ class Tipikor extends BaseController
                 ],
                 'reporter_nik' => [
                     'label' => 'NIK ',
-                    'rules' => 'required',
+                    'rules' => 'required|min_length[16]|max_length[16]',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong',
-                        'is_unique' => '{field} tidak boleh ada yang sama'
+                        'is_unique' => '{field} tidak boleh ada yang sama',
+                        'max_length' => '{field} tidak boleh kurang dari 16 Angka',
+                        'min_length' => '{field} tidak boleh kurang dari 16 Angka'
                     ]
                 ],
                 'reporter_address' => [

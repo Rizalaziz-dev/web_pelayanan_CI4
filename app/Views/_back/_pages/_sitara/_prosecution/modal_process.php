@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><strong>PRA PENUNTUTAN</strong></h5>
+                <h5 class="modal-title" id="exampleModalLabel"><strong>PENUNTUTAN</strong></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -39,7 +39,7 @@
                 <div class="form-group row pb-3 pt-3">
                     <label for="start_investigation" class="col-md-3 col-form-label">SPDP</label>
                     <div class="col-md-9">
-                        <input type="date" class="form-control" id="start_investigation" name="start_investigation" placeholder="Masukkan (16 digit) NIK Tersangka" value="">
+                        <input type="date" class="form-control" id="start_investigation" name="start_investigation" placeholder="Masukkan (16 digit) NIK Tersangka" value="<?= $start_investigation; ?>">
                         <div class="invalid-feedback errorStart">
                         </div>
                     </div>

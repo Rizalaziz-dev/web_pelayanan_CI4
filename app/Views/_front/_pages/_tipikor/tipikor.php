@@ -13,13 +13,16 @@
                 <h2>LAPORAN PENGADUAN TINDAK PIDANA KORUPSI (LAPDU TIPIKOR).</h2>
                 <p>PERKARA TINDAK PIDANA KORUPSI PADA KEJAKSAAN NEGERI KABUPATEN TASIKMALAYA</p>
             </div>
+            <div class="col-xl-10 col-lg-4 text-center pb-3">
+                <a href="#services" type="button" class="btn btn-outline-primary">Form Pengaduan</a>
+            </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card-body">
                     <div class="input-group">
-                        <input id="tipikor_search" name="tipikor_search" type="text" class="form-control" placeholder="No Token" aria-label="" aria-describedby="basic-addon1">
+                        <input id="tipikor_search" name="tipikor_search" type="text" class="form-control" placeholder="Masukan No Token disini" aria-label="" aria-describedby="basic-addon1">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-danger btn-search" type="button">Search</button>
                         </div>
@@ -101,10 +104,20 @@
                     <div class="form-group row pb-3 pt-3">
                         <label for="reporter_nik" class="col-md-3 col-form-label">NIK</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="reporter_nik" name="reporter_nik" placeholder="Masukkan (16 digit) NIK Anda">
+                            <input type="text" minlength="16" maxlength="16" onkeypress="return hanyaAngka (event)" class="form-control" id="reporter_nik" name="reporter_nik" placeholder="Masukkan (16 digit) NIK Anda">
                             <div class="invalid-feedback errorNik"></div>
                         </div>
                     </div>
+
+                    <script>
+                        function hanyaAngka(evt) {
+                            var charCode = (evt.which) ? evt.which : event.keyCode
+                            if (charCode > 31 && (charCode < 48 || charCode > 57))
+
+                                return false;
+                            return true;
+                        }
+                    </script>
 
                     <div class="form-group row pb-3 pt-3">
                         <label for="reporter_address" class="col-md-3 col-form-label">Alamat (Sesuai KTP)</label>

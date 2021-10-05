@@ -35,6 +35,8 @@ class Suspect_Model extends Model
         'suspect_phonenumber',
         'case_id',
         'case_status',
+        'id_trial',
+        'trial_nomor',
         'decision_id',
     ];
 
@@ -43,13 +45,65 @@ class Suspect_Model extends Model
     protected $createdField         = 'created_at';
     protected $updatedField         = 'updated_at';
 
-    public function search_id($id_suspect)
+    public function idTrial()
     {
 
+        $kode = $this->db->table($this->table)
+            ->select('RIGHT(id_trial,4) as nomor', false)
+            ->orderBy('id_trial', 'DESC')
+            ->limit(1)->get()->getRowArray();
+
+        if ($kode == null) {
+            $no = 1;
+        } else {
+            $no = intval($kode['nomor']) + 1;
+        }
+
+        $batas = str_pad($no, 4, "0", STR_PAD_LEFT);
+        $id_trial = $batas;
+        return $id_trial;
+    }
+    public function search_id($id_suspect)
+    {
         $search = $this->db->table($this->table)
-            ->where('suspect_id', $id_suspect)->get();
+            ->where('suspect_id', $id_suspect)
+            ->get();
 
 
         return $search->getRowArray();
+    }
+
+    public function count_all()
+    {
+        $complaint = $this->db->table($this->table);
+        return $complaint->countAllResults();
+    }
+
+    public function count_prePro()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('case_status', 'New');
+        return $complaint->countAllResults();
+    }
+
+    public function count_pro()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('case_status', 'Pra Penuntutan');
+        return $complaint->countAllResults();
+    }
+
+    public function count_execution()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('case_status', 'Penuntutan');
+        return $complaint->countAllResults();
+    }
+
+    public function count_Done()
+    {
+        $complaint = $this->db->table($this->table)
+            ->where('case_status', 'Kekuatan Hukum Tetap');
+        return $complaint->countAllResults();
     }
 }

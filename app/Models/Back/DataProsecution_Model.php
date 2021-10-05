@@ -1,9 +1,9 @@
 <?php
 
 /**
- * DataSitara
+ * DataProsecution
  *
- * DataSitara_Model scripts
+ * DataProsecution_Model scripts
  *
  * @package     Website Pelayanan
  * @category    Model
@@ -12,13 +12,13 @@
  * @reference   https://adminlte.io/themes/AdminLTE/index.html
  */
 
-namespace App\Models\Front;
+namespace App\Models\Back;
 
 use CodeIgniter\HTTP\RequestInterface;
 
 use CodeIgniter\Model;
 
-class Sitara_Model extends Model
+class DataProsecution_Model extends Model
 {
     protected $table = "tb_m_suspect";
     protected $allowedFields = [
@@ -34,15 +34,11 @@ class Sitara_Model extends Model
         'suspect_address',
         'suspect_email',
         'suspect_phonenumber',
-        'case_id',
-        'case_status',
-        'id_trial',
-        'trial_nomor',
-        'decision_id',
+        'id_case'
     ];
-    protected $column_order = array(null, 'id_case', 'suspect_name', null);
-    protected $column_search = array('id_case', 'suspect_name');
-    protected $order = array('id_case' => 'asc');
+    protected $column_order = array(null, 'suspect_nik',    'suspect_name', null);
+    protected $column_search = array('suspect_nik',    'suspect_name');
+    protected $order = array('suspect_nik' => 'asc');
     protected $db;
     protected $dt;
 
@@ -52,10 +48,8 @@ class Sitara_Model extends Model
         $this->db = db_connect();
         $this->request = $request;
 
-        $this->dt = $this->db->table($this->table)
-            // ->select('tb_m_suspect.id_case, suspect_name, suspect_ttl, suspect_address, indictment_article, case_status ')
-            ->join('tb_m_case_detail', 'tb_m_suspect.case_id=tb_m_case_detail.id_case');
-        // ->join('tb_m_decision', 'tb_m_decision.decision_nomor=tb_m_suspect.decision_id');
+        $this->dt = $this->db->table($this->table)->select('*')
+            ->where('case_status', 'Pra Penuntutan');
     }
 
     private function _get_datatables_query()

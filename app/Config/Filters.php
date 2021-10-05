@@ -95,9 +95,9 @@ class Filters extends BaseConfig
 
 				'/admin/users/*',
 
-				'/admin/sitara',
+				'/admin/sitaradashboard',
 
-				'/admin/sitara/*',
+				'/admin/sitaradashboard/*',
 
 				'/admin/tipikor',
 

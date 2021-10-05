@@ -1,4 +1,4 @@
-<table id="tabel-preprosecution" class="table">
+<table id="tabel-execution" class="table">
     <thead class="thead-dark">
         <th>No</th>
         <th>NIK</th>
@@ -23,7 +23,7 @@
     function edit(id_suspect) {
         $.ajax({
             type: "post",
-            url: "<?php echo site_url('Back/Sitaraa/preprosecution/edit') ?>",
+            url: "<?php echo site_url('Back/Sitaraa/execution/edit') ?>",
             data: {
                 id_suspect: id_suspect
             },
@@ -44,7 +44,7 @@
 
 
     function load_table() {
-        $('#tabel-preprosecution').DataTable({
+        $('#tabel-execution').DataTable({
             "searching": true,
             "bFilter": true,
             "ordering": false,
@@ -58,7 +58,7 @@
             "responsive": true,
             "deferRender": true,
             "ajax": {
-                "url": "<?php echo site_url('Back/Sitaraa/preprosecution/data') ?>",
+                "url": "<?php echo site_url('Back/Sitaraa/execution/data') ?>",
                 "type": "POST",
             },
             "columnDefs": [{
@@ -83,7 +83,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: "post",
-                    url: "<?= site_url('Back/Sitaraa/preprosecution/next') ?>",
+                    url: "<?= site_url('Back/Sitaraa/execution/next') ?>",
                     data: {
                         id_suspect: id_suspect
                     },
