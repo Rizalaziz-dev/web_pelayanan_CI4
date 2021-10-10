@@ -22,6 +22,11 @@ use Pusher\Pusher;
 
 class Tipikor extends BaseController
 {
+    public function __construct()
+    {
+        $this->email = \Config\Services::email();
+    }
+
     public function index()
     {
         return view('_front/_pages/_tipikor/tipikor');
@@ -191,6 +196,10 @@ class Tipikor extends BaseController
 
                         $tipikor = "Tipikor";
 
+                        $sendTo = $this->request->getVar('reporter_email');
+
+                        $name = $this->request->getVar('reporter_fullname');
+
                         $filelampiran = $this->request->getFile('attachment');
 
                         $filelampiran->move('assets/uploads/file', $id_report . '.' . $filelampiran->getExtension());
@@ -226,12 +235,28 @@ class Tipikor extends BaseController
                             'status' => "Terkirim",
                         ];
 
+
+                        $this->email->setFrom('Kejari Kabupaten Tasikmalaya');
+
+
+                        $this->email->setTo($sendTo);
+
+                        $this->email->setSubject('Token Pengaduan TIPIKOR');
+
+
+                        $this->email->setMessage('<h1>Token Pengaduan TIPIKOR </h1> 
+                        <h4> Hallo  ' . $name . '</h4> 
+                        <p> Kode Token Pengaduan anda adalah : 
+                        </p> <h3>' . $token . '</h3> <p> Gunakan Kode Pengaduan diatas untuk melihat progress Pengaduan di website Pelayanan Terpadu Kejari Kabupaten Tasikmalaya.<br><br>Terima Kasih, <br>PTSP Kejari Kab.Tasikmalaya</p>');
+
+                        $this->email->send();
+
+
                         $this->rprtr->insert($save_data_reporter);
 
                         $this->tpkr->insert($save_data_tipikor);
 
                         $this->status->insert($save_data_status);
-
 
 
                         $msg = [

@@ -21,6 +21,10 @@ use Pusher\Pusher;
 
 class Yankum extends BaseController
 {
+    public function __construct()
+    {
+        $this->email = \Config\Services::email();
+    }
     public function index()
     {
         return view('_front/_pages/_yankum/yankum');
@@ -154,6 +158,10 @@ class Yankum extends BaseController
 
                         $yankum = "Yankum";
 
+                        $sendTo = $this->request->getVar('reporter_email');
+
+                        $name = $this->request->getVar('reporter_fullname');
+
                         $filelampiran = $this->request->getFile('attachment');
 
                         $filelampiran->move('assets/image/lampiran', $id_report . '.' . $filelampiran->getExtension());
@@ -177,6 +185,20 @@ class Yankum extends BaseController
                             'token' => $token,
 
                         ];
+
+                        $this->email->setFrom('Kejari Kabupaten Tasikmalaya');
+
+                        $this->email->setTo($sendTo);
+
+                        $this->email->setSubject('Token Pengaduan WBS');
+
+                        $this->email->setMessage('<h1>Token Pengaduan WBS</h1> 
+                        <h4> Hallo  ' . $name . '</h4> 
+                        <p> Kode Token Pengaduan anda adalah : 
+                        </p> <h3>' . $token . '</h3> <p> Gunakan Kode Pengaduan diatas untuk melihat progress Pengaduan di website Pelayanan Terpadu Kejari Kabupaten Tasikmalaya.<br><br>Terima Kasih, <br>PTSP Kejari Kab.Tasikmalaya</p>');
+
+                        $this->email->send();
+
 
                         $this->rprtr->insert($save_data_reporter);
 

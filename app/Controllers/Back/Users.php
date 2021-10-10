@@ -19,6 +19,8 @@ use App\Controllers\BaseController;
 
 use App\Models\Back\DataUser_Model;
 
+use app\config\Email;
+
 use Config\Services;
 
 use Pusher\Pusher;
@@ -29,6 +31,11 @@ use Pusher\PusherInstance;
 
 class Users extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->email = \Config\Services::email();
+    }
 
     public function index()
     {
@@ -280,6 +287,26 @@ class Users extends BaseController
                 'data' => $dataLevel
             ];
             echo json_encode($msg);
+        }
+    }
+
+    public function sendEmail()
+    {
+
+        $this->email->setFrom('rizal.aziz37946@gmail.com', 'rizalaziz');
+        $this->email->setTo('rizal.aziz37946@gmail.com');
+        // $this->email->setCC('another@another-example.com');
+        // $this->email->setBCC('them@their-example.com');
+
+        $this->email->setSubject('Email Test');
+        $this->email->setMessage('Testing the email class.');
+
+        $this->email->send();
+
+        if (!$this->email->send()) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

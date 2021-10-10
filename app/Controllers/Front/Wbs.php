@@ -22,6 +22,10 @@ use Pusher\Pusher;
 
 class Wbs extends BaseController
 {
+    public function __construct()
+    {
+        $this->email = \Config\Services::email();
+    }
     public function index()
     {
         return view('_front/_pages/_wbs/wbs');
@@ -200,30 +204,9 @@ class Wbs extends BaseController
 
                         $wbs = "Wbs";
 
-                        // $email_address = $this->request->getVar('reporter_email');
+                        $sendTo = $this->request->getVar('reporter_email');
 
-                        // $email->setTo($email_address);
-
-                        // $email_sistem = "rizal.aziz37946@gmail.com";
-
-                        // $email->setFrom($email_sistem);
-
-                        // $email->setSubject("Token Pengaduan Wbs");
-
-                        // $message = "No Token pengaduan anda adalah " . $token . "Silahkan lakukkan pengecekan pada halaman laporan tipikor untuk melihat progress laporan anda";
-
-                        // $email->setMessage($message);
-
-                        // if ($email->send()) {
-                        //     $msg = [
-                        //         'success' => 'sukses'
-                        //     ];
-                        // } else {
-                        //     $msg = [
-                        //         'success' => 'Gagal Mengirim Pesan'
-                        //     ];
-                        // }
-                        // var_dump($msg);
+                        $name = $this->request->getVar('reporter_fullname');
 
                         $filelampiran = $this->request->getFile('attachment');
 
@@ -260,6 +243,19 @@ class Wbs extends BaseController
                             'tokens' => $token,
                             'status' => "Terkirim",
                         ];
+
+                        $this->email->setFrom('Kejari Kabupaten Tasikmalaya');
+
+                        $this->email->setTo($sendTo);
+
+                        $this->email->setSubject('Token Pengaduan WBS');
+
+                        $this->email->setMessage('<h1>Token Pengaduan WBS</h1> 
+                        <h4> Hallo  ' . $name . '</h4> 
+                        <p> Kode Token Pengaduan anda adalah : 
+                        </p> <h3>' . $token . '</h3> <p> Gunakan Kode Pengaduan diatas untuk melihat progress Pengaduan di website Pelayanan Terpadu Kejari Kabupaten Tasikmalaya.<br><br>Terima Kasih, <br>PTSP Kejari Kab.Tasikmalaya</p>');
+
+                        $this->email->send();
 
                         $this->rprtr->insert($save_data_reporter);
 
