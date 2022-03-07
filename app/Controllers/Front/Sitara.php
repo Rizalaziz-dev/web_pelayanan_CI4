@@ -40,20 +40,20 @@ class Sitara extends BaseController
                 $no++;
                 $row = [];
 
-                $btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->case_id . "')\">
-                <i class=\"fa fa-tags\"></i>
-            </button>";
-                $btnRemove = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit('" . $list->case_id . "')\">
-                <i class=\"fa fa-trash\"></i>
-            </button>";
+
                 $name = "<h5><strong>$list->suspect_name</strong></h5>";
 
+                $btnDetails = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_trial . "')\">
+				<i class=\"fas fa-eye\"></i>
+            </button>";
 
                 $row[] = $no;
+                $row[] = $list->suspect_nik;
                 $row[] = $list->id_case;
                 $row[] = $name . " " . $list->suspect_ttl . " " . $list->suspect_address;
                 $row[] = $list->indictment_article;
                 $row[] = $list->case_status;
+                $row[] = $btnDetails;
                 $data[] = $row;
             }
             $output = [

@@ -60,10 +60,7 @@ class Yankum extends BaseController
 				}
 
 
-				$btnEdit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->id_report . "')\">
-                <i class=\"fa fa-tags\"></i>
-            </button>";
-				$btnRemove = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_report . "')\">
+				$btnView = "<button type=\"button\" class=\"btn btn-warning btn-sm\" onclick=\"view('" . $list->id_report . "')\">
 				<i class=\"fas fa-eye\"></i>
             </button>";
 				// $storeImage = "<img src=\"$url\" classs=\"img-thumbnail\" width=\"50\" height=\"35\"/>";
@@ -89,7 +86,7 @@ class Yankum extends BaseController
 				$row[] = $list->question_detail;
 				$row[] = $btnDownload;
 				$row[] = $storeImage;
-				$row[] = $btnEdit . "" . $btnRemove;
+				$row[] = $btnView;
 				$data[] = $row;
 			}
 			$output = [
@@ -118,6 +115,39 @@ class Yankum extends BaseController
 			exit('Page Not Found');
 		}
 	}
+
+
+	public function view()
+	{
+		if ($this->request->isAJAX()) {
+			$report_id = $this->request->getVar('report_id');
+
+
+			$row = $this->rprtr->search_id($report_id);
+
+			// var_dump($row);
+
+			$data = [
+				'report_id' => $row['report_id'],
+				'reporter_fullname' => $row['reporter_fullname'],
+				'reporter_nik' => $row['reporter_nik'],
+				'reporter_address' => $row['reporter_address'],
+				'reporter_email' => $row['reporter_email'],
+				'reporter_phonenumber' => $row['reporter_phonenumber'],
+				'question_subject' => $row['question_subject'],
+				'question_detail' => $row['question_detail'],
+			];
+
+			// var_dump($data);
+			// var_dump($data);
+
+			$msg = [
+				'success' => view('_back/_pages/_yankum/modal_view', $data)
+			];
+			echo json_encode($msg);
+		}
+	}
+
 
 	public function count_pengaduan()
 	{

@@ -46,4 +46,27 @@
         });
 
     }
+
+
+    function view(report_id) {
+        $.ajax({
+            type: "post",
+            url: "<?php echo site_url('Back/Yankum/view') ?>",
+            data: {
+                report_id: report_id
+            },
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    $('.view-modal').html(response.success).show();
+                    $('#modal-view').modal('show');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+
+        });
+
+    }
 </script>

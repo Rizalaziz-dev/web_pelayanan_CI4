@@ -26,4 +26,17 @@ class Reporter_Model extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+
+    public function search_id($report_id)
+    {
+
+        $search = $this->db->table($this->table)
+            ->select('*')
+            ->join('tb_m_question', 'report_id=id_report')
+            ->where('id_report', $report_id)->get();
+
+
+        return $search->getRowArray();
+    }
 }

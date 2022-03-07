@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
+        <!-- <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card-body">
                     <div class="input-group">
@@ -33,9 +33,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> -->
     </div>
+
 </section>
 
 <!-- Modal -->

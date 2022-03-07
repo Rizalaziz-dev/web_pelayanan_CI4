@@ -41,7 +41,7 @@ class Sitara_Model extends Model
         'decision_id',
     ];
     protected $column_order = array(null, 'id_case', 'suspect_name', null);
-    protected $column_search = array('id_case', 'suspect_name');
+    protected $column_search = array('suspect_nik', 'suspect_name');
     protected $order = array('id_case' => 'asc');
     protected $db;
     protected $dt;
